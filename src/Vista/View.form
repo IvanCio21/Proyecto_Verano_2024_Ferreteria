@@ -24,13 +24,6 @@
               <text value="Categoria"/>
             </properties>
           </component>
-          <component id="a8d39" class="javax.swing.JTextField" binding="textField1" default-binding="true">
-            <constraints border-constraint="Center"/>
-            <properties>
-              <minimumSize width="10" height="10"/>
-              <preferredSize width="12" height="12"/>
-            </properties>
-          </component>
         </children>
       </grid>
     </children>
