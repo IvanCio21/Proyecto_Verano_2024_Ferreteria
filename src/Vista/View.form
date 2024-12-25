@@ -7,16 +7,15 @@
     <properties/>
     <border type="none"/>
     <children>
-      <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="BorderLayout" hgap="0" vgap="0">
+      <grid id="65b78" layout-manager="BorderLayout" hgap="0" vgap="0">
         <constraints>
           <tabbedpane title="Categoria"/>
         </constraints>
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="24f10" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
-            <constraints border-constraint="West"/>
+          <grid id="ed48b" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints border-constraint="Center"/>
             <properties/>
             <border type="none"/>
             <children/>
