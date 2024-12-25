@@ -1,31 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="Vista.View">
-  <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="BorderLayout" hgap="0" vgap="0">
+  <tabbedpane id="3a2a5">
     <constraints>
       <xy x="20" y="20" width="500" height="400"/>
     </constraints>
     <properties/>
     <border type="none"/>
     <children>
-      <component id="a14e8" class="javax.swing.JLabel">
-        <constraints border-constraint="North"/>
-        <properties>
-          <text value="Categoria"/>
-        </properties>
-      </component>
-      <grid id="65025" layout-manager="BorderLayout" hgap="0" vgap="0">
-        <constraints border-constraint="Center"/>
+      <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints>
+          <tabbedpane title="Categoria"/>
+        </constraints>
         <properties/>
         <border type="none"/>
         <children>
-          <component id="59a28" class="javax.swing.JTextArea" binding="categoriaTextArea" default-binding="true">
-            <constraints border-constraint="North"/>
-            <properties>
-              <text value="Categoria"/>
-            </properties>
-          </component>
+          <tabbedpane id="53d88">
+            <constraints border-constraint="West"/>
+            <properties/>
+            <border type="none"/>
+            <children/>
+          </tabbedpane>
+        </children>
+      </grid>
+      <grid id="d463c" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints>
+          <tabbedpane title="SubCategoria"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <grid id="d6d37" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints border-constraint="Center"/>
+            <properties/>
+            <border type="none"/>
+            <children/>
+          </grid>
+        </children>
+      </grid>
+      <grid id="b0186" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints>
+          <tabbedpane title="Articulos"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <grid id="eef4e" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints border-constraint="Center"/>
+            <properties/>
+            <border type="none"/>
+            <children/>
+          </grid>
         </children>
       </grid>
     </children>
-  </grid>
+  </tabbedpane>
 </form>
