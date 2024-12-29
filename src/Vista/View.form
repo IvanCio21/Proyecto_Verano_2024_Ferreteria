@@ -14,20 +14,23 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="ed48b" layout-manager="BorderLayout" hgap="0" vgap="0">
+          <grid id="ed48b" binding="Panel" custom-create="true" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints border-constraint="Center"/>
-            <properties/>
+            <properties>
+              <enabled value="true"/>
+            </properties>
             <border type="none"/>
             <children>
-              <component id="8229f" class="javax.swing.JLabel">
-                <constraints border-constraint="West"/>
+              <component id="258d6" class="javax.swing.JLabel">
+                <constraints border-constraint="North"/>
                 <properties>
+                  <alignmentX value="0.1"/>
+                  <alignmentY value="0.1"/>
+                  <autoscrolls value="true"/>
+                  <opaque value="true"/>
+                  <preferredSize width="20" height="30"/>
                   <text value="Codigo"/>
                 </properties>
-              </component>
-              <component id="826ad" class="javax.swing.JTextField" binding="textField1" default-binding="true">
-                <constraints border-constraint="Center"/>
-                <properties/>
               </component>
             </children>
           </grid>
