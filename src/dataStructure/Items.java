@@ -59,6 +59,16 @@ public class Items {
         this.subCategory = subCategory;
     }
 
+    public String[] dataName(){
+        String dataName[] = {"ID", "Name", "Presentacion", "Categoria", "SubCategoria"};
+        return dataName;
+    }
+
+    public String[] getData(){
+        String data[] = {this.id, this.name, String.valueOf(this.presentation), String.valueOf(this.category), String.valueOf(this.subCategory)};
+        return data;
+    }
+
     public String toString(){
         return this.id + " " + this.name + " " + this.presentation + " " + this.category + " " + this.subCategory;
     }
