@@ -21,6 +21,7 @@ public class GUI {
     private JTextField textField3;
     private JTextField textField4;
     private JPanel Categoria;
+    private JTable table2;
 
     private void createUIComponents() {
         // TODO: place custom component creation code here

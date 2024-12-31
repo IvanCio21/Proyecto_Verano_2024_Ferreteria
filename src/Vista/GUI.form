@@ -582,9 +582,10 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <vspacer id="800ec">
+                  <component id="33278" class="javax.swing.JTable" binding="table2" default-binding="true">
                     <constraints border-constraint="Center"/>
-                  </vspacer>
+                    <properties/>
+                  </component>
                 </children>
               </grid>
               <component id="36a80" class="javax.swing.JTextField">
