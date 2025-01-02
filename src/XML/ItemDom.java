@@ -19,14 +19,15 @@ import java.io.IOException;
 public class ItemDom {
 
         private Items items;
-        private static String xmlFilePath = "Articulos.xml";
+        private static String xmlFilePath = "";
 
-        public ItemDom() {
-            items = new Items();
-            CreateFile("Articulos", xmlFilePath, "Articulo", items.dataName(), items.getData());
+        public ItemDom(String filepath) {
+            this.items = new Items();
+            xmlFilePath = filepath;
+            CreateFile(xmlFilePath, items.dataName(), items.getData());
         }
 
-        private void CreateFile(String objectName, String fileAddress, String elementeType, String[] dataName, String[] data) {
+        private void CreateFile(String fileAddress, String[] dataName, String[] data) {
             try {
 
                 File xmlFile = new File(xmlFilePath);
@@ -37,11 +38,11 @@ public class ItemDom {
                     Document document = documentBuilder.newDocument();
 
                     // root element
-                    Element root = document.createElement(objectName); //items
+                    Element root = document.createElement("Articulos"); //items
                     document.appendChild(root);
 
                     // item element
-                    Element item = document.createElement(elementeType);
+                    Element item = document.createElement("Articulo");
                     root.appendChild(item);
 
                     // set an attribute to staff element
@@ -75,8 +76,7 @@ public class ItemDom {
             }
         }
 
-    public boolean AddItem(Items item) throws TransformerConfigurationException, TransformerException
-    {
+    public boolean AddItem(Items item, String[] dataName, String[] data ) throws TransformerConfigurationException, TransformerException {
         boolean result = false;
         boolean idexist = false;
 
@@ -86,94 +86,75 @@ public class ItemDom {
             File xmlFile = new File(xmlFilePath);
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-            if(!xmlFile.exists())
+            if (!xmlFile.exists())
                 return result;
             Document doc = builder.parse(xmlFile);
             NodeList itemsNodes = doc.getElementsByTagName("Articulo");
 
-            for(int i = 0; i < itemsNodes.getLength(); i++) {
+            for (int i = 0; i < itemsNodes.getLength(); i++) {
                 Node itemNode = itemsNodes.item(i);
-                if(itemNode.getNodeType() == Node.ELEMENT_NODE) {
+                if (itemNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element itemElement = (Element) itemNode;
                     //int id = Integer.parseInt(userElement.getAttribute("id"));
 
-                    if(item.getId().equals(itemElement.getAttribute("id")))
-                    {
+                    if (item.getId().equals(itemElement.getAttribute("id"))) {
                         idexist = true;
                         break;
                     }
                 }
             }
-        } catch (ParserConfigurationException | IOException | SAXException pce) {}
-
+        } catch (ParserConfigurationException | IOException | SAXException pce) {
+        }
 
 
         //---------------If user id does not exits---------------------
         try {
-            if(!idexist)
-            {
+            if (!idexist) {
                 File xmlFile = new File(xmlFilePath);
-                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-                DocumentBuilder builder = factory.newDocumentBuilder();
-                if(!xmlFile.exists())
-                    return result;
-                Document document = builder.parse(xmlFile);
-                //NodeList userNodes = document.getElementsByTagName("users");
 
-                Node root = document.getElementsByTagName("articulo").item(0);
+                if (!xmlFile.exists()) {
+                    DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
+                    DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
+                    Document document = documentBuilder.newDocument();
 
-                //Element root = document.getElementById("users");
-                // user element
-                Element newuser = document.createElement("user");
+                    // root element
+                    Element root = document.createElement("Articulos"); //items
+                    document.appendChild(root);
 
-                root.appendChild(newuser);
+                    // item element
+                    Element itemElement = document.createElement("Articulo");
+                    root.appendChild(itemElement);
 
-                // set an attribute to staff element
-                Attr attr = document.createAttribute("id");
-                attr.setValue(user.getID());
-                newuser.setAttributeNode(attr);
+                    // set an attribute to staff element
+                    Attr attr = document.createAttribute(dataName[0]);
+                    attr.setValue(data[0]);
+                    itemElement.setAttributeNode(attr);
 
+                    for (int i = 1; i < data.length; i++) {
+                        //crea la etiqueta
+                        Element dato = document.createElement(dataName[i]);
 
-                // firstname element
-                Element firstName = document.createElement("firstname");
-                firstName.appendChild(document.createTextNode(user.getFirstname()));
-                newuser.appendChild(firstName);
+                        dato.appendChild(document.createTextNode(data[i]));
 
-                // lastname element
-                Element lastname = document.createElement("lastname");
-                lastname.appendChild(document.createTextNode(user.getLastname()));
-                newuser.appendChild(lastname);
+                        itemElement.appendChild(dato);//agrega al objeto
 
-                // email element
-                Element username = document.createElement("username");
-                username.appendChild(document.createTextNode(user.getUsername()));
-                newuser.appendChild(username);
+                    }
 
-                // department elements
-                Element password = document.createElement("password");
-                password.appendChild(document.createTextNode(user.getPassword()));
-                newuser.appendChild(password);
+                    // create the xml file
+                    //transform the DOM Object to an XML File
+                    TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                    Transformer transformer = transformerFactory.newTransformer();
+                    DOMSource domSource = new DOMSource(document);
+                    StreamResult streamResult = new StreamResult(new File(xmlFilePath));
+                    transformer.transform(domSource, streamResult);
 
-                // create the xml file
-                //transform the DOM Object to an XML File
-                TransformerFactory transformerFactory = TransformerFactory.newInstance();
-                Transformer transformer = transformerFactory.newTransformer();
-                DOMSource domSource = new DOMSource(document);
-                StreamResult streamResult = new StreamResult(new File(xmlFilePath));
-
-                // If you use
-                // StreamResult result = new StreamResult(System.out);
-                // the output will be pushed to the standard output ...
-                // You can use that for debugging
-
-                transformer.transform(domSource, streamResult);
-
-                result = true;
+                    System.out.println("Registro guardado");
+                    result = true;
+                }
+            }
+            } catch(ParserConfigurationException pce){
             }
 
-        } catch (ParserConfigurationException | IOException | SAXException pce) {
+            return result;
         }
-
-        return result;
-    }
     }

@@ -4,9 +4,8 @@ import javax.swing.*;
 
 public class GUI {
     private JTabbedPane PestaniasPanel;
-    private JPanel principal;
-    private JPanel Principal;
-    private JTable table1;
+    private JPanel PanelPrincipal;
+    private JPanel PanelCategoria;
     private JButton NEXTTTButton;
     private JLabel codigoText;
     private JTextField codigo;
@@ -21,7 +20,20 @@ public class GUI {
     private JTextField textField3;
     private JTextField textField4;
     private JPanel Categoria;
-    private JTable table2;
+    private JTable presentacionesTable;
+    private JTextField categoriaArticuloTf;
+    private JTextField subCategoriaArticuloTf;
+    private JTextField codigoArticuloTf;
+    private JTextField nombreArticuloTf;
+    private JTextField descripcionArticuloTf;
+    private JTextField buscarIdArticuloTf;
+    private JButton buscarArticuloBtn;
+    private JButton guardarArticulosBtn;
+    private JButton limpiarArticulosBtn;
+    private JButton eliminarArticulosBtn;
+    private JScrollPane articulosTable;
+    private JPanel AcercaDe;
+    private JPanel Articulo;
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
