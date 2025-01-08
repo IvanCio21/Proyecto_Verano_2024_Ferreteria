@@ -1,6 +1,6 @@
 package Presentaciones;
 
-import Domain.Category;
+import Logic.Category;
 
 public class Model {
 

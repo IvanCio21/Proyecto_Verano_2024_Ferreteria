@@ -1,4 +1,4 @@
-package data;
+package datas;
 
 public class ItemsManager {
     private ItemDom itemFile;

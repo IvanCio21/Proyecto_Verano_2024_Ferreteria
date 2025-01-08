@@ -1,4 +1,4 @@
-package Domain;
+package Logic;
 
 public class Presentation {
     private String measure;

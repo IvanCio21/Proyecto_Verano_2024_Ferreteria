@@ -1,9 +1,13 @@
-package Domain;
+package Logic;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Category {
     private String id;
     private String name;
     private String description;
+    private List<SubCategory> subCategoryList;
 
     public Category() {
 
@@ -13,6 +17,7 @@ public class Category {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.subCategoryList = new ArrayList<SubCategory>();
     }
 
 
@@ -41,8 +46,20 @@ public class Category {
         this.description = description;
     }
 
+    public List<SubCategory> getSubCategoryList() {
+        return subCategoryList;
+    }
+
+    public void setSubCategoryList(List<SubCategory> subCategoryList) {
+        this.subCategoryList = subCategoryList;
+    }
+
+    public void addSubCategory(SubCategory subCategory) {
+        this.subCategoryList.add(subCategory);
+    }
+
     @Override
     public String toString() {
-        return "Category" + id + name + description;
+        return "Category" + id + name + description + subCategoryList;
     }
 }

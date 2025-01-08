@@ -1,9 +1,9 @@
-package data;
+package datas;
 
-import Domain.Category;
-import Domain.Items;
-import Domain.Presentation;
-import Domain.SubCategory;
+import Logic.Category;
+import Logic.Items;
+import Logic.Presentation;
+import Logic.SubCategory;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
