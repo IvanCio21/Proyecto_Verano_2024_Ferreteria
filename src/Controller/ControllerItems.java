@@ -1,6 +1,6 @@
 package Controller;
 
-import Model.ItemsManager;
+import data.ItemsManager;
 import Vista.GUI;
 
 public class ControllerItems {

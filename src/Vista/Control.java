@@ -1,10 +1,11 @@
 package Vista;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class Control {
 
-    private Model model;
+    private static Model model;
     private GUI gui;
 
     private static JTable tableArticulos;
@@ -21,6 +22,19 @@ public class Control {
         tableSubCategorias = new JTable();
 
 
+    }
+
+    public static void show(){ //Mostrar las actualizaciones del observable
+        model.setTableArticulos(tableArticulos);
+        model.setTableCategorias(tableCategorias);
+        model.setTableSubCategorias(tableSubCategorias);
+        model.commit();//encargador de actualizar
+    }
+
+    //TABLAS//
+
+    private static void setTableArticulos(){
+        //tableArticulos.setModel(new DefaultTableModel(new String[]{"ID" , "Nombre", "Descripcion"}));
     }
 
 }

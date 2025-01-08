@@ -1,4 +1,4 @@
-package dataStructure;
+package Domain;
 
 public class Items {
     private String id;

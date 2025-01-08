@@ -1,4 +1,4 @@
-package dataStructure;
+package Domain;
 
 public class Presentation {
     private String measure;

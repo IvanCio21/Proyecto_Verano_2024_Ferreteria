@@ -1,6 +1,4 @@
-package Model;
-
-import XML.ItemDom;
+package data;
 
 public class ItemsManager {
     private ItemDom itemFile;

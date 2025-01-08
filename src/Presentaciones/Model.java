@@ -1,6 +1,6 @@
 package Presentaciones;
 
-import dataStructure.Category;
+import Domain.Category;
 
 public class Model {
 

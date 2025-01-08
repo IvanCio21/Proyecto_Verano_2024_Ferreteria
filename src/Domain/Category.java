@@ -1,4 +1,4 @@
-package dataStructure;
+package Domain;
 
 public class Category {
     private String id;
@@ -14,6 +14,8 @@ public class Category {
         this.name = name;
         this.description = description;
     }
+
+
 
     public String getId() {
         return id;
