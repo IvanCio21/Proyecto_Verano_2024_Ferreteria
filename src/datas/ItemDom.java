@@ -165,43 +165,4 @@ public class ItemDom {
 
         return result;
     }
-
-    public ArrayList<Items> getItems() {
-        ArrayList<Items> itemAL = new ArrayList<>();
-
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        try {
-
-            dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-            DocumentBuilder db = dbf.newDocumentBuilder();
-
-            Document doc = db.parse(new File("Articulos.xml"));
-            doc.getDocumentElement().normalize();
-            NodeList list = doc.getElementsByTagName("Articulo");
-
-            for (int temp = 0; temp < list.getLength(); temp++) {
-
-                Node node = list.item(temp);
-
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
-
-                    Element element = (Element) node;
-
-                    // get staff's attribute
-                    String id = element.getElementsByTagName("id").item(0).getTextContent();
-
-                    // get text
-                    String name = element.getElementsByTagName("nombre").item(0).getTextContent();
-                    Presentation presentation = Presentation.valueOf(element.getElementsByTagName("presentacion").item(0).getTextContent());
-                    Category category = Category.valueOf(element.getElementsByTagName("categoria").item(0).getTextContent());
-                    SubCategory subCategory = SubCategory.valueOf(element.getElementsByTagName("subcategoria").item(0).getTextContent());
-                    Items i = new Items(id, name, presentation, category, subCategory);
-                    itemAL.add(i);
-                }
-            }
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            e.printStackTrace();
-        }
-        return itemAL;
-    }
 }

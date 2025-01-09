@@ -120,32 +120,49 @@ public class XmlPersistent {
 
             doc.getDocumentElement().normalize();
 
-            NodeList nList = doc.getElementsByTagName("categoria");
+            NodeList categoriaNList = doc.getElementsByTagName("categoria");
 
-            for (int temp = 0; temp < nList.getLength(); temp++){
+            for (int i = 0; i < categoriaNList.getLength(); i++){
 
-                Node nNode = nList.item(temp);
+                Node NodeCategoria = categoriaNList.item(i);
 
-                if (nNode.getNodeType() == Node.ELEMENT_NODE){
+                if (NodeCategoria.getNodeType() == Node.ELEMENT_NODE) {
+                    Element eElement = (Element) NodeCategoria;
 
-                    Element eElement = (Element) nNode;
+                    String idCategoria = eElement.getElementsByTagName("ID").item(0).getTextContent();
+                    String nameCategoria = eElement.getElementsByTagName("nombre").item(0).getTextContent();
+                    String descripcionCategoria = eElement.getElementsByTagName("descripcion").item(0).getTextContent();
+                    Category category = new Category(idCategoria, nameCategoria, descripcionCategoria);
+                    //SUBCATEGORIA//
+                            NodeList subcategoriaNodes = eElement.getElementsByTagName("subcategoria");
+                            ArrayList<SubCategory> subcategoriaList = new ArrayList<>();
 
-                    String id = eElement.getElementsByTagName("ID").item(0).getTextContent();
+                            for (int j = 0; j < subcategoriaNodes.getLength(); j++) {
+                                Node node = subcategoriaNodes.item(i);
+                                if (node.getNodeType() == Node.ELEMENT_NODE) {
+                                    Element subcategoriaElement = (Element) node;
 
-                    String name = eElement.getElementsByTagName("nombre").item(0).getTextContent();
-                    String descripcion = eElement.getElementsByTagName("descripcion").item(0).getTextContent();
-                    //Creo que aun falta agregar mas cosas, pero no tengo la menor idea xD
-                }
-
-            }
-            } catch (ParserConfigurationException | SAXException | IOException e) {
-                e.printStackTrace();
-            }
-
-            //Este return se cambia
-            return categorias;
+                                    String idSubCategoria = subcategoriaElement.getElementsByTagName("codigo").item(0).getTextContent();
+                                    String namesubCategoria = subcategoriaElement.getElementsByTagName("nombre").item(0).getTextContent();
+                                    String descripcionsubCategoria = subcategoriaElement.getElementsByTagName("descripcion").item(0).getTextContent();
+                                    SubCategory subCategoria = new SubCategory(idSubCategoria, namesubCategoria, descripcionsubCategoria);
+                                    subcategoriaList.add(subCategoria);
+                                }
+                            }
+                            category.setSubCategoryList(subcategoriaList);
+                            categorias.add(category);
+                        }
+                    }
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        } catch (SAXException ex) {
+            throw new RuntimeException(ex);
+        } catch (ParserConfigurationException e) {
+            throw new RuntimeException(e);
+        }
+        return categorias;
 
         }
-    }
 
-}
+
+    }
