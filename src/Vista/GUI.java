@@ -53,6 +53,8 @@ public class GUI extends JFrame implements Observer {
     private JButton eliminarsubcategoriaBtn;
     private JButton GuardarSubcategoriaBtn;
     private JButton buscarSubcategoriaBtn;
+    private JTextField buscarCategoria;
+    private JTextField descripcionCategoria;
 
 
     public GUI(){
@@ -86,6 +88,8 @@ public class GUI extends JFrame implements Observer {
         subCategoriasTable.setColumnModel(model.getTableArticulos().getColumnModel());
     }
 
+
+
     public JTable getTableCategorias(){
         return tableCategorias;
     }
@@ -113,6 +117,15 @@ public class GUI extends JFrame implements Observer {
 
         this.setContentPane(panelPrincipal); // Seteo contenido del form al JFrame que se acaba de crear
         this.pack();
+
+        //BOTONES CATEGORIA
+        limpiarCategoriaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clearTable();
+            }
+        });
+
 
         //BOTONES ARTICULOS//
         limpiarArticulosBtn.addActionListener(new ActionListener() {
@@ -206,5 +219,13 @@ public class GUI extends JFrame implements Observer {
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
+    }
+
+
+    void clearTable(){
+        nombre.setText("");
+        codigo.setText("");
+        descripcionCategoria.setText("");
+        buscarCategoria.setText("");
     }
 }
