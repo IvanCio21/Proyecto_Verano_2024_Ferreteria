@@ -1,29 +1,37 @@
 package Logic;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class SubCategory extends Category {
+public class SubCategory {
 
+    private int subCategoryID;
+    private String subCategoryName;
     private List<Items> articulos;
 
-    public SubCategory() {
+    public SubCategory(int subCategoryID, String subCategoryName, List<Items> articulos) {
+        this.subCategoryID = subCategoryID;
+        this.subCategoryName = subCategoryName;
+        this.articulos = articulos;
     }
 
-    public SubCategory(String id, String nombre, String descripcion) {
-        super(id, nombre, descripcion);
-        this.articulos = new ArrayList<>();
+    public int getSubCategoryID() {
+        return subCategoryID;
+    }
+
+    public void setSubCategoryID(int subCategoryID) {
+        this.subCategoryID = subCategoryID;
+    }
+
+    public String getSubCategoryName() {
+        return subCategoryName;
+    }
+
+    public void setSubCategoryName(String subCategoryName) {
+        this.subCategoryName = subCategoryName;
     }
 
     public List<Items> getArticulos() {
         return articulos;
     }
 
-    public void setArticulos(List<Items> articulos) {
-        this.articulos = articulos;
-    }
-
-    public void addArticulo(Items articulo) {
-        this.articulos.add(articulo);
-    }
 }

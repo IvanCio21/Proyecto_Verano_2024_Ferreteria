@@ -4,31 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Items {
-    private String id;
+    private int id;
     private String marca;
     private String name;
     private String description;
     private List<Presentation> presentation;
-    private SubCategory subCategory;
 
-    public Items(){
-        this.presentation  = new ArrayList<>();
-    }
-
-    public Items(String id, String marca, String name, String descripcion, SubCategory subcategory){
+    public Items(int id, String marca, String name, String description, List<Presentation> presentation) {
         this.id = id;
         this.marca = marca;
         this.name = name;
-        this.description = descripcion;
-        this.subCategory = subcategory;
-        this.presentation = new ArrayList<>();
+        this.description = description;
+        this.presentation = presentation;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -60,30 +54,24 @@ public class Items {
         return presentation;
     }
 
-    public SubCategory getSubCategory() {
-        return subCategory;
-    }
-
-    public void setSubCategory(SubCategory subCategory) {
-        this.subCategory = subCategory;
-    }
-
+    /*
     public String[] dataName(){
         return new String[]{"ID", "Marca","Nombre", "Descripcion", "Subcategoria"};
     }
 
     public String[] getData(){
         return new String[]{
-                this.id,
+                String.valueOf(this.id),
                 this.marca,
                 this.name,
                 this.description,
-                subCategory != null ? subCategory.getName() : "Sin subcategoría"
+                presentation != null ? presentation.getName() : "Sin subcategoría"
         };
     }
 
     public String toString(){
         return id + " " + marca + " " + name + " " + description + " Subcategoria: " +
-                (subCategory != null ? subCategory.getName() : "N/A");
+                (presentation != null ? presentation.getName() : "N/A");
     }
+    */
 }

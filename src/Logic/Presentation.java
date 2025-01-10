@@ -1,15 +1,23 @@
 package Logic;
 
 public class Presentation {
+    private int PresentationID;
     private String measure;
     private double quantity;
 
-    public Presentation() {
-    }
 
-    public Presentation(String measure, double quantity) {
+    public Presentation(int presentationID, String measure, double quantity) {
+        PresentationID = presentationID;
         this.measure = measure;
         this.quantity = quantity;
+    }
+
+    public int getPresentationID() {
+        return PresentationID;
+    }
+
+    public void setPresentationID(int presentationID) {
+        PresentationID = presentationID;
     }
 
     public String getMeasure() {

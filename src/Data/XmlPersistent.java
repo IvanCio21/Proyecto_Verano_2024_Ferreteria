@@ -18,20 +18,20 @@ import java.util.List;
 
 public class XmlPersistent {
 
-    public void guardarCategorias(List<Category> categorias){
-        try{
+    public void guardarCategorias(List<Category> categorias) {
+        try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = dbFactory.newDocumentBuilder();
             Document doc = docBuilder.newDocument();
             Element rootElement = doc.createElement("inventario");
             doc.appendChild(rootElement);
 
-            for(Category cat : categorias){
+            for (Category cat : categorias) {
                 Element catElement = doc.createElement("categoria");
                 rootElement.appendChild(catElement);
 
-                Element id = doc.createElement("ID");
-                id.appendChild(doc.createTextNode(cat.getId()));
+                Element id = doc.createElement("id");
+                id.appendChild(doc.createTextNode(String.valueOf(cat.getId())));
                 catElement.appendChild(id);
 
                 Element nombre = doc.createElement("nombre");
@@ -42,29 +42,26 @@ public class XmlPersistent {
                 descripcion.appendChild(doc.createTextNode(cat.getDescription()));
                 catElement.appendChild(descripcion);
 
-                for(SubCategory subCategory : cat.getSubCategoryList()){
+                for (SubCategory subCategory : cat.getSubCategoryList()) {
                     Element subCatElement = doc.createElement("subcategoria");
                     catElement.appendChild(subCatElement);
 
-                    Element subCategoryId = doc.createElement("ID");
-                    subCategoryId.appendChild(doc.createTextNode(subCategory.getId()));
+                    Element subCategoryId = doc.createElement("id");
+                    subCategoryId.appendChild(doc.createTextNode(String.valueOf(subCategory.getSubCategoryID())));
                     subCatElement.appendChild(subCategoryId);
 
                     Element subCategoryNombre = doc.createElement("nombre");
-                    subCategoryNombre.appendChild(doc.createTextNode(subCategory.getName()));
+                    subCategoryNombre.appendChild(doc.createTextNode(subCategory.getSubCategoryName()));
                     subCatElement.appendChild(subCategoryNombre);
 
-                    Element subCategoryDescripcion = doc.createElement("descripcion");
-                    subCategoryDescripcion.appendChild(doc.createTextNode(subCategory.getDescription()));
-                    subCatElement.appendChild(subCategoryDescripcion);
-
-                    for(Items articulos : subCategory.getArticulos()){
+                    for (Items articulos : subCategory.getArticulos()) {
                         Element articuloElement = doc.createElement("articulo");
                         subCatElement.appendChild(articuloElement);
 
-                        Element articuloId = doc.createElement("ID");
-                        articuloId.appendChild(doc.createTextNode(articulos.getId()));
+                        Element articuloId = doc.createElement("id");
+                        articuloId.appendChild(doc.createTextNode(String.valueOf(articulos.getId())));
                         articuloElement.appendChild(articuloId);
+
 
                         Element articuloMarca = doc.createElement("marca");
                         articuloMarca.appendChild(doc.createTextNode(articulos.getMarca()));
@@ -78,11 +75,11 @@ public class XmlPersistent {
                         articuloDescripcion.appendChild(doc.createTextNode(articulos.getDescription()));
                         articuloElement.appendChild(articuloDescripcion);
 
-                        for(Presentation presentacion : articulos.getPresentation()){
+                        for (Presentation presentacion : articulos.getPresentation()) {
                             Element presentationElement = doc.createElement("presentacion");
                             articuloElement.appendChild(presentationElement);
 
-                            Element presentationId = doc.createElement("ID");
+                            Element presentationId = doc.createElement("id");
                             presentationElement.appendChild(presentationId);
 
                             Element presentationUnidad = doc.createElement("Unidad");
@@ -107,62 +104,75 @@ public class XmlPersistent {
 
     }
 
-    public List<Category> cargarCategorias(){
+    public List<Category> cargarCategorias() {
         List<Category> categorias = new ArrayList<>();
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 
         try {
-            dbFactory.setAttribute(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-
+            dbFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
             DocumentBuilder db = dbFactory.newDocumentBuilder();
-
             Document doc = db.parse(new File("Articulos.xml"));
-
             doc.getDocumentElement().normalize();
 
             NodeList categoriaNList = doc.getElementsByTagName("categoria");
 
-            for (int i = 0; i < categoriaNList.getLength(); i++){
+            for (int i = 0; i < categoriaNList.getLength(); i++) {
+                Element categoriaElement = (Element) categoriaNList.item(i);
 
-                Node NodeCategoria = categoriaNList.item(i);
+                int idCategoria = Integer.parseInt(categoriaElement.getAttribute("id"));
+                String nombreCategoria = categoriaElement.getElementsByTagName("nombre").item(0).getTextContent();
+                String descripcionCategoria = categoriaElement.getElementsByTagName("descripcion").item(0).getTextContent();
 
-                if (NodeCategoria.getNodeType() == Node.ELEMENT_NODE) {
-                    Element eElement = (Element) NodeCategoria;
+                List<SubCategory> subCategorias = new ArrayList<>();
+                NodeList subList = categoriaElement.getElementsByTagName("subcategoria");
 
-                    String idCategoria = eElement.getElementsByTagName("ID").item(0).getTextContent();
-                    String nameCategoria = eElement.getElementsByTagName("nombre").item(0).getTextContent();
-                    String descripcionCategoria = eElement.getElementsByTagName("descripcion").item(0).getTextContent();
-                    Category category = new Category(idCategoria, nameCategoria, descripcionCategoria);
-                    //SUBCATEGORIA//
-                            NodeList subcategoriaNodes = eElement.getElementsByTagName("subcategoria");
-                            ArrayList<SubCategory> subcategoriaList = new ArrayList<>();
+                for (int j = 0; j < subList.getLength(); j++) {
+                    Element subElement = (Element) subList.item(j);
 
-                            for (int j = 0; j < subcategoriaNodes.getLength(); j++) {
-                                Node node = subcategoriaNodes.item(i);
-                                if (node.getNodeType() == Node.ELEMENT_NODE) {
-                                    Element subcategoriaElement = (Element) node;
+                    int idSubCategoria = Integer.parseInt(subElement.getAttribute("id"));
+                    String nombreSubCategoria = subElement.getElementsByTagName("nombre").item(0).getTextContent();
 
-                                    String idSubCategoria = subcategoriaElement.getElementsByTagName("codigo").item(0).getTextContent();
-                                    String namesubCategoria = subcategoriaElement.getElementsByTagName("nombre").item(0).getTextContent();
-                                    String descripcionsubCategoria = subcategoriaElement.getElementsByTagName("descripcion").item(0).getTextContent();
-                                    SubCategory subCategoria = new SubCategory(idSubCategoria, namesubCategoria, descripcionsubCategoria);
-                                    subcategoriaList.add(subCategoria);
-                                }
-                            }
-                            category.setSubCategoryList(subcategoriaList);
-                            categorias.add(category);
+                    List<Items> articulos = new ArrayList<>();
+                    NodeList artList = subElement.getElementsByTagName("articulo");
+
+                    for (int k = 0; k < artList.getLength(); k++) {
+                        Element artElement = (Element) artList.item(k);
+
+                        int idArticulo = Integer.parseInt(artElement.getAttribute("id"));
+                        String marcaArticulo = artElement.getElementsByTagName("marca").item(0).getTextContent();
+                        String nombreArticulo = artElement.getElementsByTagName("nombre").item(0).getTextContent();
+                        String descriptionArticulo = artElement.getElementsByTagName("descripcion").item(0).getTextContent();
+
+                        List<Presentation> presentaciones = new ArrayList<>();
+                        NodeList presentationList = artElement.getElementsByTagName("presentacion");
+
+                        for (int l = 0; l < presentationList.getLength(); l++) {
+                            Element presentationElement = (Element) presentationList.item(l);
+
+                            int idPresentacion = Integer.parseInt(presentationElement.getAttribute("id"));
+                            String unidad = presentationElement.getElementsByTagName("unidad").item(0).getTextContent();
+                            double cantidad = Double.parseDouble(presentationElement.getElementsByTagName("cantidad").item(0).getTextContent());
+
+                            Presentation presentacion = new Presentation(idPresentacion, unidad, cantidad);
+                            presentaciones.add(presentacion);
                         }
+
+                        Items articulo = new Items(idArticulo, marcaArticulo, nombreArticulo, descriptionArticulo, presentaciones);
+                        articulos.add(articulo);
                     }
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        } catch (SAXException ex) {
-            throw new RuntimeException(ex);
-        } catch (ParserConfigurationException e) {
-            throw new RuntimeException(e);
+
+                    SubCategory subCategoria = new SubCategory(idSubCategoria, nombreSubCategoria, articulos);
+                    subCategorias.add(subCategoria);
+                }
+
+                Category categoria = new Category(idCategoria, nombreCategoria, descripcionCategoria, subCategorias);
+                categorias.add(categoria);
+            }
+
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            e.printStackTrace();
         }
+
         return categorias;
-
-        }
-
-
     }
+}
