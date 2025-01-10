@@ -1,1 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><Articulos><Articulo ID=""><Name/><Presentacion>null</Presentacion><Categoria>null</Categoria><SubCategoria>null</SubCategoria></Articulo></Articulos>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<inventario>
+  <categoria>
+    <ID>Pala23</ID>
+    <nombre>Palaa</nombre>
+    <descripcion>Pala de metal</descripcion>
+  </categoria>
+  <categoria>
+    <ID>Copa</ID>
+    <nombre>Soppa</nombre>
+    <descripcion>Sopaa</descripcion>
+  </categoria>
+</inventario>

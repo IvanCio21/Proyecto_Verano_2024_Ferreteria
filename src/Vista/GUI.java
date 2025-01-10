@@ -1,6 +1,10 @@
 package Vista;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
@@ -71,6 +75,7 @@ public class GUI extends JFrame implements Observer {
 
     public void setModel(Model model) {
         this.model = model;
+      //  model.addObserver(this);
     }
     public Model getModel() {
         return model;
@@ -80,13 +85,14 @@ public class GUI extends JFrame implements Observer {
     //TABLES VIEWS
     @Override
     public void update(Observable o, Object arg) {
-        tableCategorias.setModel(model.getTableArticulos().getModel());
-        tableCategorias.setColumnModel(model.getTableArticulos().getColumnModel());
+        tableCategorias.setModel(model.getTableCategorias().getModel());
+        tableCategorias.setColumnModel(model.getTableCategorias().getColumnModel());
         jTableArticulos.setModel(model.getTableArticulos().getModel());
         jTableArticulos.setColumnModel(model.getTableArticulos().getColumnModel());
         subCategoriasTable.setModel(model.getTableArticulos().getModel());
         subCategoriasTable.setColumnModel(model.getTableArticulos().getColumnModel());
     }
+
 
 
 
@@ -109,23 +115,17 @@ public class GUI extends JFrame implements Observer {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("LA MEJOR FERRETERIA");
 
-        /*addWindowListener(new java.awt.event.WindowAdapter() {
+        addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
-        });*/
+        });
+
 
         this.setContentPane(panelPrincipal); // Seteo contenido del form al JFrame que se acaba de crear
         this.pack();
 
-        //BOTONES CATEGORIA
-        limpiarCategoriaButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                clearTable();
-            }
-        });
-
+        tableCategorias = new JTable();
 
         //BOTONES ARTICULOS//
         limpiarArticulosBtn.addActionListener(new ActionListener() {
@@ -146,6 +146,7 @@ public class GUI extends JFrame implements Observer {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+
             }
         });
 
@@ -161,7 +162,7 @@ public class GUI extends JFrame implements Observer {
         limpiarCategoriaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                clearTable();
             }
         });
 
@@ -172,9 +173,18 @@ public class GUI extends JFrame implements Observer {
             }
         });
 
-        guardarButton.addActionListener(new ActionListener() {
+        this.guardarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try {
+                    if(validateForm()){
+                    GUI.this.control.agregarCategoria(codigo.getText(),nombre.getText(),descripcionCategoria.getText());
+                    clearTable();
+                    }
+
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
 
             }
         });
@@ -214,13 +224,50 @@ public class GUI extends JFrame implements Observer {
 
             }
         });
+        
+    }
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_  formWindowClosing
+        control.exit();
     }
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
     }
 
+    private boolean validateForm() {
+
+        javax.swing.border.Border errorBorder = BorderFactory.createLineBorder(Color.RED, 2);
+        boolean valid = true;
+        if (codigo.getText().isEmpty()) {
+            valid = false;
+            codigoLabel.setBorder(errorBorder);
+            codigoLabel.setToolTipText("ID requerido");
+        } else {
+            codigoLabel.setBorder(null);
+            codigoLabel.setToolTipText(null);
+        }
+
+        if (nombre.getText().isEmpty()) {
+            valid = false;
+            nombreLabel.setBorder(errorBorder);
+            nombreLabel.setToolTipText("Nombre requerido");
+        } else {
+            nombreLabel.setBorder(null);
+            nombreLabel.setToolTipText(null);
+        }
+
+        if (descripcionCategoria.getText().isEmpty()) {
+            valid = false;
+            descripcionLabel.setBorder(errorBorder);
+            descripcionLabel.setToolTipText("Descripcion requerido");
+        }else {
+            descripcionLabel.setBorder(null);
+            descripcionLabel.setToolTipText(null);
+        }
+
+        return valid;
+    }
 
     void clearTable(){
         nombre.setText("");
@@ -228,4 +275,27 @@ public class GUI extends JFrame implements Observer {
         descripcionCategoria.setText("");
         buscarCategoria.setText("");
     }
+
+    public void redimensionarAnchoColumna(JTable tabla) {
+        TableColumnModel columnModel = tabla.getColumnModel();
+
+        for(int column = 0; column < tabla.getColumnCount(); ++column) {
+            int width = 70;
+
+            for(int row = 0; row < tabla.getRowCount(); ++row) {
+                TableCellRenderer renderer = tabla.getCellRenderer(row, column);
+                Component comp = tabla.prepareRenderer(renderer, row, column);
+                width = Math.max(comp.getPreferredSize().width + 1, width);
+            }
+
+            if (width > 300) {
+                width = 300;
+            }
+
+            columnModel.getColumn(column).setPreferredWidth(width);
+        }
+
+    }
+
+
 }

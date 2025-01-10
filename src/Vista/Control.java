@@ -5,6 +5,7 @@ import Logic.Service;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 public class Control {
 
@@ -25,6 +26,7 @@ public class Control {
         tableArticulos = new JTable();
         tableCategorias = new JTable();
         tableSubCategorias = new JTable();
+        service.cargarxml();
         this.gui.setVisible(true);
         show();
         tableCategorias();
@@ -39,6 +41,12 @@ public class Control {
 
     public void hide(){this.gui.setVisible(false);}
 
+
+    void exit(){
+        service.GurdarXml();
+    }
+
+
     //TABLAS//
 
     private static void setTableArticulos(){
@@ -47,19 +55,25 @@ public class Control {
 
 
 
-    private static void  tableCategorias(){
-      tableCategorias.setModel(new DefaultTableModel(new String[]{
-              "ID","Nombre","Descripcion"}, service.getAllCategorias().size()){
-          public  boolean isCellEditable(int row, int column) { return false;}
-      });
+    public void  tableCategorias(){
 
-      for(int i = 0; i < service.getAllCategorias().size(); ++i) {
-          Category category = service.getAllCategorias().get(i);
-          tableCategorias.setValueAt(category.getId(), i, 0);
-          tableCategorias.setValueAt(category.getName(), i, 1);
-          tableCategorias.setValueAt(category.getDescription(), i, 2);
-      }
+        String[] columnNames = {"Id","Nombre", "Descripción"};
+        Object[][] data = new Object[service.getAllCategorias().size()][6];
+
+        for (int i = 0; i < service.getAllCategorias().size(); i++) {
+            Category categoria = service.getAllCategorias().get(i);
+            data[i][0] = categoria.getId();
+            data[i][1] = categoria.getName();
+            data[i][2] = categoria.getDescription();
+        }
+
+        tableCategorias.setModel(new DefaultTableModel(data, columnNames));
     }
 
-
+    public  void agregarCategoria(String id, String nombre, String de) throws Exception {
+        Category cat = new Category(id, nombre, de);
+        service.addCategoria(cat);
+        tableCategorias();
+        show();
+    }
 }

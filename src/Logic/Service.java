@@ -54,6 +54,39 @@ public class Service {
 
     }
 
+    public void addCategoria(Category categori) throws Exception {
+        Category result = (Category) this.data.getCategorias().stream().filter((c)->{
+            return c.getName().equals(c.getName());
+        }).findFirst().orElse((Category) null);
+        if (result != null) {
+            this.data.getCategorias().add(categori);
+        } else {
+            throw new Exception("Categoria ya existe");
+        }
+
+    }
+
+
+    public void eliminarEmpleado(String cedula) {
+        Boolean X = false;
+
+        for (int i = 0; i < this.data.getCategorias().size(); i++) {
+            if(((Category)this.data.getCategorias().get(i)).getName().equals(cedula)) {
+                this.data.getCategorias().remove(i);
+            }
+        }
+
+    }
+
+    public void GurdarXml() {
+        this.xml.guardarCategorias(data.getCategorias());
+    }
+
+
+    public void cargarxml() {
+        List<Category> S = this.xml.cargarCategorias();
+        this.data.setCategorias(S);
+    }
 
 
 }
