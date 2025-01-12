@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class XmlPersistent {
+private List<Category> categorias;
 
     public void guardarCategorias(List<Category> categorias) {
         try {
@@ -105,13 +106,13 @@ public class XmlPersistent {
     }
 
     public List<Category> cargarCategorias() {
-        List<Category> categorias = new ArrayList<>();
+         categorias = new ArrayList<>();
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 
         try {
             dbFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
             DocumentBuilder db = dbFactory.newDocumentBuilder();
-            Document doc = db.parse(new File("Articulos.xml"));
+            Document doc = db.parse(new File("Inventario.xml"));
             doc.getDocumentElement().normalize();
 
             NodeList categoriaNList = doc.getElementsByTagName("categoria");
@@ -119,7 +120,7 @@ public class XmlPersistent {
             for (int i = 0; i < categoriaNList.getLength(); i++) {
                 Element categoriaElement = (Element) categoriaNList.item(i);
 
-                int idCategoria = Integer.parseInt(categoriaElement.getAttribute("id"));
+                String idCategoria = categoriaElement.getElementsByTagName("id").item(0).getTextContent();
                 String nombreCategoria = categoriaElement.getElementsByTagName("nombre").item(0).getTextContent();
                 String descripcionCategoria = categoriaElement.getElementsByTagName("descripcion").item(0).getTextContent();
 
@@ -173,6 +174,10 @@ public class XmlPersistent {
             e.printStackTrace();
         }
 
+        return categorias;
+    }
+
+    public List<Category> getCategorias() {
         return categorias;
     }
 }

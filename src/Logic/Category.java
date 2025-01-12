@@ -1,27 +1,35 @@
 package Logic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Category {
-    private int id;
+    private String id;
     private String name;
     private String description;
     private List<SubCategory> subCategoryList;
 
 
 
-    public Category(int id, String name, String description, List<SubCategory> subCategoryList) {
+    public Category(String id, String name, String description, List<SubCategory> subCategoryList) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.subCategoryList = subCategoryList;
     }
 
-    public int getId() {
+    public Category(String id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.subCategoryList = new ArrayList<SubCategory>();
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

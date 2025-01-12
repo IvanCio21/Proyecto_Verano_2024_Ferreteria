@@ -18,6 +18,14 @@ public class Items {
         this.presentation = presentation;
     }
 
+    public Items(int id, String marca, String name, String description) {
+        this.id = id;
+        this.marca = marca;
+        this.name = name;
+        this.description = description;
+        this.presentation = new ArrayList<Presentation>();
+    }
+
     public int getId() {
         return id;
     }

@@ -1,5 +1,6 @@
 package Logic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SubCategory {
@@ -12,6 +13,12 @@ public class SubCategory {
         this.subCategoryID = subCategoryID;
         this.subCategoryName = subCategoryName;
         this.articulos = articulos;
+    }
+
+    public SubCategory(int subCategoryID, String subCategoryName) {
+        this.subCategoryID = subCategoryID;
+        this.subCategoryName = subCategoryName;
+        this.articulos = new ArrayList<Items>();
     }
 
     public int getSubCategoryID() {
