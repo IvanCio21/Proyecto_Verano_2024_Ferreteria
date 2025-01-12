@@ -4,42 +4,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Items {
-    private int id;
-    private String marca;
+    private String id;
+    private String brand;
     private String name;
     private String description;
     private List<Presentation> presentation;
 
-    public Items(int id, String marca, String name, String description, List<Presentation> presentation) {
+    public Items(String id, String brand, String name, String description, List<Presentation> presentation) {
         this.id = id;
-        this.marca = marca;
+        this.brand = brand;
         this.name = name;
         this.description = description;
         this.presentation = presentation;
     }
 
-    public Items(int id, String marca, String name, String description) {
+    public Items(String id, String brand, String name, String description) {
         this.id = id;
-        this.marca = marca;
+        this.brand = brand;
         this.name = name;
         this.description = description;
         this.presentation = new ArrayList<Presentation>();
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getMarca() {
-        return marca;
+    public String getBrand() {
+        return brand;
     }
 
-    public void setMarca(String marca) {
-        this.marca = marca;
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
     public String getName() {
@@ -62,24 +62,4 @@ public class Items {
         return presentation;
     }
 
-    /*
-    public String[] dataName(){
-        return new String[]{"ID", "Marca","Nombre", "Descripcion", "Subcategoria"};
-    }
-
-    public String[] getData(){
-        return new String[]{
-                String.valueOf(this.id),
-                this.marca,
-                this.name,
-                this.description,
-                presentation != null ? presentation.getName() : "Sin subcategoría"
-        };
-    }
-
-    public String toString(){
-        return id + " " + marca + " " + name + " " + description + " Subcategoria: " +
-                (presentation != null ? presentation.getName() : "N/A");
-    }
-    */
 }

@@ -10,11 +10,13 @@ public class Data {
     private List<Category> categorias;
     private List<SubCategory> subcategorias;
     private List<Items> articulos;
+    private List<Presentation> presentations;
 
     public Data() {
         categorias = new ArrayList<>();
         subcategorias = new ArrayList<>();
         articulos = new ArrayList<>();
+        presentations = new ArrayList<>();
     }
 
     public List<Category> getCategorias() {
@@ -41,10 +43,19 @@ public class Data {
         this.articulos = articulos;
     }
 
-    public void loadXML(){
-        XmlPersistent source = new XmlPersistent();
-        source.cargarCategorias();
-        categorias = source.getCategorias();
+    public List<Presentation> getPresentations() {
+        return presentations;
+    }
+    public void setPresentations(List<Presentation> presentations) {
+        this.presentations = presentations;
     }
 
 }
+
+
+//public void loadXML(){
+//XmlPersistent source = new XmlPersistent();
+//source.cargarCategorias();
+//categorias = source.getCategorias();
+//}
+

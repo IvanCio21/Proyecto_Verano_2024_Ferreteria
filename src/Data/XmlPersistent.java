@@ -17,82 +17,119 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class XmlPersistent {
-private List<Category> categorias;
+    private List<Category> categorias;
 
-    public void guardarCategorias(List<Category> categorias) {
+    public void guardarCategorias(Data data) { //PASARLE LA LISTA DE DATA
+
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = dbFactory.newDocumentBuilder();
+            //Raiz
             Document doc = docBuilder.newDocument();
             Element rootElement = doc.createElement("inventario");
             doc.appendChild(rootElement);
 
-            for (Category cat : categorias) {
-                Element catElement = doc.createElement("categoria");
-                rootElement.appendChild(catElement);
+            String dato;
 
-                Element id = doc.createElement("id");
-                id.appendChild(doc.createTextNode(String.valueOf(cat.getId())));
-                catElement.appendChild(id);
+            for (int i = 0; i < data.getCategorias().size(); i++) { // categorias
 
-                Element nombre = doc.createElement("nombre");
-                nombre.appendChild(doc.createTextNode(cat.getName()));
-                catElement.appendChild(nombre);
+                //Raiz
+                Element categoryElement = doc.createElement("categoria");
+                Category category = (Category) data.getCategorias().get(i);
+                categoryElement.setAttribute("id", category.getId());
+                rootElement.appendChild(categoryElement);
 
-                Element descripcion = doc.createElement("descripcion");
-                descripcion.appendChild(doc.createTextNode(cat.getDescription()));
-                catElement.appendChild(descripcion);
+                //Nombre//
+                dato = category.getName();
+                Element name = doc.createElement("nombre");
+                name.appendChild(doc.createTextNode(dato));
+                categoryElement.appendChild(name);
 
-                for (SubCategory subCategory : cat.getSubCategoryList()) {
-                    Element subCatElement = doc.createElement("subcategoria");
-                    catElement.appendChild(subCatElement);
+                //Descripcion//
+                dato = category.getDescription();
+                Element description = doc.createElement("descripcion");
+                description.appendChild(doc.createTextNode(dato));
+                categoryElement.appendChild(description);
 
-                    Element subCategoryId = doc.createElement("id");
-                    subCategoryId.appendChild(doc.createTextNode(String.valueOf(subCategory.getSubCategoryID())));
-                    subCatElement.appendChild(subCategoryId);
+                //SUBCATEGORIA//
+                List<SubCategory> subCategoryList = category.getSubCategoryList();
+                if (subCategoryList.size() > 0) {
+                    Element subcategories = doc.createElement("subCategorias");
+                    for (SubCategory subCategory : subCategoryList) {
 
-                    Element subCategoryNombre = doc.createElement("nombre");
-                    subCategoryNombre.appendChild(doc.createTextNode(subCategory.getSubCategoryName()));
-                    subCatElement.appendChild(subCategoryNombre);
+                        //Atributo subCategoria//
+                        Element subCategoryElement = doc.createElement("subcategoria");
+                        subCategoryElement.setAttribute("id", subCategory.getSubCategoryID());
+                        subcategories.appendChild(subCategoryElement);
 
-                    for (Items articulos : subCategory.getArticulos()) {
-                        Element articuloElement = doc.createElement("articulo");
-                        subCatElement.appendChild(articuloElement);
+                        //Nombre subcategoria//
+                        Element subCategoryName = doc.createElement("nombre");
+                        subCategoryName.appendChild(doc.createTextNode(subCategory.getSubCategoryName()));
+                        subCategoryElement.appendChild(subCategoryName);
 
-                        Element articuloId = doc.createElement("id");
-                        articuloId.appendChild(doc.createTextNode(String.valueOf(articulos.getId())));
-                        articuloElement.appendChild(articuloId);
+                        //Descripcion SubCategoria//
+                        Element subCategoryDescription = doc.createElement("descripcion");
+                        subCategoryDescription.appendChild(doc.createTextNode(subCategory.getSubCategoryDescription()));
+                        subCategoryElement.appendChild(subCategoryDescription);
 
+                        List<Items> itemsList = subCategory.getItems();
+                        if (itemsList.size() > 0) {
+                            Element itemsE = doc.createElement("articulos");
+                            for (Items items : subCategory.getItems()) {
+                                //Atributo Articulo
+                                Element itemsElement = doc.createElement("articulo");
+                                itemsElement.setAttribute("id", items.getId());
+                                itemsE.appendChild(itemsElement);
 
-                        Element articuloMarca = doc.createElement("marca");
-                        articuloMarca.appendChild(doc.createTextNode(articulos.getMarca()));
-                        articuloElement.appendChild(articuloMarca);
+                                //Nombre articulo//
+                                Element itemName = doc.createElement("nombre");
+                                itemName.appendChild(doc.createTextNode(items.getName()));
+                                itemsElement.appendChild(itemName);
 
-                        Element articuloNombre = doc.createElement("nombre");
-                        articuloNombre.appendChild(doc.createTextNode(articulos.getName()));
-                        articuloElement.appendChild(articuloNombre);
+                                //Marca//
+                                Element itemBrand = doc.createElement("marca");
+                                itemBrand.appendChild(doc.createTextNode(items.getBrand()));
+                                itemsElement.appendChild(itemBrand);
 
-                        Element articuloDescripcion = doc.createElement("descripcion");
-                        articuloDescripcion.appendChild(doc.createTextNode(articulos.getDescription()));
-                        articuloElement.appendChild(articuloDescripcion);
+                                //Descripcion//
+                                Element itemDescription = doc.createElement("descripcion");
+                                itemBrand.appendChild(doc.createTextNode(items.getBrand()));
+                                itemsElement.appendChild(itemBrand);
 
-                        for (Presentation presentacion : articulos.getPresentation()) {
-                            Element presentationElement = doc.createElement("presentacion");
-                            articuloElement.appendChild(presentationElement);
+                                List<Presentation> presentationList = items.getPresentation();
+                                if (presentationList.size() > 0) {
+                                    Element presentationsE = doc.createElement("presentaciones");
+                                    for (Presentation presentation : items.getPresentation()) {
+                                        Element presentationElement = doc.createElement("presentacion");
+                                        presentationsE.appendChild(presentationElement);
 
-                            Element presentationId = doc.createElement("id");
-                            presentationElement.appendChild(presentationId);
+                                        //Unidad de medida//
+                                        Element measure = doc.createElement("unidad");
+                                        measure.appendChild(doc.createTextNode(presentation.getMeasure()));
+                                        presentationElement.appendChild(measure);
 
-                            Element presentationUnidad = doc.createElement("Unidad");
-                            presentationElement.appendChild(presentationUnidad);
+                                        //Capacidad//
 
-                            Element presentationCantidad = doc.createElement("Cantidad");
-                            presentationElement.appendChild(presentationCantidad);
+                                        Element quantity = doc.createElement("cantidad");
+                                        quantity.appendChild(doc.createTextNode(String.valueOf(presentation.getQuantity())));
+                                        presentationElement.appendChild(quantity);
+                                    }
+                                    itemsElement.appendChild(presentationsE);
+                                }
+                            }
+                            subCategoryElement.appendChild(itemsE);
                         }
                     }
+                    categoryElement.appendChild(subcategories);
                 }
             }
+        } catch (ParserConfigurationException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    //Crear el xml//
+            /*
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
@@ -101,12 +138,11 @@ private List<Category> categorias;
             transformer.transform(source, result);
         } catch (ParserConfigurationException | TransformerException ex) {
             System.out.println(ex.getMessage());
-        }
+        }*/
 
-    }
 
-    public List<Category> cargarCategorias() {
-         categorias = new ArrayList<>();
+    public List cargarCategorias() {
+        categorias = new ArrayList<>();
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 
         try {
@@ -115,59 +151,59 @@ private List<Category> categorias;
             Document doc = db.parse(new File("Inventario.xml"));
             doc.getDocumentElement().normalize();
 
-            NodeList categoriaNList = doc.getElementsByTagName("categoria");
 
-            for (int i = 0; i < categoriaNList.getLength(); i++) {
-                Element categoriaElement = (Element) categoriaNList.item(i);
+            //CATEGORIA
+            NodeList categoryNodeList = doc.getElementsByTagName("categoria");
+            for (int i = 0; i < categoryNodeList.getLength(); i++) {
+                //Nodo actual
+                Node CategoryNode = categoryNodeList.item(i);
+                if (CategoryNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element categoryElement = (Element) CategoryNode;
 
-                String idCategoria = categoriaElement.getElementsByTagName("id").item(0).getTextContent();
-                String nombreCategoria = categoriaElement.getElementsByTagName("nombre").item(0).getTextContent();
-                String descripcionCategoria = categoriaElement.getElementsByTagName("descripcion").item(0).getTextContent();
+                    //SUBCATEGORIA
+                    NodeList subCategoryNodeList = categoryElement.getElementsByTagName("subcategoria");
+                    List<SubCategory> subCategoryList = new ArrayList<>();
+                    for (int j = 0; j < subCategoryNodeList.getLength(); j++) {
+                        Node subCategoryNode = subCategoryNodeList.item(j);
+                        if (subCategoryNode.getNodeType() == Node.ELEMENT_NODE) {
+                            Element subCategoryElement = (Element) subCategoryNode;
 
-                List<SubCategory> subCategorias = new ArrayList<>();
-                NodeList subList = categoriaElement.getElementsByTagName("subcategoria");
+                            //ARTICULO
+                            NodeList itemNodeList = subCategoryElement.getElementsByTagName("articulo");
+                            List<Items> itemsList = new ArrayList<>();
+                            for (int k = 0; k < itemNodeList.getLength(); k++) {
+                                Node itemNode = itemNodeList.item(k);
+                                if (itemNode.getNodeType() == Node.ELEMENT_NODE) {
+                                    Element itemElement = (Element) itemNode;
 
-                for (int j = 0; j < subList.getLength(); j++) {
-                    Element subElement = (Element) subList.item(j);
+                                    //PRESENTACION
+                                    NodeList presentationNodeList = itemElement.getElementsByTagName("presentacion");
+                                    List<Presentation> presentationList = new ArrayList<>();
+                                    for (int l = 0; l < presentationNodeList.getLength(); l++) {
+                                        Node presentationNode = presentationNodeList.item(l);
+                                        if (presentationNode.getNodeType() == Node.ELEMENT_NODE) {
+                                            Element presentationElement = (Element) presentationNode;
+                                            Presentation presentation = new Presentation(presentationElement.getElementsByTagName("unidad").item(0).getTextContent(),
+                                                    Double.parseDouble(presentationElement.getElementsByTagName("cantidad").item(0).getTextContent()));
+                                            presentationList.add(presentation);
+                                        }
+                                    }
 
-                    int idSubCategoria = Integer.parseInt(subElement.getAttribute("id"));
-                    String nombreSubCategoria = subElement.getElementsByTagName("nombre").item(0).getTextContent();
-
-                    List<Items> articulos = new ArrayList<>();
-                    NodeList artList = subElement.getElementsByTagName("articulo");
-
-                    for (int k = 0; k < artList.getLength(); k++) {
-                        Element artElement = (Element) artList.item(k);
-
-                        int idArticulo = Integer.parseInt(artElement.getAttribute("id"));
-                        String marcaArticulo = artElement.getElementsByTagName("marca").item(0).getTextContent();
-                        String nombreArticulo = artElement.getElementsByTagName("nombre").item(0).getTextContent();
-                        String descriptionArticulo = artElement.getElementsByTagName("descripcion").item(0).getTextContent();
-
-                        List<Presentation> presentaciones = new ArrayList<>();
-                        NodeList presentationList = artElement.getElementsByTagName("presentacion");
-
-                        for (int l = 0; l < presentationList.getLength(); l++) {
-                            Element presentationElement = (Element) presentationList.item(l);
-
-                            int idPresentacion = Integer.parseInt(presentationElement.getAttribute("id"));
-                            String unidad = presentationElement.getElementsByTagName("unidad").item(0).getTextContent();
-                            double cantidad = Double.parseDouble(presentationElement.getElementsByTagName("cantidad").item(0).getTextContent());
-
-                            Presentation presentacion = new Presentation(idPresentacion, unidad, cantidad);
-                            presentaciones.add(presentacion);
+                                    Items items = new Items(itemElement.getAttribute("id"), itemElement.getElementsByTagName("nombre").item(0).getTextContent(),
+                                            itemElement.getElementsByTagName("marca").item(0).getTextContent(), itemElement.getElementsByTagName("descripcion").item(0).getTextContent(),
+                                            presentationList);
+                                    itemsList.add(items);
+                                }
+                            }
+                            SubCategory subcategory = new SubCategory(subCategoryElement.getAttribute("id"), subCategoryElement.getElementsByTagName("nombre").item(0).getTextContent(),
+                                    subCategoryElement.getElementsByTagName("descripcion").item(0).getTextContent(), itemsList);
+                            subCategoryList.add(subcategory);
                         }
-
-                        Items articulo = new Items(idArticulo, marcaArticulo, nombreArticulo, descriptionArticulo, presentaciones);
-                        articulos.add(articulo);
                     }
-
-                    SubCategory subCategoria = new SubCategory(idSubCategoria, nombreSubCategoria, articulos);
-                    subCategorias.add(subCategoria);
+                    Category category = new Category(categoryElement.getAttribute("id"), categoryElement.getElementsByTagName("nombre").item(0).getTextContent(),
+                            categoryElement.getElementsByTagName("descripcion").item(0).getTextContent(), subCategoryList);
+                    categorias.add(category);
                 }
-
-                Category categoria = new Category(idCategoria, nombreCategoria, descripcionCategoria, subCategorias);
-                categorias.add(categoria);
             }
 
         } catch (ParserConfigurationException | SAXException | IOException e) {

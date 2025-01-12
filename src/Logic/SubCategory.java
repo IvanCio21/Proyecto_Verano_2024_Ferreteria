@@ -5,27 +5,29 @@ import java.util.List;
 
 public class SubCategory {
 
-    private int subCategoryID;
+    private String subCategoryID;
     private String subCategoryName;
-    private List<Items> articulos;
+    private String subCategoryDescription;
+    private List<Items> items;
 
-    public SubCategory(int subCategoryID, String subCategoryName, List<Items> articulos) {
+    public SubCategory(String subCategoryID, String subCategoryName, String subCategoryDescription, List<Items> articulos) {
         this.subCategoryID = subCategoryID;
         this.subCategoryName = subCategoryName;
-        this.articulos = articulos;
+        this.subCategoryDescription = subCategoryDescription;
+        this.items = articulos;
     }
 
-    public SubCategory(int subCategoryID, String subCategoryName) {
+    public SubCategory(String subCategoryID, String subCategoryName, String subCategoryDescription) {
         this.subCategoryID = subCategoryID;
         this.subCategoryName = subCategoryName;
-        this.articulos = new ArrayList<Items>();
+        this.items = new ArrayList<Items>();
     }
 
-    public int getSubCategoryID() {
+    public String getSubCategoryID() {
         return subCategoryID;
     }
 
-    public void setSubCategoryID(int subCategoryID) {
+    public void setSubCategoryID(String subCategoryID) {
         this.subCategoryID = subCategoryID;
     }
 
@@ -37,8 +39,15 @@ public class SubCategory {
         this.subCategoryName = subCategoryName;
     }
 
-    public List<Items> getArticulos() {
-        return articulos;
+    public String getSubCategoryDescription() {
+        return subCategoryDescription;
+    }
+    public void setSubCategoryDescription(String subCategoryDescription) {
+        this.subCategoryDescription = subCategoryDescription;
+    }
+
+    public List<Items> getItems() {
+        return items;
     }
 
 }
