@@ -6,7 +6,6 @@ public class Presentation {
 
 
     public Presentation(String measure, double quantity) {
-
         this.measure = measure;
         this.quantity = quantity;
     }

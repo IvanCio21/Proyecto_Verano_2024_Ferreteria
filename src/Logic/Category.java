@@ -59,7 +59,9 @@ public class Category {
     }
 
     public void addSubCategory(SubCategory subCategory) {
-        this.subCategoryList.add(subCategory);
+        if (this.subCategoryList.size() <= 2) {
+            this.subCategoryList.add(subCategory);
+        }
     }
 
     @Override
