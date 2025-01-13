@@ -52,11 +52,22 @@ public class GUI extends JFrame implements Observer {
     private JButton limpiarArticulosBtn;
     private JButton eliminarArticulosBtn;
     private JPanel AcercaDe;
-    private JPanel Articulo;
-    private JPanel SubCategoria;
+    private JPanel PanelArticulo;
     private JScrollPane ListadoSubCategorias;
     private DefaultTableModel tableCategorias;
     private JTable jTableArticulos;
+
+
+    private JButton editCategory;
+
+    //SUB- CATEGORY
+    private JPanel PanelSubCategoria;
+    private JTextField categorySubCategory;
+    private JTextField IDSubCategoria;
+    private JTextField NameSubCategoria;
+    private JLabel codigoLabel_Sub;
+    private JLabel nombreLabel_Sub;
+    private JLabel descrpcionLabel_SubCategoria;
     private JTable subCategoriasTable;
     private JButton limpiarSubcategoriaBtn;
     private JButton eliminarsubcategoriaBtn;
@@ -64,14 +75,15 @@ public class GUI extends JFrame implements Observer {
     private JButton buscarSubcategoriaBtn;
     private JTextField buscarCategoria;
     private JTextField descripcionCategoria;
-    private JButton editCategory;
-    private JTextField categorySubCategory;
-    private JTextField IDSubCategoria;
-    private JTextField NameSubCategoria;
-    private JLabel codigoLabel_Sub;
-    private JLabel nombreLabel_Sub;
-    private JLabel descrpcionLabel_SubCategoria;
-    private JTable listadoSubCategorias;
+    private JButton editarButtonSubCat;
+    private JPanel codigoArticuloLa;
+    private JLabel nombreArticuloLa;
+    private JLabel descrpcionLabel;
+    private JLabel cantidadLa;
+    private JTextField cantidadItems;
+    private JButton agregarPresentacionButton;
+    private JTextField unidadArt;
+    private JButton editarButton;
 
 
     public GUI(){
@@ -79,8 +91,16 @@ public class GUI extends JFrame implements Observer {
     }
     @Override
     public void update(Observable o, Object arg) {
-        this.listadoSubCategorias.setModel(this.model.getTableSubCategories().getModel());
-        this.listadoSubCategorias.setColumnModel(this.model.getTableSubCategories().getColumnModel());
+        if (this.model.getTableCategories() != null) {
+            this.listaCategoria.setModel(this.model.getTableCategories().getModel());
+            this.listaCategoria.setColumnModel(this.model.getTableCategories().getColumnModel());
+        }
+        if (this.model.getTableSubCategories() != null) {
+            this.subCategoriasTable.setModel(this.model.getTableSubCategories().getModel());
+            this.subCategoriasTable.setColumnModel(this.model.getTableSubCategories().getColumnModel());
+        }
+      //  this.listadoSubCategorias.setModel(this.model.getTableSubCategories().getModel());
+      //  this.listadoSubCategorias.setColumnModel(this.model.getTableSubCategories().getColumnModel());
     }
 
     public void setController(Controller control) {
@@ -119,6 +139,11 @@ public class GUI extends JFrame implements Observer {
         return subCategoriasTable;
     }
 
+    public void setArticulosTable(DefaultTableModel ta){
+         jTableArticulos.setModel(ta);
+    }
+
+
     //END TABLES VIEWS//
 
     //COMPONENTES//
@@ -130,7 +155,7 @@ public class GUI extends JFrame implements Observer {
             }
         });
 
-        listadoSubCategorias = new JTable();
+      //  subCategoriasTable = new JTable();
         this.guardarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -154,6 +179,7 @@ public class GUI extends JFrame implements Observer {
         this.limpiarCategoriaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                codigo.setEditable(true);
                 clearText();
             }
         });
@@ -181,6 +207,7 @@ public class GUI extends JFrame implements Observer {
                 int filaSeleccionada = listaCategoria.getSelectedRow();
 
                 if (filaSeleccionada != -1) {
+                    codigo.setEditable(false);
                     String codigoCategoria = listaCategoria.getValueAt(filaSeleccionada, 0).toString();
                     String nombreCategoria = listaCategoria.getValueAt(filaSeleccionada, 1).toString();
                     String descripcion = listaCategoria.getValueAt(filaSeleccionada, 2).toString();
@@ -222,16 +249,20 @@ public class GUI extends JFrame implements Observer {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int filaSeleccionada = listaCategoria.getSelectedRow();
-
                 if (filaSeleccionada != -1) {
                     String codigoCategoria = listaCategoria.getValueAt(filaSeleccionada, 0).toString();
                     String nombreCategoria = listaCategoria.getValueAt(filaSeleccionada, 1).toString();
 
                     categorySubCategory.setText(codigoCategoria+ "-" + nombreCategoria);
                     categorySubCategory.setEditable(false);
+                    categoriaArticuloTf.setText(codigoCategoria+ "-" + nombreCategoria);
+                    categoriaArticuloTf.setEditable(false);
+
+                    controller.TableSubCategories(codigo.getText()); /// Cambiar esto
                 }
             }
         });
+
 
         this.limpiarSubcategoriaBtn.addActionListener(new ActionListener() {
             @Override
@@ -243,7 +274,7 @@ public class GUI extends JFrame implements Observer {
         this.GuardarSubcategoriaBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                  if(validateForm()){
+                  if(validateSubCategoria()){
 
                       if(controller.GuardarSubCategoria(codigo.getText(),IDSubCategoria.getText(),NameSubCategoria.getText(),Descripcion_SubCategoria.getText())){
                           clearTextSubCategoria();
@@ -256,8 +287,81 @@ public class GUI extends JFrame implements Observer {
 
 
 
+
+        assert this.eliminarsubcategoriaBtn != null;
+        this.eliminarsubcategoriaBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(controller.eliminarSubCatgoeria(codigo.getText(),IDSubCategoria.getText())){
+                    clearTextSubCategoria();
+                    JOptionPane.showMessageDialog(null, "Subcategoria eliminada con exito");
+                }
+            }
+        });
+
+        this.subCategoriasTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int filaSeleccionada = subCategoriasTable.getSelectedRow();
+                if (filaSeleccionada != -1) {
+                    String codigoSubCategoria = subCategoriasTable.getValueAt(filaSeleccionada, 0).toString();
+                    String nombreSubCategoria = subCategoriasTable.getValueAt(filaSeleccionada, 1).toString();
+                    String descripcionSub = subCategoriasTable.getValueAt(filaSeleccionada, 2).toString();
+                    IDSubCategoria.setEditable(false);
+                    IDSubCategoria.setText(codigoSubCategoria);
+                    NameSubCategoria.setText(nombreSubCategoria);
+                    Descripcion_SubCategoria.setText(descripcionSub);
+                    subCategoriaArticuloTf.setText(codigoSubCategoria+ "-" + nombreSubCategoria);
+                    subCategoriaArticuloTf.setEditable(false);
+
+                }
+            }
+        });
+
+
+        this.editarButtonSubCat.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(controller.editSubCategory(codigo.getText(),IDSubCategoria.getText(),NameSubCategoria.getText(),Descripcion_SubCategoria.getText())){
+                    clearTextSubCategoria();
+                }
+            }
+        });
+
+        //ARTICULO
+
+        this.limpiarArticulosBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clearTextArticulo();
+            }
+        });
+
+        this.guardarArticulosBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(validateArticulo()){
+                    try{
+                        if(controller.saveItems(codigo.getText(),IDSubCategoria.getText(), codigoArticuloTf.getText(),
+                                nombreArticuloTf.getText(),descripcionArticuloTf.getText(),unidadArt.getText(),cantidadItems.getText())){
+                               clearTextArticulo();
+                               JOptionPane.showMessageDialog(null, "Articulo guardada con exito");
+                        }
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+
+                }
+            }
+        });
+
+
+
         
     }
+
+    public String getCategoryId(){ return codigo.getText(); }
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_  formWindowClosing
         controller.exit();
     }
@@ -267,10 +371,10 @@ public class GUI extends JFrame implements Observer {
         boolean valid = true;
         if (codigo.getText().isEmpty()) {
             valid = false;
-            codigoLabel.setBorder(errorBorder);
+            codigo.setBorder(errorBorder);
             codigoLabel.setToolTipText("ID requerido");
         } else {
-            codigoLabel.setBorder(null);
+            codigo.setBorder(null);
             codigoLabel.setToolTipText(null);
         }
 
@@ -297,9 +401,9 @@ public class GUI extends JFrame implements Observer {
 
     private boolean validateSubCategoria() {
 
-        javax.swing.border.Border errorBorder = BorderFactory.createLineBorder(Color.RED, 2);
+        javax.swing.border.Border errorBorder = BorderFactory.createLineBorder(Color.RED, 1);
         boolean valid = true;
-        if (IDSubCategoria.getText().isEmpty()) {
+        if (codigoArticuloTf.getText().isEmpty()) {
             valid = false;
             codigoLabel_Sub.setBorder(errorBorder);
             codigoLabel_Sub.setToolTipText("ID requerido");
@@ -317,7 +421,7 @@ public class GUI extends JFrame implements Observer {
             nombreLabel_Sub.setToolTipText(null);
         }
 
-        if (descripcionCategoria.getText().isEmpty()) {
+        if (Descripcion_SubCategoria.getText().isEmpty()) {
             valid = false;
             descrpcionLabel_SubCategoria.setBorder(errorBorder);
             descrpcionLabel_SubCategoria.setToolTipText("Descripcion requerido");
@@ -329,16 +433,65 @@ public class GUI extends JFrame implements Observer {
         return valid;
     }
 
+
+    private boolean validateArticulo() {
+
+        javax.swing.border.Border errorBorder = BorderFactory.createLineBorder(Color.RED, 2);
+        boolean valid = true;
+        if (codigoArticuloTf.getText().isEmpty()) {
+            valid = false;
+            codigoArticuloTf.setBorder(errorBorder);
+           // codigoArticuloTf.setToolTipText("ID requerido");
+        } else {
+            codigoArticuloTf.setBorder(null);
+            codigoArticuloTf.setToolTipText(null);
+        }
+
+        if (nombreArticuloTf.getText().isEmpty()) {
+            valid = false;
+            nombreArticuloTf.setBorder(errorBorder);
+           // nombreLabel.setToolTipText("Nombre requerido");
+        } else {
+            nombreArticuloTf.setBorder(null);
+         //   nombreLabel.setToolTipText(null);
+        }
+
+        if (descripcionArticuloTf.getText().isEmpty()) {
+            valid = false;
+            descripcionArticuloTf.setBorder(errorBorder);
+          //  descripcionArticuloTf.setToolTipText("Descripcion requerido");
+        }else {
+            descripcionArticuloTf.setBorder(null);
+            //descripcionLabel.setToolTipText(null);
+        }
+
+        return valid;
+    }
+
+
     void  clearText(){
         nombre.setText("");
         codigo.setText("");
         descripcionCategoria.setText("");
         buscarCategoria.setText("");
+        listaCategoria.clearSelection();
     }
     void  clearTextSubCategoria(){
         IDSubCategoria.setText("");
         NameSubCategoria.setText("");
         Descripcion_SubCategoria.setText("");
         buscarSubCategoria.setText("");
+        subCategoriasTable.clearSelection();
+    }
+
+    void clearTextArticulo(){
+        codigoArticuloTf.setText("");
+        nombreArticuloTf.setText("");
+        descripcionArticuloTf.setText("");
+        buscarIdArticuloTf.setText("");
+        jTableArticulos.clearSelection();
+        unidadArt.setText("");
+        cantidadItems.setText("");
+
     }
 }

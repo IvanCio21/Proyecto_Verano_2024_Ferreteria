@@ -1,12 +1,9 @@
 package Vista;
 
-import Logic.Category;
-import Logic.Service;
-import Logic.SubCategory;
+import Logic.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.util.EventObject;
 import java.util.List;
 
 public class Controller {
@@ -16,19 +13,31 @@ public class Controller {
     private static Service service;
     private static JTable categoriesTable;
     private static final JTable SubcategoryTable = new JTable();
+    private  JTable categoryTable;
 
     public Controller(Model model, GUI gui) {
         service = new Service();
-        this.model = model;  // Aquí creas el modelo internamente
+        categoryTable = new JTable();
+        Controller.model = model;  // Aquí creas el modelo internamente
         this.gui = gui;    // Aquí creas la vista internamente
         model.setCategories(service.allCategories());
         gui.setController(this);
-        gui.setModel(this.model);
+        gui.setModel(Controller.model);
         iniciar();
         prueba();
         TableCategorias();
-        TableSubCategories();
+        TableSubCategories(gui.getCategoryId());
+        TableItems(gui.getCategoryId());
+      //  show();
 
+
+    }
+
+
+    public void show() {
+        model.setTableCategories(categoriesTable);
+        model.setTableSubCategories(SubcategoryTable);
+        model.commit();
     }
 
 
@@ -48,8 +57,8 @@ public class Controller {
         model.getCategories().add(materialesConstruccion);
         model.getCategories().add(pintura);
 
-        SubCategory aes = new SubCategory("23334"," 3edff","edf");
-        herramientas.addSubCategory(aes);
+        GuardarSubCategoria("003","PINT","Pinturas Acrílicas", "Pinturas para interior y exterior");
+        GuardarSubCategoria( "001","HERM","Herramientas Manuales", "Martillos, destornilladores, llaves y más");
 
     }
 
@@ -81,10 +90,12 @@ public class Controller {
             TableModel.setValueAt(category.getName(),i,1);
             TableModel.setValueAt(category.getDescription(),i,2);
         }
+      //  categoriesTable.setModel(TableModel);
+       // model.setTableCategories(categoriesTable);
         this.gui.setTableCategoria(TableModel);
     }
     public void deleteCategory(int row){
-        this.model.getCategories().remove(row);
+        model.getCategories().remove(row);
         TableCategorias();
     }
     public boolean editCategory(String id,String name, String descripcion) {
@@ -128,35 +139,105 @@ public class Controller {
         searchCategoryTable(dat);
     }
 
-    public void TableSubCategories(){
-        DefaultTableModel TableModel = new DefaultTableModel(new String[]{ "ID", "Nombre", "Descripcion"}, service.allSubCategories().size()) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
+    public void TableSubCategories(String dat) {
+
+        try{
+            List<SubCategory> subCategories = service.categoryGetId(dat).getSubCategoryList();
+
+            DefaultTableModel TableModel = new DefaultTableModel(new String[]{"ID", "Nombre", "Descripcion"}, subCategories.size()) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            for (int i = 0; i < subCategories.size(); i++) {
+
+                SubCategory subCategory = subCategories.get(i);
+                TableModel.setValueAt(subCategory.getSubCategoryID(), i, 0);
+                TableModel.setValueAt(subCategory.getSubCategoryName(), i, 1);
+                TableModel.setValueAt(subCategory.getSubCategoryDescription(), i, 2);
             }
-        };
-        for (int i = 0; i < service.allSubCategories().size(); i++) {
-            SubCategory subCategory = service.allSubCategories().get(i);
-            TableModel.setValueAt(subCategory.getSubCategoryID(), i, 0);
-            TableModel.setValueAt(subCategory.getSubCategoryName(),i,1);
-            TableModel.setValueAt(subCategory.getSubCategoryDescription(),i,2);
+           // SubcategoryTable.setModel(TableModel);
+            this.gui.setTableSubCategorias(TableModel);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
-        this.gui.setTableSubCategorias(TableModel);
 
     }
 
 
     public boolean GuardarSubCategoria(String idCategoria,String idSub, String nombre, String descripcion) {
-        for(Category cat: service.allCategories()){
-            if(cat.getId().equals(idCategoria)){
-                cat.addSubCategory(new SubCategory(idSub,nombre,descripcion));
-                TableSubCategories();
-                return true;
-            }
+        try{
+            SubCategory newSubCategory = new SubCategory(idSub,nombre,descripcion);
+            service.addSubCategory(idCategoria,newSubCategory);
+            TableSubCategories(idCategoria);
+            return true;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        return false;
     }
+
+
+    public boolean eliminarSubCatgoeria(String idCategory, String idSub) {
+        try {
+          service.EliminateSubcategory(idCategory,idSub);
+          TableSubCategories(idCategory);
+          return true;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean editSubCategory(String idCat, String idSub, String nombre, String descripcion) {
+        try {
+            service.setEditSubCategory(idCat,idSub,nombre,descripcion);
+            TableSubCategories(idCat);
+            return true;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean saveItems(String idC, String sub, String cod, String nombre, String descripcion, String Prese, String e) throws Exception {
+        double num = Double.parseDouble(e);
+        Items item = new Items(cod,nombre,descripcion);
+        Presentation presentation = new Presentation(Prese,num);
+        service.guardarArticulo(idC, sub,item, presentation);
+        return true;
+
+    }
+
+
+    public void TableItems(String dat) {
+
+        try{
+            List<SubCategory> subCategories = service.categoryGetId(dat).getSubCategoryList();
+
+            DefaultTableModel TableModel = new DefaultTableModel(new String[]{"ID", "Nombre", "Descripcion"}, subCategories.size()) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            for (int i = 0; i < subCategories.size(); i++) {
+                List<Items> items  = subCategories.get(i).getItems();
+                for (int j = 0; j < items.size(); j++) {
+                    Items item = items.get(j);
+                    TableModel.setValueAt(item.getId(), j, 0);
+                    TableModel.setValueAt(item.getName(),j,1);
+                    TableModel.setValueAt(item.getDescription(),j,2);
+                }
+            }
+            this.gui.setArticulosTable(TableModel);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
 
 
 }

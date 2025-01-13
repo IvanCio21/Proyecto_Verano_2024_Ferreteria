@@ -20,6 +20,7 @@ public class SubCategory {
     public SubCategory(String subCategoryID, String subCategoryName, String subCategoryDescription) {
         this.subCategoryID = subCategoryID;
         this.subCategoryName = subCategoryName;
+        this.subCategoryDescription = subCategoryDescription;
         this.items = new ArrayList<Items>();
     }
 

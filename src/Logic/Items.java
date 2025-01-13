@@ -18,12 +18,13 @@ public class Items {
         this.presentation = presentation;
     }
 
-    public Items(String id, String brand, String name, String description) {
-        this.id = id;
-        this.brand = brand;
+
+    public Items(String cod, String nombre, String descripcion) {
+        this.id = cod;
+        this.brand = nombre;
         this.name = name;
-        this.description = description;
-        this.presentation = new ArrayList<Presentation>();
+        this.description = descripcion;
+        this.presentation = new ArrayList();
     }
 
     public String getId() {

@@ -15,6 +15,7 @@ public class Model extends Observable  {
 
 private List<Category> categories;
 private JTable tableSubCategories = new JTable();
+private JTable tableCategories = new JTable();
 
 
 
@@ -34,6 +35,8 @@ public List<Category> getCategories(){
     }
     public JTable getTableSubCategories() {return tableSubCategories;}
     public void setTableSubCategories(JTable tableSubCategories) {this.tableSubCategories = tableSubCategories;}
+    public JTable getTableCategories() {return tableCategories;}
+    public void setTableCategories(JTable tableCategories) {this.tableCategories = tableCategories;}
 
     //    //NECESITO SETTEARLOS CON CONTENIDO
 //    private JTable tableArticulos = new JTable();
