@@ -123,22 +123,34 @@ public class XmlPersistent {
                     categoryElement.appendChild(subcategories);
                 }
             }
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+            // initialize StreamResult with File object to save to file
+            StreamResult result = new StreamResult(new File("Inventario.xml"));
+            DOMSource source = new DOMSource(doc);
+            transformer.transform(source, result);
         } catch (ParserConfigurationException e) {
+            throw new RuntimeException(e);
+        } catch (TransformerConfigurationException e) {
+            throw new RuntimeException(e);
+        } catch (TransformerException e) {
             throw new RuntimeException(e);
         }
     }
 
-    //Crear el xml//
-            /*
-            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+    public void saveXml(Document doc, String address) {
+        try {
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-            StreamResult result = new StreamResult(new File("Articulos.xml"));
-            DOMSource source = new DOMSource(doc);
-            transformer.transform(source, result);
-        } catch (ParserConfigurationException | TransformerException ex) {
-            System.out.println(ex.getMessage());
-        }*/
+            DOMSource domSource = new DOMSource(doc);
+            StreamResult streamResult = new StreamResult(new File(address));
+            transformer.transform(domSource, streamResult);
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public List cargarCategorias() {

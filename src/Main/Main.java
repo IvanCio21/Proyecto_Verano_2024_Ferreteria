@@ -2,19 +2,23 @@ package Main;
 
 
 import Vista.CategoriaController;
+import Vista.CategoriaController;
+import Vista.GUI;
+import Vista.Model;
+
+import javax.swing.*;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
-        new CategoriaController();
-//            SwingUtilities.invokeLater(() -> {
-//                try {
-//                   new Control(new Model(), new GUI());
-//                } catch (Exception var1) {
-//                    Exception e = var1;
-//                    throw new RuntimeException(e);
-//                }
-//            });
+            SwingUtilities.invokeLater(() -> {
+                try {
+                   new CategoriaController(new Model(), new GUI());
+                } catch (Exception var1) {
+                    Exception e = var1;
+                    throw new RuntimeException(e);
+                }
+            });
 
     }
 }

@@ -3,12 +3,14 @@ import Data.Data;
 import Data.XmlPersistent;
 import org.xml.sax.SAXException;
 
+import javax.swing.text.Document;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
+import java.time.Period;
 import java.util.List;
 
 public class Service {
@@ -16,10 +18,13 @@ public class Service {
     private static Service theInstance;
     private Data data;
     private XmlPersistent xmlPersistent;
+    private Document doc;
 
     public Service(){
         data = new Data();
         xmlPersistent = new XmlPersistent();
+        loadXml();
+
     }
 
     public static Service instance(){
@@ -72,18 +77,36 @@ public class Service {
         else throw new Exception("Categoria no existe");
     }
 
-    /*public void addCategory(Category category) throws Exception {
+    public void addCategory(Category category) throws Exception {
         Category newCategory = data.getCategorias().stream().filter(c -> c.getId().contains(category.getId())).findFirst().orElse(null);
-        if(newCategory == null)
+        if(newCategory == null) {
             data.getCategorias().add(category);
+            saveXml();
+        }
         else throw new Exception("Categoria ya existe");
-    }*/
+    }
 
-    public void addCategory(Category category) {
-        Data data = new Data();
-        List<Category> categories = data.getCategorias();
-        categories.add(category);
-        data.setCategorias(categories);
+    public void addsubCategory(SubCategory subCategory) throws Exception {
+        SubCategory newsubCategory = data.getSubcategorias().stream().filter(c -> c.getSubCategoryID().contains(subCategory.getSubCategoryID())).findFirst().orElse(null);
+        if(newsubCategory == null) {
+            data.getSubcategorias().add(subCategory);
+            saveXml();
+        }
+        else throw new Exception("subCategoria ya existe");
+    }
+
+    public void addItems(Items items) throws Exception {
+        Items newItem = data.getArticulos().stream().filter(c -> c.getId().contains(items.getId())).findFirst().orElse(null);
+        if(newItem == null) {
+            data.getArticulos().add(items);
+            saveXml();
+        }
+        else throw new Exception("Articulo ya existe");
+    }
+
+    public void addPresentation(Presentation presentation) throws Exception {
+        data.getPresentations().add(presentation);
+        saveXml();
     }
 
     public void saveXml(){
@@ -91,8 +114,8 @@ public class Service {
     }
 
     public void loadXml(){
-        List<Category> categorias = xmlPersistent.cargarCategorias();
-        data.setCategorias(categorias);
+        List<Category> categories = xmlPersistent.cargarCategorias();
+        data.setCategorias(categories);
     }
 
     public List<Category> allCategories(){
@@ -109,6 +132,12 @@ public class Service {
 
     public List<Presentation> allPresentation(){
         return data.getPresentations();
+    }
+
+    public Category categoryGetNumber(int pos) throws Exception{ //Devuelve un empleado exp
+        Category result=data.getCategorias().get(pos);
+        if (result!=null) return result;
+        else throw new Exception("Posicion erronea");
     }
 
 

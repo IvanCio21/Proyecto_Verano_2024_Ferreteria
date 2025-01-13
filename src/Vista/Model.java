@@ -12,15 +12,15 @@ import java.util.Observer;
 
 public class Model{
 
-private List<Category> categories;
+    private List<Category> categories;
 
-public Model(){
-    categories = new ArrayList<>();
-}
+    public Model(){
+        categories = new ArrayList<>();
+    }
 
-public List<Category> getCategories(){
-    return categories;
-}
+    public List<Category> getCategories(){
+        return categories;
+    }
 
     public void setCategories(List<Category> categorias) {
         this.categories = categorias;
@@ -31,44 +31,32 @@ public List<Category> getCategories(){
         this.categories.add(categoria);
     }
 
-//    //NECESITO SETTEARLOS CON CONTENIDO
-//    private JTable tableArticulos = new JTable();
-//    private JTable tableCategorias = new JTable();
-//    private JTable tableSubCategorias = new JTable();
-//
-//    public JTable getTableArticulos() {
-//        return tableArticulos;
-//    }
-//
-//    public void setTableArticulos(JTable tableArticulos) {
-//        this.tableArticulos = tableArticulos;
-//    }
-//
-//    public JTable getTableCategorias() {
-//        return tableCategorias;
-//    }
-//
-//    public void setTableCategorias(JTable tableCategorias) {
-//        this.tableCategorias = tableCategorias;
-//    }
-//
-//    public JTable getTableSubCategorias() {
-//        return tableSubCategorias;
-//    }
-//
-//    public void setTableSubCategorias(JTable tableSubCategorias) {
-//        this.tableSubCategorias = tableSubCategorias;
-//    }
-//
-//    //PATRON OBSERVADOR//
-//     public synchronized void addObserver(Observer o) {
-//        super.addObserver(o);
-//        this.commit();
-//     }
-//
-//     public void commit(){
-//        this.setChanged();
-//        this.notifyObservers();
-//     }
+    //NECESITO SETTEARLOS CON CONTENIDO
+    private JTable tableArticulos = new JTable();
+    private JTable tableCategorias = new JTable();
+    private JTable tableSubCategorias = new JTable();
 
+    public JTable getTableArticulos() {
+        return tableArticulos;
+    }
+
+    public void setTableArticulos(JTable tableArticulos) {
+        this.tableArticulos = tableArticulos;
+    }
+
+    public JTable getTableCategorias() {
+        return tableCategorias;
+    }
+
+    public void setTableCategorias(JTable tableCategorias) {
+        this.tableCategorias = tableCategorias;
+    }
+
+    public JTable getTableSubCategorias() {
+        return tableSubCategorias;
+    }
+
+    public void setTableSubCategorias(JTable tableSubCategorias) {
+        this.tableSubCategorias = tableSubCategorias;
+    }
 }
