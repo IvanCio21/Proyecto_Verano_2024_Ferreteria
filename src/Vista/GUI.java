@@ -84,6 +84,7 @@ public class GUI extends JFrame implements Observer {
     private JButton agregarPresentacionButton;
     private JTextField unidadArt;
     private JButton editarButton;
+    private JTextArea acercaDeTextArea;
 
 
     public GUI(){

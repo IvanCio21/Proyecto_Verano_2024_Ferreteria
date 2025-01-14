@@ -24,6 +24,7 @@ public class Service {
         return theInstance;
     }
 
+
     //BUSQUEDA PRUEBA
     public Category categoryGetId(String id) throws Exception {
         Category resultCategory = data.getCategorias().stream().filter(c -> c.getId().contains(id)).findFirst().orElse(null);
@@ -129,6 +130,48 @@ public class Service {
         List<Category> categoryList = data.getCategorias();
         data.getCategorias().remove(cat);
     }
+
+    //Se elimina solo si no tine articulos.
+    public void DeleteSubCategory(String categoryName, String subCategoryId) throws Exception {
+        // Buscar la categoría por nombre
+        Category category = null;
+        for (Category cat : data.getCategorias()) {
+            if (cat.getName().equals(categoryName)) {
+                category = cat;
+                break;
+            }
+        }
+
+        // Verificar si la categoría existe
+        if (category == null) {
+            throw new Exception("Categoría con nombre '" + categoryName + "' no encontrada.");
+        }
+
+        // Buscar la subcategoría por ID dentro de la categoría
+        SubCategory subCat = null;
+        for (SubCategory sc : category.getSubCategoryList()) {
+            if (sc.getSubCategoryID().equals(subCategoryId)) {
+                subCat = sc;
+                break;
+            }
+        }
+
+        // Verificar si la subcategoría existe
+        if (subCat == null) {
+            throw new Exception("Subcategoría con ID '" + subCategoryId + "' no encontrada en la categoría '" + categoryName + "'.");
+        }
+
+        // Verificar si la subcategoría tiene artículos
+        if (!subCat.getItems().isEmpty()) {
+            throw new Exception("No se puede eliminar la subcategoría '" + subCat.getSubCategoryName() +
+                    "' porque tiene artículos asociados.");
+        }
+
+        // Eliminar la subcategoría
+        category.getSubCategoryList().remove(subCat);
+        System.out.println("Subcategoría '" + subCat.getSubCategoryName() + "' eliminada exitosamente de la categoría '" + categoryName + "'.");
+    }
+
 
     public void guardarArticulo(String cat, String subCategory, Items items, Presentation presentation) throws Exception {
         // Validar si la categoría proporcionada es válida
