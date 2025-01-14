@@ -49,6 +49,8 @@ public class Controller {
         frame.setVisible(true); // Muestra la ventana
     }
 
+    //Categoria
+
     public void  prueba (){
         Category herramientas = new Category("001", "Herramientas", "Todo tipo de herramientas manuales y eléctricas.");
         Category materialesConstruccion = new Category("002", "Materiales de Construcción", "Cemento, ladrillos, yeso, etc.");
@@ -139,6 +141,8 @@ public class Controller {
         searchCategoryTable(dat);
     }
 
+    //SubCategoria
+
     public void TableSubCategories(String dat) {
 
         try{
@@ -199,6 +203,9 @@ public class Controller {
             throw new RuntimeException(e);
         }
     }
+
+
+    //Articulos
 
     public boolean saveItems(String idC, String sub, String cod, String nombre, String descripcion, String Prese, String e) throws Exception {
         double num = Double.parseDouble(e);

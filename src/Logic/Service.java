@@ -170,6 +170,33 @@ public class Service {
         }
     }
 
+    public boolean deleteItem(String categoryName, String subCategoryName, String itemId) {
+        List<Category> categorias = data.getCategorias();
+
+        for (Category categoria : categorias) {
+            if (categoria.getName().equalsIgnoreCase(categoryName)) {
+
+                List<SubCategory> subCategorias = categoria.getSubCategoryList();
+
+                for (SubCategory subCategoria : subCategorias) {
+                    if (subCategoria.getSubCategoryName().equalsIgnoreCase(subCategoryName)) {
+
+                        List<Items> articulos = subCategoria.getItems();
+
+                        for (Items articulo : articulos) {
+                            if (articulo.getName().equalsIgnoreCase(itemId)) {
+                                articulos.remove(articulo);
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
 
     public void saveXml() {
         xmlPersistent.guardarCategorias(data);
