@@ -89,6 +89,8 @@ public class GUI extends JFrame {
     private JTextArea textAcercaDe;
     private JLabel marcaLabel;
     private JTextField marcaArticuloTf;
+    private JButton regresarCategoriaButton;
+    private JButton eliminarPresentacionButton;
 
 
     public GUI(){
@@ -98,6 +100,9 @@ public class GUI extends JFrame {
     public void setController(Controller control) {
 
         this.controller = control;
+    }
+    public void setArticulosTable(DefaultTableModel ta){
+        jTableArticulos.setModel(ta);
     }
 
     public Controller getController() {
@@ -113,27 +118,8 @@ public class GUI extends JFrame {
         this.subCategoriasTable.setModel(tableSubCategorias);
     }
 
-    public void setTableArticulos(DefaultTableModel tableArticulos) {
-        this.jTableArticulos.setModel(tableArticulos);
-    }
     public  void setPresentacionesTable(DefaultTableModel presentacionesTable) {
         this.presentacionesTable.setModel(presentacionesTable);
-    }
-
-    public DefaultTableModel getTableCategorias(){
-        return tableCategorias;
-    }
-
-    public JTable getTableArticulos(){
-        return jTableArticulos;
-    }
-
-    public JTable getSubCategoriasTable(){
-        return subCategoriasTable;
-    }
-
-    public void setArticulosTable(DefaultTableModel ta){
-         jTableArticulos.setModel(ta);
     }
 
 
@@ -156,10 +142,13 @@ public class GUI extends JFrame {
 
         PestaniasPanel.setEnabledAt(1,false);
         PestaniasPanel.setEnabledAt(2,false);
+        textAcercaDe.setEditable(false);
+        Acercade();
 
         NEXTTTButton.setEnabled(false);
         NextButtonSub.setEnabled(false);
         agregarPresentacionButton.setEnabled(false);
+        eliminarPresentacionButton.setEnabled(false);
         //Categporia
         this.guardarButton.addActionListener(new ActionListener() {
             @Override
@@ -303,6 +292,8 @@ public class GUI extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 int filaSeleccionada = presentacionesTable.getSelectedRow();
                 if(filaSeleccionada != -1){
+                    unidadArt.setEditable(false);
+                    eliminarPresentacionButton.setEnabled(true);
                     String unidad = presentacionesTable.getValueAt(filaSeleccionada, 0).toString();
                     String cantidad = presentacionesTable.getValueAt(filaSeleccionada, 1).toString();
                     unidadArt.setText(unidad);
@@ -397,19 +388,7 @@ public class GUI extends JFrame {
             }
         });
 
-        //HSUDAJHD
-buscarArticuloBtn.addActionListener(new ActionListener() {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if(!buscarIdArticuloTf.getText().isEmpty()){
-            try {
-                controller.searchArticulo(buscarIdArticuloTf.getText());
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
-        }
-    }
-});
+
 
 
         this.editarButtonSubCat.addActionListener(new ActionListener() {
@@ -427,6 +406,7 @@ buscarArticuloBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 clearTextArticulo();
+                controller.TableItems();
             }
         });
 
@@ -445,6 +425,34 @@ buscarArticuloBtn.addActionListener(new ActionListener() {
                     }
 
 
+                }
+            }
+        });
+
+
+        this.editarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int seleccion = presentacionesTable.getSelectedRow();
+                if (seleccion != -1) {
+                controller.editarItems(nombreArticuloTf.getText(), marcaArticuloTf.getText(),descripcionArticuloTf.getText(),
+                        seleccion,cantidadItems.getText());
+
+                   clearTextArticulo();
+                   controller.TableItems();
+               }
+            }
+        });
+
+        buscarArticuloBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!buscarIdArticuloTf.getText().isEmpty()){
+                    try {
+                        controller.searchArticulo(buscarIdArticuloTf.getText());
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             }
         });
@@ -494,6 +502,7 @@ buscarArticuloBtn.addActionListener(new ActionListener() {
                 int seleccion = jTableArticulos.getSelectedRow();
 
                 if (seleccion != -1) {
+
                     try {
                         boolean eliminado = controller.eliminarArticulo();
 
@@ -510,6 +519,34 @@ buscarArticuloBtn.addActionListener(new ActionListener() {
                 }
             }
         });
+
+        eliminarPresentacionButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int seleccion = presentacionesTable.getSelectedRow();
+                if (seleccion != -1) {
+                    unidadArt.setEditable(false);
+                     if(controller.deletePresentacion(unidadArt.getText(),cantidadItems.getText())){
+                         JOptionPane.showMessageDialog(null, "Presentacion eliminado con exito");
+                         controller.TablePresentacion();
+                         unidadArt.setText("");
+                         cantidadItems.setText("");
+                     }
+                 }
+            }
+        });
+
+
+        this.regresarCategoriaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PestaniasPanel.setEnabledAt(0, true);
+                PestaniasPanel.setSelectedIndex(0);
+                PestaniasPanel.setEnabledAt(1, false);
+                PestaniasPanel.setEnabledAt(2, false);
+            }
+        });
+
 
 
     }
@@ -662,6 +699,34 @@ buscarArticuloBtn.addActionListener(new ActionListener() {
         marcaArticuloTf.setText(" ");
         guardarArticulosBtn.setEnabled(true);
         codigoArticuloTf.setEditable(true);
-        controller.TableItems();
+        presentacionesTable.clearSelection();
+        agregarPresentacionButton.setEnabled(false);
+
+    }
+
+    private void Acercade() {
+        String texto = "Esta Aplicación Fue Creada Por Grupo F.\n\n"
+                + "Integrantes:\n"
+                + "- Cristi Lazuna Valdivia\n"
+                + "- Ivan Espinoza Mora\n"
+                + "- Sharon Cerrato Amador\n"
+                + "- Fernando Santamaría Leiva\n"
+                + "- Jurguen Herrera Alfaro\n\n"
+                + "Especificaciones:\n\n"
+                + "Categoría:\n"
+                + "- Todo es editable menos el código.\n"
+                + "- Para pasar a la siguiente pestaña es necesario haber seleccionado una categoría de la lista y darle al botón 'Next'.\n\n"
+                + "SubCategoría:\n"
+                + "- Todo es editable menos el código.\n"
+                + "- Para pasar de pestaña es necesario haber seleccionado una subcategoría de la lista y darle al botón 'Next'.\n\n"
+                + "Artículo:\n"
+                + "- Se puede editar todo menos el nombre de la presentación (Unidad) y el código del artículo.\n"
+                + "- Para agregar un artículo es necesario incluir una presentación.\n"
+                + "- Para editar el artículo es necesario que escojan el artículo y la presentación con un clic en su respectiva tabla.";
+
+        textAcercaDe.setText(texto);
+    }
+    public void setTableArticulos(DefaultTableModel tableModel) {
+        jTableArticulos.setModel(tableModel);
     }
 }

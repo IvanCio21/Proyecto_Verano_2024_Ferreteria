@@ -341,5 +341,50 @@ public class Service {
         }
     }
 
+    public void eliminarPresentation(String id, String sub, String Ar, Presentation presentation) {
+        try {
+            List<Items> items = allItems(id, sub);
+
+            for (Items item : items) {
+                if (item.getId().equals(Ar)) {
+
+                    boolean existe = item.getPresentation().stream()
+                            .anyMatch(p -> p.getMeasure().equals(presentation.getMeasure()));
+
+                    if (existe) {
+                        item.getPresentation().removeIf(p -> p.getMeasure().equals(presentation.getMeasure()));
+
+                        data.setCategorias(data.getCategorias());
+                    } else {
+                        throw new IllegalArgumentException("La presentación no existe en el ítem especificado.");
+                    }
+                    return;
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+
+
+    }
+
+    public void editarArticulo ( String idCat, String idSub, String id, String nombre, String marca, String descricion, int row, String cant) {
+
+        try {
+            List<Items> items = allItems(idCat, idSub);
+            for (Items item : items) {
+                if (item.getId().equals(id)) {
+                    item.setBrand(marca);
+                    item.setDescription(descricion);
+                    item.setName(nombre);
+                    item.getPresentation().get(row).setQuantity(Integer.parseInt(cant));
+                }
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 }
 

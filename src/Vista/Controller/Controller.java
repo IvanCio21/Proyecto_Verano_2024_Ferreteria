@@ -400,6 +400,21 @@ public class Controller {
         }
     }
 
+    public boolean deletePresentacion(String me, String e){
+            double ee = Double.parseDouble(e);
+            service.eliminarPresentation(gui.getCategoryId(), gui.getIDSubCategoria(), gui.getArticuloId(
+            )   , new Presentation(me,ee));
+            return true;
+
+    }
+
+    public boolean editarItems(String nombre, String marca, String descripcion, int uni, String cantidas){
+        service.editarArticulo(gui.getCategoryId(),gui.getIDSubCategoria(),gui.getArticuloId(),nombre,marca,descripcion,uni,cantidas);
+        return true;
+    }
+
+
+
 
 
 }
