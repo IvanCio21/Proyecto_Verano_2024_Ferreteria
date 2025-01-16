@@ -126,6 +126,9 @@ public class GUI extends JFrame {
     }
 
 
+    public String getIDSubCategoria() {
+        return IDSubCategoria.getText();  // Obtener el texto del campo de texto "IDSubCategoria"
+    }
     //END TABLES VIEWS//
 
     //COMPONENTES//
@@ -306,19 +309,35 @@ public class GUI extends JFrame {
             }
         });
 
+
+
         assert this.eliminarsubcategoriaBtn != null;
         this.eliminarsubcategoriaBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Asegúrate de que se haya seleccionado una fila en la tabla de categorías
                 if (listaCategoria.getSelectedRow() != -1) {
-                    if (controller.eliminarSubCatgoeria(codigoCategoria[0], listaCategoria.getSelectedRow())) {
-                        clearTextSubCategoria();
-                        JOptionPane.showMessageDialog(null, "Subcategoria eliminada con exito");
-                    }
-                }
+                    // Obtén el ID de la categoría desde la tabla
+                    String categoriaId = (String) listaCategoria.getValueAt(listaCategoria.getSelectedRow(), 0); // Suponiendo que la columna 0 tiene el ID de la categoría
 
+                    // Obtén el ID de la subcategoría desde algún lugar (por ejemplo, otro campo de texto o tabla)
+                    String subCategoriaId = getIDSubCategoria(); // Este método debe obtener el ID de la subcategoría seleccionada (ajústalo según tu diseño)
+
+                    // Llamar al método del controlador para eliminar la subcategoría
+                    try {
+                        if (controller.eliminarSubcategoria(categoriaId, subCategoriaId)) {
+                            clearTextSubCategoria(); // Limpiar campos si es necesario
+                            JOptionPane.showMessageDialog(null, "Subcategoría eliminada con éxito");
+                        }
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, "Error al eliminar la subcategoría: " + ex.getMessage());
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Por favor, selecciona una categoría.");
+                }
             }
         });
+
 
         this.subCategoriasTable.addMouseListener(new MouseAdapter() {
             @Override

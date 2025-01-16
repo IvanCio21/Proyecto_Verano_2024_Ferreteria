@@ -3,12 +3,6 @@
   <categoria id="001">
     <nombre>Herramientas</nombre>
     <descripcion>Todo tipo de herramientas manuales y eléctricas.</descripcion>
-    <subCategorias>
-      <subcategoria id="HERM">
-        <nombre>Herramientas Manuales</nombre>
-        <descripcion>Martillos, destornilladores, llaves y más</descripcion>
-      </subcategoria>
-    </subCategorias>
   </categoria>
   <categoria id="002">
     <nombre>Materiales de Construcción</nombre>

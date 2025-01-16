@@ -123,12 +123,30 @@ public class Service {
         data.getCategorias().remove(cat);
     }
 
-    public  void EliminateSubcategory(String id, int row) throws Exception {
-        Category cat = categoryGetId(id);
-        for (SubCategory subCat : cat.getSubCategoryList()) {
-            cat.getSubCategoryList().remove(row);
+    public void EliminateSubcategory(String categoriaId, String subCategoriaId) throws Exception {
+        // Obtener la categoría por el ID
+        Category categoria = categoryGetId(categoriaId);
+
+        // Buscar la subcategoría por el ID
+        SubCategory subCategoria = null;
+        for (SubCategory subCat : categoria.getSubCategoryList()) {
+            if (subCat.getSubCategoryID().equals(subCategoriaId)) {
+                subCategoria = subCat;
+                break;
+            }
+        }
+
+        if (subCategoria != null) {
+            // Eliminar la subcategoría
+            categoria.getSubCategoryList().remove(subCategoria);
+            saveXml(); // Guardar los cambios en el archivo XML
+        } else {
+            throw new Exception("Subcategoría no encontrada");
         }
     }
+
+
+
 
 
 

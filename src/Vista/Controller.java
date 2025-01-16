@@ -187,16 +187,24 @@ public class Controller {
         }
     }
 
-    public boolean eliminarSubCatgoeria(String idCategory, int row ) {
+    public boolean eliminarSubcategoria(String categoriaId, String subCategoriaId) {
         try {
-          Service.instance().EliminateSubcategory(idCategory, row);
-          model.setCategories(Service.instance().allCategories());
-          TableSubCategories(idCategory);
-          return true;
+            // Llamar al servicio para eliminar la subcategoría usando los IDs
+            service.EliminateSubcategory(categoriaId, subCategoriaId);
+
+            // Actualizar el modelo de categorías
+            model.setCategories(service.allCategories());
+
+            // Refrescar la vista de categorías
+            TableCategorias();
+            return true;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            JOptionPane.showMessageDialog(null, "Error al eliminar subcategoría: " + e.getMessage());
+            return false;
         }
     }
+
+
 
     public boolean editSubCategory(String idCat, String idSub, String nombre, String descripcion) {
         try {
