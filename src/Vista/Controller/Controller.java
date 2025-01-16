@@ -31,7 +31,7 @@ public class Controller {
         iniciar();
         TableCategorias();
         TableItems();
-        TablePresentacion(gui.getArticuloId());
+        TablePresentacion();
     }
 
 
@@ -294,10 +294,10 @@ public class Controller {
 
     }
 
-    public void TablePresentacion(String dat){
+    public void TablePresentacion(){
 
         try{
-            List<Presentation> presentations = service.allPresentation(gui.getCategoryId(), gui.getIDSubCategoria(), dat);
+            List<Presentation> presentations = service.allPresentation(gui.getCategoryId(), gui.getIDSubCategoria(), gui.getArticuloId());
             DefaultTableModel TableModel = new DefaultTableModel(new String[]{"Unidad", "Cantidad"}, presentations.size()) {
                 @Override
                 public boolean isCellEditable(int row, int column) {

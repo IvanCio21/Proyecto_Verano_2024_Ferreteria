@@ -440,7 +440,7 @@ public class GUI extends JFrame {
                     descripcionArticuloTf.setText(descripcion);
                     nombreArticuloTf.setText(nombreArticulo);
                     marcaArticuloTf.setText(marca);
-                    controller.TablePresentacion(codigoArticulo);
+                    controller.TablePresentacion();
                     codigoArticuloTf.setEditable(false);
                 }
             }
@@ -456,7 +456,7 @@ public class GUI extends JFrame {
                     if(controller.agregarPresentaciones(unidadArt.getText(),cantidadItems.getText())){
                         JOptionPane.showMessageDialog(null, "Presentacion agregado con exito");
                         clearTextArticulo();
-                        controller.TablePresentacion(IDSubCategoria.getText());
+                        controller.TablePresentacion();
                     }
                 }
             }

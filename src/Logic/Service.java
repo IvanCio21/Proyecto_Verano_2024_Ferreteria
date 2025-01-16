@@ -258,13 +258,15 @@ public class Service {
         return items;
     }
 
-    public List<Presentation> allPresentation(String id, String idSub) {
+    public List<Presentation> allPresentation(String id, String idSub, String ar) {
 
         List<Presentation> presentations = new ArrayList<>();
         try{
             List<Items> items = allItems(id,idSub);
-            for(Items item : items){
-                presentations = item.getPresentation();
+            for (int i = 0; i < items.size(); i++) {
+                if(items.get(i).getId().equals(ar)){
+                    presentations = items.get(i).getPresentation();
+                }
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
