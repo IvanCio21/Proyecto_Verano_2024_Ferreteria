@@ -95,9 +95,7 @@
                         <preferred-size width="150" height="-1"/>
                       </grid>
                     </constraints>
-                    <properties>
-                      <editable value="true"/>
-                    </properties>
+                    <properties/>
                   </component>
                   <component id="5a649" class="javax.swing.JLabel" binding="nombreLabel">
                     <constraints>
@@ -707,7 +705,25 @@
             </constraints>
             <properties/>
             <border type="none"/>
-            <children/>
+            <children>
+              <component id="60360" class="javax.swing.JTextArea" binding="acercaDeTextArea">
+                <constraints border-constraint="Center"/>
+                <properties/>
+              </component>
+              <vspacer id="209f2">
+                <constraints border-constraint="West"/>
+              </vspacer>
+              <vspacer id="4b098">
+                <constraints border-constraint="East"/>
+              </vspacer>
+              <hspacer id="caa52">
+                <constraints border-constraint="North"/>
+              </hspacer>
+              <component id="e9280" class="javax.swing.JSeparator">
+                <constraints border-constraint="South"/>
+                <properties/>
+              </component>
+            </children>
           </grid>
         </children>
       </tabbedpane>
