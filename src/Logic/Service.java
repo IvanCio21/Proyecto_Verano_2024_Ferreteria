@@ -26,27 +26,15 @@ public class Service {
 
     //BUSQUEDA PRUEBA
     public Category categoryGetId(String id) throws Exception {
-        Category resultCategory = data.getCategorias().stream().filter(c -> c.getId().contains(id)).findFirst().orElse(null);
+        Category resultCategory = data.getCategorias().stream()
+                .filter(c -> c.getId().contains(id) || c.getName().contains(id)) // Filtra por id o nombre
+                .findFirst()
+                .orElse(null);
+
         if (resultCategory != null)
             return resultCategory;
         else throw new Exception("Categoria no existe");
     }
-
-    public  void EliminateSubcategory(String idCat, String id) throws Exception {
-        Category cat = data.getCategorias().stream().filter(c -> c.getId().contains(id)).findFirst().orElse(null);
-        assert cat != null;
-        cat.getSubCategoryList().removeIf(subCat -> subCat.getSubCategoryID().equals(id));
-
-    }
-
-
-    public Category categoryGetName(String name) throws Exception {
-        Category resultCategory = data.getCategorias().stream().filter(c -> c.getName().contains(name)).findFirst().orElse(null);
-        if (resultCategory != null)
-            return resultCategory;
-        else throw new Exception("Categoria no existe");
-    }
-
 
 
     public SubCategory subCategoryGetId(String id) throws Exception {
@@ -80,7 +68,7 @@ public class Service {
         else throw new Exception("Categoria no existe");
     }
 
-
+/// Category
     public void addCategory(Category category) throws Exception {
         List<Category> categories = data.getCategorias();
 
@@ -90,18 +78,8 @@ public class Service {
             }
         }
         categories.add(category);
+        data.setCategorias(categories);
     }
-
-    public void addSubCategory(String id, SubCategory subCategory) throws Exception {
-        Category cat = categoryGetId(id);
-        for (SubCategory subCat : cat.getSubCategoryList()) {
-            if (subCat.getSubCategoryID().trim().equals(id.trim())) {
-                throw new Exception("Subcategoria ya existe");
-            }
-        }
-        cat.getSubCategoryList().add(subCategory);
-    }
-
 
     public void CategoryEdit(String id, String nombre, String descrpcion) throws Exception {
         List<Category> categories = data.getCategorias();
@@ -112,6 +90,19 @@ public class Service {
                 category1.setDescription(descrpcion);
             }
         }
+    }
+
+
+    //SubCategory
+
+    public void addSubCategory(String id, SubCategory subCategory) throws Exception {
+        Category cat = categoryGetId(id);
+        for (SubCategory subCat : cat.getSubCategoryList()) {
+            if (subCat.getSubCategoryID().trim().equals(id.trim())) {
+                throw new Exception("Subcategoria ya existe");
+            }
+        }
+        cat.getSubCategoryList().add(subCategory);
     }
 
     public void setEditSubCategory(String idC,String id, String name, String descrpcion) throws Exception {
@@ -129,6 +120,16 @@ public class Service {
         List<Category> categoryList = data.getCategorias();
         data.getCategorias().remove(cat);
     }
+
+    public  void EliminateSubcategory(String id, int row) throws Exception {
+        Category cat = categoryGetId(id);
+        for (SubCategory subCat : cat.getSubCategoryList()) {
+            cat.getSubCategoryList().remove(row);
+        }
+    }
+
+
+
 
     public void guardarArticulo(String cat, String subCategory, Items items, Presentation presentation) throws Exception {
         // Validar si la categoría proporcionada es válida

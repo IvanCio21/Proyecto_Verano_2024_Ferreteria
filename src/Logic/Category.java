@@ -9,8 +9,6 @@ public class Category {
     private String description;
     private List<SubCategory> subCategoryList;
 
-
-
     public Category(String id, String name, String description, List<SubCategory> subCategoryList)
     {
         this.id = id;

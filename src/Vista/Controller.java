@@ -11,7 +11,7 @@ public class Controller {
     private static Model model;
     private GUI gui;
     private static Service service;
-    private static JTable categoriesTable;
+    private static JTable categoriesTable = new JTable();
     private static final JTable SubcategoryTable = new JTable();
     private  JTable categoryTable;
 
@@ -22,22 +22,12 @@ public class Controller {
         this.gui = gui;    // Aquí creas la vista internamente
         model.setCategories(service.allCategories());
         gui.setController(this);
-        gui.setModel(Controller.model);
         iniciar();
         prueba();
         TableCategorias();
-        TableSubCategories(gui.getCategoryId());
-        TableItems(gui.getCategoryId());
-      //  show();
+        TableSubCategories("003");
+  //      TableItems(gui.getCategoryId());
 
-
-    }
-
-
-    public void show() {
-        model.setTableCategories(categoriesTable);
-        model.setTableSubCategories(SubcategoryTable);
-        model.commit();
     }
 
 
@@ -45,7 +35,7 @@ public class Controller {
         JFrame frame = new JFrame("Sistema de Inventarios");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Para cerrar la ventana correctamente
         frame.setContentPane(gui.getContentPane());
-        frame.pack(); // Ajusta el tamaño según el contenido
+        frame.pack();  // Ajusta el tamaño al contenido
         frame.setVisible(true); // Muestra la ventana
     }
 
@@ -60,16 +50,19 @@ public class Controller {
         model.getCategories().add(pintura);
 
         GuardarSubCategoria("003","PINT","Pinturas Acrílicas", "Pinturas para interior y exterior");
+        GuardarSubCategoria("003","PINT_1","Pinturas De agua", "Pinturas para interior y exterior");
         GuardarSubCategoria( "001","HERM","Herramientas Manuales", "Martillos, destornilladores, llaves y más");
 
     }
 
     public void exit(){ service.saveXml();}
 
+    /// CATEGORIA
     public boolean agregarCategoria(String id, String nombre, String descripcion) {
         Category newCategory =  new Category(id,nombre,descripcion);
         try{
             service.addCategory(newCategory);
+            model.setCategories(service.allCategories());
             TableCategorias();
             return true;
         } catch (Exception e) {
@@ -93,21 +86,25 @@ public class Controller {
             TableModel.setValueAt(category.getName(),i,1);
             TableModel.setValueAt(category.getDescription(),i,2);
         }
-      //  categoriesTable.setModel(TableModel);
-       // model.setTableCategories(categoriesTable);
         this.gui.setTableCategoria(TableModel);
     }
     public void deleteCategory(int row){
-        model.getCategories().remove(row);
-        TableCategorias();
-    }
+        try{
+            service.CategoryDelete(row);
+            model.setCategories(service.allCategories());
+            TableCategorias();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
+    }
     public boolean editCategory(String id,String name, String descripcion) {
         List<Category> categories = model.getCategories();
         try{
             for(int i = 0; i < categories.size(); i++){
                 if(categories.get(i).getId().equals(id)){
                     service.CategoryEdit(id,name,descripcion);
+                    model.setCategories(service.allCategories());
                     TableCategorias();
                     return true;
                 }
@@ -131,11 +128,6 @@ public class Controller {
         if (cat == null) {
             TableCategorias();
         } else {
-            /*
-            TableModel.setValueAt(cat.getId(), 0, 0);
-            TableModel.setValueAt(cat.getName(),1,1);
-            TableModel.setValueAt(cat.getDescription(),2,2);
-             */
             TableModel.addRow(new Object[]{cat.getId(), cat.getName(), cat.getDescription()});
 
         }
@@ -145,7 +137,6 @@ public class Controller {
     }
     public void searchCategory(String dat) throws Exception {
         searchCategoryTable(dat);
-        show();
     }
 
     //SubCategoria
@@ -162,21 +153,16 @@ public class Controller {
                 }
             };
             for (int i = 0; i < subCategories.size(); i++) {
-
                 SubCategory subCategory = subCategories.get(i);
                 TableModel.setValueAt(subCategory.getSubCategoryID(), i, 0);
                 TableModel.setValueAt(subCategory.getSubCategoryName(), i, 1);
                 TableModel.setValueAt(subCategory.getSubCategoryDescription(), i, 2);
             }
-           // SubcategoryTable.setModel(TableModel);
             this.gui.setTableSubCategorias(TableModel);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-
     }
-
 
     public boolean GuardarSubCategoria(String idCategoria,String idSub, String nombre, String descripcion) {
         try{
@@ -189,10 +175,10 @@ public class Controller {
         }
     }
 
-
-    public boolean eliminarSubCatgoeria(String idCategory, String idSub) {
+    public boolean eliminarSubCatgoeria(String idCategory, int row ) {
         try {
-          service.EliminateSubcategory(idCategory,idSub);
+          Service.instance().EliminateSubcategory(idCategory, row);
+          model.setCategories(Service.instance().allCategories());
           TableSubCategories(idCategory);
           return true;
         } catch (Exception e) {
@@ -233,7 +219,6 @@ public class Controller {
     }
     public void searchSubCategory(String dat) throws Exception {
         searchSubCategoryTable(dat);
-        show();
     }
 
 

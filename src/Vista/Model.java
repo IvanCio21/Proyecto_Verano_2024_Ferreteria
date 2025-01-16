@@ -11,17 +11,17 @@ import java.util.Observer;
 //Observable:Genera eventos o notificaciones
 //se registra en el observable
 
-public class Model extends Observable  {
+public class Model  {
 
 private List<Category> categories;
-private JTable tableSubCategories = new JTable();
-private JTable tableCategories = new JTable();
 
 
 
-public Model(){categories = new ArrayList<>();}
+public Model(){categories = new ArrayList<>();
+}
 
-public List<Category> getCategories(){
+
+    public List<Category> getCategories(){
     return categories;
 }
 
@@ -33,47 +33,6 @@ public List<Category> getCategories(){
     {
         this.categories.add(categoria);
     }
-    public JTable getTableSubCategories() {return tableSubCategories;}
-    public void setTableSubCategories(JTable tableSubCategories) {this.tableSubCategories = tableSubCategories;}
-    public JTable getTableCategories() {return tableCategories;}
-    public void setTableCategories(JTable tableCategories) {this.tableCategories = tableCategories;}
-
-    //    //NECESITO SETTEARLOS CON CONTENIDO
-//    private JTable tableArticulos = new JTable();
-//    private JTable tableCategorias = new JTable();
-//    private JTable tableSubCategorias = new JTable();
-//
-//    public JTable getTableArticulos() {
-//        return tableArticulos;
-//    }
-//
-//    public void setTableArticulos(JTable tableArticulos) {
-//        this.tableArticulos = tableArticulos;
-//    }
-//
-//    public JTable getTableCategorias() {
-//        return tableCategorias;
-//    }
-//
-//public void setTableCategorias(JTable tableCategorias) {
-//        this.tableCategorias = tableCategorias;
-//    }
-//
-//
-//    public void setTableSubCategorias(JTable tableSubCategorias) {
-//        this.tableSubCategorias = tableSubCategorias;
-//    }
-//
-//    //PATRON OBSERVADOR//
-     public synchronized void addObserver(Observer o) {
-        super.addObserver(o);
-        this.commit();
-    }
-//
-   public void commit() {
-       this.setChanged();
-       this.notifyObservers();
-   }
 
 
 }
