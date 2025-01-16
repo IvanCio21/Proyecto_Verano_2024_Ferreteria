@@ -3,7 +3,6 @@ import Data.Data;
 import Data.XmlPersistent;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.PropertyResourceBundle;
 
@@ -216,33 +215,33 @@ public class Service {
 
 
     public boolean deleteItem(String categoryName, String subCategoryName, String itemId) {
-        List<Category> categorias = data.getCategorias();
+        try {
+            // Obtener la lista de artículos
+            List<Items> items = allItems(categoryName, subCategoryName);
 
-        for (Category categoria : categorias) {
-            if (categoria.getName().equalsIgnoreCase(categoryName)) {
-
-                List<SubCategory> subCategorias = categoria.getSubCategoryList();
-
-                for (SubCategory subCategoria : subCategorias) {
-                    if (subCategoria.getSubCategoryName().equalsIgnoreCase(subCategoryName)) {
-
-                        List<Items> articulos = subCategoria.getItems();
-
-
-                        for (Iterator<Items> iterator = articulos.iterator(); iterator.hasNext();) {
-                            Items articulo = iterator.next();
-                            if (articulo.getId().equalsIgnoreCase(itemId)) {
-                                iterator.remove();
-                                saveXml();
-                                return true;
-                            }
-                        }
+            for (Items item : items) {
+                if (item.getId().equals(itemId)) {
+                    // Verificar si el artículo tiene presentaciones
+                    if (!item.getPresentation().isEmpty()) {
+                        throw new Exception("El artículo tiene presentaciones asociadas y no puede eliminarse.");
                     }
+
+                    // Eliminar el artículo
+                    items.remove(item);
+                    data.setCategorias(data.getCategorias());
+                    saveXml();
+                    return true;
                 }
             }
+
+            // Si no se encuentra el artículo
+            throw new Exception("Artículo no encontrado.");
+        } catch (Exception e) {
+            // Propagar la excepción con el mensaje correspondiente
+            throw new RuntimeException("Error al eliminar el artículo: " + e.getMessage(), e);
         }
-        return false;
     }
+
 
 
 
