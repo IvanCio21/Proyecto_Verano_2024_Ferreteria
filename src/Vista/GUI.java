@@ -1,20 +1,12 @@
 package Vista;
 
-import Logic.Category;
-import Logic.Service;
-import Logic.SubCategory;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.beans.PropertyChangeListener;
-import java.util.Observable;
-import java.util.Observer;
 //Este sera el observado: Escucha los cambios
 //actualiza cuando algo del observable cambia
 
@@ -91,6 +83,7 @@ public class GUI extends JFrame {
     private JTextField unidadArt;
     private JButton editarButton;
     private JButton NextButtonSub;
+    private JTextArea textAcercaDe;
 
 
     public GUI(){

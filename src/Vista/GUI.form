@@ -706,10 +706,6 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="60360" class="javax.swing.JTextArea" binding="acercaDeTextArea">
-                <constraints border-constraint="Center"/>
-                <properties/>
-              </component>
               <vspacer id="209f2">
                 <constraints border-constraint="West"/>
               </vspacer>
@@ -721,6 +717,10 @@
               </hspacer>
               <component id="e9280" class="javax.swing.JSeparator">
                 <constraints border-constraint="South"/>
+                <properties/>
+              </component>
+              <component id="cc104" class="javax.swing.JTextArea" binding="textAcercaDe">
+                <constraints border-constraint="Center"/>
                 <properties/>
               </component>
             </children>

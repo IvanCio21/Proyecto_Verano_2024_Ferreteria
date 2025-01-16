@@ -79,6 +79,8 @@ public class Service {
         }
         categories.add(category);
         data.setCategorias(categories);
+
+        saveXml();
     }
 
     public void CategoryEdit(String id, String nombre, String descrpcion) throws Exception {

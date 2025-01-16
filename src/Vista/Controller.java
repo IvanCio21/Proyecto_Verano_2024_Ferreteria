@@ -18,16 +18,21 @@ public class Controller {
     public Controller(Model model, GUI gui) {
         service = new Service();
         categoryTable = new JTable();
-        Controller.model = model;  // Aquí creas el modelo internamente
-        this.gui = gui;    // Aquí creas la vista internamente
+        Controller.model = model; // Aquí creas el modelo internamente
+        this.gui = gui; // Aquí creas la vista internamente
+
+        // Cargar datos desde el archivo XML
+        service.loadXml();
         model.setCategories(service.allCategories());
+
+        // Solo si el XML está vacío, agregar datos quemados
+        if (model.getCategories().isEmpty()) {
+            prueba();
+        }
+
         gui.setController(this);
         iniciar();
-        prueba();
         TableCategorias();
-        TableSubCategories("003");
-  //      TableItems(gui.getCategoryId());
-
     }
 
 
@@ -49,11 +54,18 @@ public class Controller {
         model.getCategories().add(materialesConstruccion);
         model.getCategories().add(pintura);
 
-        GuardarSubCategoria("003","PINT","Pinturas Acrílicas", "Pinturas para interior y exterior");
-        GuardarSubCategoria("003","PINT_1","Pinturas De agua", "Pinturas para interior y exterior");
-        GuardarSubCategoria( "001","HERM","Herramientas Manuales", "Martillos, destornilladores, llaves y más");
+        try {
+            GuardarSubCategoria("003", "PINT", "Pinturas Acrílicas", "Pinturas para interior y exterior");
+            GuardarSubCategoria("003", "PINT_1", "Pinturas De agua", "Pinturas para interior y exterior");
+            GuardarSubCategoria("001", "HERM", "Herramientas Manuales", "Martillos, destornilladores, llaves y más");
+        } catch (Exception e) {
+            throw new RuntimeException("Error inicializando datos quemados", e);
+        }
 
+        // Guardar los datos iniciales en el archivo XML
+        service.saveXml();
     }
+
 
     public void exit(){ service.saveXml();}
 
