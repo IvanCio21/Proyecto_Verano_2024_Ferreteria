@@ -1,7 +1,7 @@
-package Vista;
+package MVC;
 
-import Vista.Controller.Controller;
-import Vista.Model.Model;
+import MVC.Controller.Controller;
+import MVC.Model.Model;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -124,7 +124,7 @@ public class GUI extends JFrame {
 
 
     public String getIDSubCategoria() {
-        return IDSubCategoria.getText();  // Obtener el texto del campo de texto "IDSubCategoria"
+        return IDSubCategoria.getText();
     }
     //END TABLES VIEWS//
 
@@ -133,7 +133,7 @@ public class GUI extends JFrame {
 
         final String[] codigoCategoria = new String[1];
         String codigoSubCategory;
-        this.setContentPane(panelPrincipal);// Seteo contenido del form al JFrame que se acaba de crear
+        this.setContentPane(panelPrincipal);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -335,7 +335,7 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (listaCategoria.getSelectedRow() != -1) {
-                    String categoriaId = (String) listaCategoria.getValueAt(listaCategoria.getSelectedRow(), 0); // Suponiendo que la columna 0 tiene el ID de la categoría
+                    String categoriaId = (String) listaCategoria.getValueAt(listaCategoria.getSelectedRow(), 0);
 
                     String subCategoriaId = getIDSubCategoria();
 

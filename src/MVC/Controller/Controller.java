@@ -1,8 +1,8 @@
-package Vista.Controller;
+package MVC.Controller;
 
 import Logic.*;
-import Vista.GUI;
-import Vista.Model.Model;
+import MVC.GUI;
+import MVC.Model.Model;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -16,17 +16,17 @@ public class Controller {
 
     public Controller(Model model, GUI gui) {
         service = new Service();
-        Controller.model = model; // Aquí creas el modelo internamente
-        this.gui = gui; // Aquí creas la vista internamente
+        Controller.model = model;
+        this.gui = gui;
 
-        // Cargar datos desde el archivo XML
+
         service.loadXml();
         model.setCategories(service.allCategories());
 
-        // Solo si el XML está vacío, agregar datos quemados
         if (model.getCategories().isEmpty()) {
             prueba();
         }
+
         gui.setController(this);
         iniciar();
         TableCategorias();
@@ -38,10 +38,10 @@ public class Controller {
 
     public void iniciar() {
         JFrame frame = new JFrame("Sistema de Inventarios");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Para cerrar la ventana correctamente
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(gui.getContentPane());
-        frame.pack();  // Ajusta el tamaño al contenido
-        frame.setVisible(true); // Muestra la ventana
+        frame.pack();
+        frame.setVisible(true);
     }
 
     //Categoria
@@ -62,7 +62,7 @@ public class Controller {
             throw new RuntimeException("Error inicializando datos quemados", e);
         }
 
-        // Guardar los datos iniciales en el archivo XML
+
         service.saveXml();
     }
 
@@ -138,7 +138,7 @@ public class Controller {
 
         DefaultTableModel TableModel = new DefaultTableModel(new String[]{"ID", "Nombre", "Descripcion"}, 0) {
             @Override
-            public boolean isCellEditable(int row, int column) {return false; // Hacer que las celdas no sean editable
+            public boolean isCellEditable(int row, int column) {return false;
             }
         };
 
@@ -206,18 +206,18 @@ public class Controller {
 
     public boolean agregarPresentaciones(String un, String pre) {
         try {
-            double numeroComoDouble = Double.parseDouble(pre); // Convertir cantidad a double
+            double numeroComoDouble = Double.parseDouble(pre);
 
             // Llamar al servicio para agregar la presentación
             service.agregarPresentation(gui.getCategoryId(), gui.getIDSubCategoria(), gui.getArticuloId(),
                     new Presentation(un, numeroComoDouble));
 
-            // Mostrar mensaje de éxito en la interfaz
+
             JOptionPane.showMessageDialog(null, "Presentación agregada correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             return true;
 
         } catch (RuntimeException e) {
-            // Mostrar mensaje de error en la interfaz gráfica
+
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -283,19 +283,18 @@ public class Controller {
         DefaultTableModel TableModel = new DefaultTableModel(new String[]{"ID", "Nombre", "Marca", "Descripción"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false; // Hacer que las celdas no sean editables
+                return false;
             }
         };
 
-        // Buscar artículo en la base de datos utilizando el ID o el nombre
-        Items articulo = service.articuloGetId(dat); // Utilizamos el método articuloGetId que ya tenemos
 
+        Items articulo = service.articuloGetId(dat);
         if (articulo != null) {
-            // Si se encuentra el artículo, se agrega a la tabla
+
             TableModel.addRow(new Object[]{articulo.getId(), articulo.getName(), articulo.getBrand(), articulo.getDescription()});
         }
 
-        // Actualizar la tabla en la interfaz
+
         this.gui.setTableArticulos(TableModel); // Método para actualizar la tabla en la GUI
     }
 
@@ -309,26 +308,26 @@ public class Controller {
 
     public boolean saveItems(String idC, String sub, String cod, String marca, String nombre, String descripcion, String Prese, String e) {
         try {
-            // Convertir la cantidad de la presentación a double
+
             double num = Double.parseDouble(e);
 
-            // Crear el objeto Item y Presentation
+
             Items item = new Items(cod, marca, nombre, descripcion);
             Presentation presentation = new Presentation(Prese, num);
 
-            // Intentar guardar el artículo
+
             service.guardarArticulo(idC, sub, item, presentation);
-            TableItems(); // Actualizar la tabla de artículos
-            service.saveXml(); // Guardar cambios en el XML
+            TableItems();
+            service.saveXml();
             return true;
 
         } catch (NumberFormatException ex) {
-            // Mostrar error si la cantidad no es válida
+
             JOptionPane.showMessageDialog(null, "El valor de la cantidad debe ser un número válido: " + e, "Error", JOptionPane.ERROR_MESSAGE);
             return false;
 
         } catch (Exception ex) {
-            // Mostrar cualquier otra excepción
+
             JOptionPane.showMessageDialog(null, "Error al guardar el artículo: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -388,14 +387,14 @@ public class Controller {
             boolean eliminado = service.deleteItem(gui.getCategoryId(), gui.getIDSubCategoria(), gui.getArticuloId());
 
             if (eliminado) {
-                TablePresentacion(); // Refrescar la tabla de presentaciones
-                TableItems(); // Refrescar la tabla de artículos
+                TablePresentacion();
+                TableItems();
                 return true;
             } else {
-                return false; // No se encontró el artículo
+                return false;
             }
         } catch (Exception e) {
-            // Lanza la excepción para que la vista la maneje
+
             throw new RuntimeException("Error al eliminar el artículo: " + e.getMessage(), e);
         }
     }

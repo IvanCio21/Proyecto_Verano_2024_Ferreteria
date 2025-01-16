@@ -1,4 +1,4 @@
-package Vista.Model;
+package MVC.Model;
 
 import Logic.Category;
 

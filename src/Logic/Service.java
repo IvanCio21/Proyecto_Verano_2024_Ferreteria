@@ -118,7 +118,7 @@ public class Service {
     }
 
     public void setEditSubCategory(String idC, String id, String name, String descrpcion) throws Exception {
-        // Obtener la categoría por el ID
+
         Category categoria = categoryGetId(idC);
 
         SubCategory subCategoria = null;
@@ -150,10 +150,10 @@ public class Service {
     }
 
     public void EliminateSubcategory(String categoriaId, String subCategoriaId) throws Exception {
-        // Obtener la categoría por el ID
+
         Category categoria = categoryGetId(categoriaId);
 
-        // Buscar la subcategoría por el ID
+
         SubCategory subCategoria = null;
         for (SubCategory subCat : categoria.getSubCategoryList()) {
             if (subCat.getSubCategoryID().equals(subCategoriaId)) {
@@ -163,13 +163,13 @@ public class Service {
         }
 
         if (subCategoria != null) {
-            // Verificar si la subcategoría tiene artículos
+
             if (subCategoria.getItems() != null && !subCategoria.getItems().isEmpty()) {
                 throw new Exception("No se puede eliminar la subcategoría porque contiene artículos");
             } else {
-                // Eliminar la subcategoría si no tiene artículos
+
                 categoria.getSubCategoryList().remove(subCategoria);
-                saveXml(); // Guardar los cambios en el archivo XML
+                saveXml();
             }
         } else {
             throw new Exception("Subcategoría no encontrada");
@@ -184,42 +184,42 @@ public class Service {
 
 
     public void guardarArticulo(String cat, String subCategory, Items items, Presentation presentation) throws Exception {
-        // Buscar la categoría
+
         Category category = categoryGetId(cat);
         if (category == null) {
             throw new Exception("Categoría no encontrada.");
         }
 
-        // Obtener la lista de subcategorías
+
         List<SubCategory> subCategories = category.getSubCategoryList();
         if (subCategories == null || subCategories.isEmpty()) {
             throw new Exception("No hay subcategorías disponibles en esta categoría.");
         }
 
-        // Buscar la subcategoría
+
         boolean subCategoryFound = false;
         for (SubCategory subCat : subCategories) {
             if (subCat.getSubCategoryID().equals(subCategory)) {
                 subCategoryFound = true;
 
-                // Validar que el artículo no sea nulo
+
                 if (items == null) {
                     throw new Exception("El artículo no puede ser nulo.");
                 }
 
-                // Validar que la presentación no sea nula
+
                 if (presentation == null) {
                     throw new Exception("La presentación no puede ser nula.");
                 }
 
-                // Validar si ya existe un artículo con el mismo ID
+
                 boolean idRepetido = subCat.getItems().stream()
                         .anyMatch(articulo -> articulo.getId().equals(items.getId()));
                 if (idRepetido) {
                     throw new Exception("Ya existe un artículo con el mismo ID: " + items.getId());
                 }
 
-                // Agregar el artículo y la presentación
+
                 subCat.getItems().add(items);
                 items.getPresentation().add(presentation);
                 saveXml();
@@ -236,17 +236,17 @@ public class Service {
 
     public boolean deleteItem(String categoryName, String subCategoryName, String itemId) {
         try {
-            // Obtener la lista de artículos
+
             List<Items> items = allItems(categoryName, subCategoryName);
 
             for (Items item : items) {
                 if (item.getId().equals(itemId)) {
-                    // Verificar si el artículo tiene presentaciones
+
                     if (!item.getPresentation().isEmpty()) {
                         throw new Exception("El artículo tiene presentaciones asociadas y no puede eliminarse.");
                     }
 
-                    // Eliminar el artículo
+
                     items.remove(item);
                     data.setCategorias(data.getCategorias());
                     saveXml();
@@ -254,10 +254,9 @@ public class Service {
                 }
             }
 
-            // Si no se encuentra el artículo
             throw new Exception("Artículo no encontrado.");
         } catch (Exception e) {
-            // Propagar la excepción con el mensaje correspondiente
+
             throw new RuntimeException("Error al eliminar el artículo: " + e.getMessage(), e);
         }
     }

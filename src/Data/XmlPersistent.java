@@ -19,7 +19,7 @@ import java.util.List;
 public class XmlPersistent {
     private List<Category> categorias;
 
-    public void guardarCategorias(Data data) { //PASARLE LA LISTA DE DATA
+    public void guardarCategorias(Data data) {
 
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();

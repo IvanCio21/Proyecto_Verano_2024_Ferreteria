@@ -1,9 +1,9 @@
 package Main;
 
 
-import Vista.Controller.Controller;
-import Vista.GUI;
-import Vista.Model.Model;
+import MVC.Controller.Controller;
+import MVC.GUI;
+import MVC.Model.Model;
 
 import javax.swing.*;
 
