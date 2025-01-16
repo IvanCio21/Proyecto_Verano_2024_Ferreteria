@@ -84,6 +84,8 @@ public class GUI extends JFrame {
     private JButton editarButton;
     private JButton NextButtonSub;
     private JTextArea textAcercaDe;
+    private JLabel marcaLabel;
+    private JTextField marcaArticuloTf;
 
 
     public GUI(){
@@ -399,7 +401,7 @@ public class GUI extends JFrame {
                 if(validateArticulo()){
                     try{
                         if(controller.saveItems(codigo.getText(),IDSubCategoria.getText(), codigoArticuloTf.getText(),
-                                nombreArticuloTf.getText(),descripcionArticuloTf.getText(),unidadArt.getText(),cantidadItems.getText())){
+                                nombreArticuloTf.getText(), marcaArticuloTf.getText(),descripcionArticuloTf.getText(),unidadArt.getText(),cantidadItems.getText())){
                                clearTextArticulo();
                                JOptionPane.showMessageDialog(null, "Articulo guardada con exito");
                         }

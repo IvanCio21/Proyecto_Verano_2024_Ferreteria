@@ -19,10 +19,10 @@ public class Items {
     }
 
 
-    public Items(String cod, String nombre, String descripcion) {
+    public Items(String cod,String brand, String nombre, String descripcion) {
         this.id = cod;
-        this.brand = nombre;
-        this.name = name;
+        this.brand = brand;
+        this.name = nombre;
         this.description = descripcion;
         this.presentation = new ArrayList();
     }

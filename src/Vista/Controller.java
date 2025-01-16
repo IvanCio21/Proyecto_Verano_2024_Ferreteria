@@ -244,9 +244,9 @@ public class Controller {
 
     //Articulos
 
-    public boolean saveItems(String idC, String sub, String cod, String nombre, String descripcion, String Prese, String e) throws Exception {
+    public boolean saveItems(String idC, String sub, String cod, String marca,String nombre, String descripcion, String Prese, String e) throws Exception {
         double num = Double.parseDouble(e);
-        Items item = new Items(cod,nombre,descripcion);
+        Items item = new Items(cod,marca,nombre,descripcion);
         Presentation presentation = new Presentation(Prese,num);
         service.guardarArticulo(idC, sub,item, presentation);
         return true;

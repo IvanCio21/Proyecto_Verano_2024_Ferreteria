@@ -93,7 +93,7 @@ public class XmlPersistent {
 
                                 //Descripcion//
                                 Element itemDescription = doc.createElement("descripcion");
-                                itemBrand.appendChild(doc.createTextNode(items.getBrand()));
+                                itemDescription.appendChild(doc.createTextNode(items.getBrand()));
                                 itemsElement.appendChild(itemBrand);
 
                                 List<Presentation> presentationList = items.getPresentation();
@@ -201,8 +201,10 @@ public class XmlPersistent {
                                         }
                                     }
 
-                                    Items items = new Items(itemElement.getAttribute("id"), itemElement.getElementsByTagName("nombre").item(0).getTextContent(),
-                                            itemElement.getElementsByTagName("marca").item(0).getTextContent(), itemElement.getElementsByTagName("descripcion").item(0).getTextContent(),
+                                    Items items = new Items(itemElement.getAttribute("id"),
+                                            itemElement.getElementsByTagName("nombre").item(0).getTextContent(),
+                                            itemElement.getElementsByTagName("marca").item(0).getTextContent(),
+                                            itemElement.getElementsByTagName("descripcion").item(0).getTextContent(),
                                             presentationList);
                                     itemsList.add(items);
                                 }
