@@ -6,7 +6,7 @@
     <subCategorias>
       <subcategoria id="HERM">
         <nombre>Herramientas Manuales</nombre>
-        <descripcion>Martillos, destornilladores, llaves y más</descripcion>
+        <descripcion>Martillos, destornilladores, l</descripcion>
         <articulos>
           <articulo id="28GF">
             <nombre>Destornillador</nombre>
@@ -55,7 +55,7 @@
     <subCategorias>
       <subcategoria id="PINT">
         <nombre>Pinturas Acrílicas</nombre>
-        <descripcion>Pinturas para interior y exterior</descripcion>
+        <descripcion>Pinturas para interior y </descripcion>
         <articulos>
           <articulo id="CLo">
             <nombre>2222</nombre>
@@ -79,11 +79,22 @@
               </presentacion>
             </presentaciones>
           </articulo>
+          <articulo id="Esee">
+            <nombre>eeee</nombre>
+            <marca>Holaaa</marca>
+            <descripcion>Ellll</descripcion>
+            <presentaciones>
+              <presentacion>
+                <unidad>caja</unidad>
+                <cantidad>25.0</cantidad>
+              </presentacion>
+            </presentaciones>
+          </articulo>
         </articulos>
       </subcategoria>
       <subcategoria id="PINT_1">
         <nombre>Pinturas De agua</nombre>
-        <descripcion>Pinturas para interior y exterior</descripcion>
+        <descripcion>Pinturas para interior y exterior.</descripcion>
         <articulos>
           <articulo id="CO__">
             <nombre>ssss</nombre>
@@ -94,11 +105,30 @@
                 <unidad>eee</unidad>
                 <cantidad>202.0</cantidad>
               </presentacion>
+              <presentacion>
+                <unidad>Cajas</unidad>
+                <cantidad>2023.0</cantidad>
+              </presentacion>
+            </presentaciones>
+          </articulo>
+          <articulo id="0078">
+            <nombre>Pintura</nombre>
+            <marca> 333</marca>
+            <descripcion>33</descripcion>
+            <presentaciones>
+              <presentacion>
+                <unidad>sss</unidad>
+                <cantidad>22.0</cantidad>
+              </presentacion>
             </presentaciones>
           </articulo>
         </articulos>
       </subcategoria>
     </subCategorias>
+  </categoria>
+  <categoria id="004">
+    <nombre>2222</nombre>
+    <descripcion>3333</descripcion>
   </categoria>
   <categoria id="21">
     <nombre>dwasd</nombre>

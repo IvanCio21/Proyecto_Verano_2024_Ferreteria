@@ -57,7 +57,6 @@ public class Service {
     }
 
 
-
     public SubCategory subCategoryGetName(String name) throws Exception {
         SubCategory resultsubCategory = data.getSubcategorias().stream().filter(c -> c.getSubCategoryName().contains(name)).findFirst().orElse(null);
         if (resultsubCategory != null)
@@ -79,7 +78,7 @@ public class Service {
         else throw new Exception("Categoria no existe");
     }
 
-/// Category
+    /// Category
     public void addCategory(Category category) throws Exception {
         List<Category> categories = data.getCategorias();
 
@@ -95,7 +94,6 @@ public class Service {
     }
 
 
-
     //SubCategory
 
     public void addSubCategory(String id, SubCategory subCategory) throws Exception {
@@ -104,17 +102,26 @@ public class Service {
         saveXml();
     }
 
-    public void setEditSubCategory(String idC,String id, String name, String descrpcion) throws Exception {
-        List<SubCategory> subCategories = categoryGetId(id).getSubCategoryList();
-        for (SubCategory subCategory : subCategories) {
-            if(subCategory.getSubCategoryID().equals(idC)){
-                subCategory.setSubCategoryName(name);
-                subCategory.setSubCategoryDescription(descrpcion);
-                saveXml();
+    public void setEditSubCategory(String idC, String id, String name, String descrpcion) throws Exception {
+        // Obtener la categoría por el ID
+        Category categoria = categoryGetId(idC);
+
+        SubCategory subCategoria = null;
+        for (SubCategory subCat : categoria.getSubCategoryList()) {
+            if (subCat.getSubCategoryID().equals(id)) {
+                subCategoria = subCat;
+                break;
             }
         }
 
+        if (subCategoria != null) {
+            subCategoria.setSubCategoryName(name);
+            subCategoria.setSubCategoryDescription(descrpcion);
+            data.setSubcategorias(categoria.getSubCategoryList());
+            saveXml();
+        }
     }
+
     public void CategoryDelete(int row) throws Exception {
         Category cat = data.getCategorias().get(row);
         List<Category> categoryList = data.getCategorias();
@@ -263,6 +270,24 @@ public class Service {
             throw new RuntimeException(e);
         }
         return presentations;
+    }
+
+    public void agregarPresentation(String id, String sub, String Ar, Presentation presentation) {
+
+       try{
+           List<Items> items = allItems(id, sub);
+           for(Items item : items){
+               if(item.getId().equals(Ar)){
+                   item.getPresentation().add(presentation);
+                   data.setCategorias(data.getCategorias());
+               }
+
+           }
+       } catch (Exception e) {
+           throw new RuntimeException(e);
+       }
+
+
     }
 }
 

@@ -31,7 +31,7 @@ public class Controller {
         iniciar();
         TableCategorias();
         TableItems();
-        TablePresentacion();
+        TablePresentacion(gui.getArticuloId());
     }
 
 
@@ -195,6 +195,14 @@ public class Controller {
         }
     }
 
+
+    public boolean agregarPresentaciones(String un, String pre){
+        double numeroComoDouble = Double.parseDouble(pre);
+        service.agregarPresentation(gui.getCategoryId(),gui.getIDSubCategoria(),gui.getArticuloId()
+        ,new Presentation(un,numeroComoDouble));
+        return true;
+    }
+
     public boolean eliminarSubcategoria(String categoriaId, String subCategoriaId) {
         try {
             // Llamar al servicio para eliminar la subcategoría usando los IDs
@@ -255,9 +263,7 @@ public class Controller {
         Items item = new Items(cod,marca,nombre,descripcion);
         Presentation presentation = new Presentation(Prese,num);
         service.guardarArticulo(idC, sub,item, presentation);
-        TablePresentacion();
         TableItems();
-        TablePresentacion();
         service.saveXml();
         return true;
 
@@ -288,10 +294,10 @@ public class Controller {
 
     }
 
-    public void TablePresentacion(){
+    public void TablePresentacion(String dat){
 
         try{
-            List<Presentation> presentations = service.allPresentation(gui.getCategoryId(), gui.getIDSubCategoria());
+            List<Presentation> presentations = service.allPresentation(gui.getCategoryId(), gui.getIDSubCategoria(), dat);
             DefaultTableModel TableModel = new DefaultTableModel(new String[]{"Unidad", "Cantidad"}, presentations.size()) {
                 @Override
                 public boolean isCellEditable(int row, int column) {
