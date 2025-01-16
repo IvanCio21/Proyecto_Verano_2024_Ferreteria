@@ -277,20 +277,30 @@ public class Service {
 
     public void agregarPresentation(String id, String sub, String Ar, Presentation presentation) {
 
-       try{
-           List<Items> items = allItems(id, sub);
-           for(Items item : items){
-               if(item.getId().equals(Ar)){
-                   item.getPresentation().add(presentation);
-                   data.setCategorias(data.getCategorias());
-               }
+        try {
+            List<Items> items = allItems(id, sub);
+            for (Items item : items) {
+                if (item.getId().equals(Ar)) {
 
-           }
-       } catch (Exception e) {
-           throw new RuntimeException(e);
-       }
+                    boolean existe = item.getPresentation().stream()
+                            .anyMatch(p -> p.getMeasure().equals(presentation.getMeasure()) && p.getQuantity() == presentation.getQuantity());
 
-
+                    if (existe) {
+                        // Lanza una excepción personalizada con el mensaje de error
+                        throw new RuntimeException("La presentación ya existe");
+                    } else {
+                        // Agregar la nueva presentación
+                        item.getPresentation().add(presentation);
+                        data.setCategorias(data.getCategorias()); // Actualiza los datos
+                    }
+                    break; // Salir del bucle una vez encontrado el ítem
+                }
+            }
+        } catch (Exception e) {
+            // Re-lanzar la excepción para manejarla en el nivel superior
+            throw new RuntimeException(e.getMessage(), e);
+        }
     }
+
 }
 

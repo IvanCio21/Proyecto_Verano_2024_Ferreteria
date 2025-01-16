@@ -204,12 +204,25 @@ public class Controller {
     }
 
 
-    public boolean agregarPresentaciones(String un, String pre){
-        double numeroComoDouble = Double.parseDouble(pre);
-        service.agregarPresentation(gui.getCategoryId(),gui.getIDSubCategoria(),gui.getArticuloId()
-        ,new Presentation(un,numeroComoDouble));
-        return true;
+    public boolean agregarPresentaciones(String un, String pre) {
+        try {
+            double numeroComoDouble = Double.parseDouble(pre); // Convertir cantidad a double
+
+            // Llamar al servicio para agregar la presentación
+            service.agregarPresentation(gui.getCategoryId(), gui.getIDSubCategoria(), gui.getArticuloId(),
+                    new Presentation(un, numeroComoDouble));
+
+            // Mostrar mensaje de éxito en la interfaz
+            JOptionPane.showMessageDialog(null, "Presentación agregada correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+
+        } catch (RuntimeException e) {
+            // Mostrar mensaje de error en la interfaz gráfica
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
     }
+
 
     public boolean eliminarSubcategoria(String categoriaId, String subCategoriaId) {
         try {
