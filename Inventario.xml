@@ -16,10 +16,6 @@
         <nombre>Pinturas Acrílicas</nombre>
         <descripcion>Pinturas para interior y exterior</descripcion>
       </subcategoria>
-      <subcategoria id="PINT_1">
-        <nombre>Pinturas De agua</nombre>
-        <descripcion>Pinturas para interior y exterior</descripcion>
-      </subcategoria>
     </subCategorias>
   </categoria>
   <categoria id="004">

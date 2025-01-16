@@ -90,6 +90,7 @@ public class Service {
             if (category1.getId().equals(id)) {
                 category1.setName(nombre);
                 category1.setDescription(descrpcion);
+                saveXml();
             }
         }
     }
@@ -105,6 +106,7 @@ public class Service {
             }
         }
         cat.getSubCategoryList().add(subCategory);
+        saveXml();
     }
 
     public void setEditSubCategory(String idC,String id, String name, String descrpcion) throws Exception {
@@ -113,6 +115,7 @@ public class Service {
             if(subCategory.getSubCategoryID().equals(idC)){
                 subCategory.setSubCategoryName(name);
                 subCategory.setSubCategoryDescription(descrpcion);
+                saveXml();
             }
         }
 
@@ -137,13 +140,19 @@ public class Service {
         }
 
         if (subCategoria != null) {
-            // Eliminar la subcategoría
-            categoria.getSubCategoryList().remove(subCategoria);
-            saveXml(); // Guardar los cambios en el archivo XML
+            // Verificar si la subcategoría tiene artículos
+            if (subCategoria.getItems() != null && !subCategoria.getItems().isEmpty()) {
+                throw new Exception("No se puede eliminar la subcategoría porque contiene artículos");
+            } else {
+                // Eliminar la subcategoría si no tiene artículos
+                categoria.getSubCategoryList().remove(subCategoria);
+                saveXml(); // Guardar los cambios en el archivo XML
+            }
         } else {
             throw new Exception("Subcategoría no encontrada");
         }
     }
+
 
 
 
@@ -181,6 +190,7 @@ public class Service {
                 // Agregar el artículo y la presentación a la subcategoría
                 subCat.getItems().add(items);
                 items.getPresentation().add(presentation);
+                saveXml();
                 break;
             }
         }
@@ -207,6 +217,7 @@ public class Service {
                         for (Items articulo : articulos) {
                             if (articulo.getName().equalsIgnoreCase(itemId)) {
                                 articulos.remove(articulo);
+                                saveXml();
                                 return true;
                             }
                         }
