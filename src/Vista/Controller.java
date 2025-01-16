@@ -211,6 +211,31 @@ public class Controller {
         }
     }
 
+    public void searchSubCategoryTable(String dat) throws Exception {
+
+        DefaultTableModel TableModel = new DefaultTableModel(new String[]{"ID", "Nombre", "Descripcion"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {return false; // Hacer que las celdas no sean editable
+            }
+        };
+
+        SubCategory subCategory = service.subCategoryGetId(dat);
+
+        if (subCategory == null) {
+
+        } else {
+            TableModel.addRow(new Object[]{subCategory.getSubCategoryID(), subCategory.getSubCategoryName(), subCategory.getSubCategoryDescription()});
+
+        }
+
+        this.gui.setTableSubCategorias(TableModel);
+
+    }
+    public void searchSubCategory(String dat) throws Exception {
+        searchSubCategoryTable(dat);
+        show();
+    }
+
 
     //Articulos
 

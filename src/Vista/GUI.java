@@ -130,6 +130,7 @@ public class GUI extends JFrame implements Observer {
         this.subCategoriasTable.setModel(tableSubCategorias);
     }
 
+
     public DefaultTableModel getTableCategorias(){
         return tableCategorias;
     }
@@ -289,9 +290,6 @@ public class GUI extends JFrame implements Observer {
             }
         });
 
-
-
-
         assert this.eliminarsubcategoriaBtn != null;
         this.eliminarsubcategoriaBtn.addActionListener(new ActionListener() {
             @Override
@@ -321,6 +319,21 @@ public class GUI extends JFrame implements Observer {
                 }
             }
         });
+
+        buscarSubcategoriaBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            if(!buscarSubCategoria.getText().isEmpty()){
+                try {
+                    controller.searchSubCategory(buscarSubCategoria.getText());
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+            }
+        });
+
+
 
 
         this.editarButtonSubCat.addActionListener(new ActionListener() {
@@ -408,7 +421,7 @@ public class GUI extends JFrame implements Observer {
 
         javax.swing.border.Border errorBorder = BorderFactory.createLineBorder(Color.RED, 1);
         boolean valid = true;
-        if (codigoArticuloTf.getText().isEmpty()) {
+        if (IDSubCategoria.getText().isEmpty()) {
             valid = false;
             codigoLabel_Sub.setBorder(errorBorder);
             codigoLabel_Sub.setToolTipText("ID requerido");
