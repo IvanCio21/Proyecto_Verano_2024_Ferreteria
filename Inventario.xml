@@ -43,10 +43,6 @@
           </articulo>
         </articulos>
       </subcategoria>
-      <subcategoria id="222">
-        <nombre>dddd</nombre>
-        <descripcion>dddd</descripcion>
-      </subcategoria>
     </subCategorias>
   </categoria>
   <categoria id="002">

@@ -215,7 +215,6 @@ public class Controller {
         try {
             service.EliminateSubcategory(categoriaId, subCategoriaId);
             model.setCategories(service.allCategories());
-            TableCategorias();
             service.saveXml();
             return true;
         } catch (Exception e) {

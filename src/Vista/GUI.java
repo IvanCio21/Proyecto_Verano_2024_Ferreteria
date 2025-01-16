@@ -327,18 +327,15 @@ public class GUI extends JFrame {
         this.eliminarsubcategoriaBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Asegúrate de que se haya seleccionado una fila en la tabla de categorías
                 if (listaCategoria.getSelectedRow() != -1) {
-                    // Obtén el ID de la categoría desde la tabla
                     String categoriaId = (String) listaCategoria.getValueAt(listaCategoria.getSelectedRow(), 0); // Suponiendo que la columna 0 tiene el ID de la categoría
 
-                    // Obtén el ID de la subcategoría desde algún lugar (por ejemplo, otro campo de texto o tabla)
-                    String subCategoriaId = getIDSubCategoria(); // Este método debe obtener el ID de la subcategoría seleccionada (ajústalo según tu diseño)
+                    String subCategoriaId = getIDSubCategoria();
 
-                    // Llamar al método del controlador para eliminar la subcategoría
                     try {
                         if (controller.eliminarSubcategoria(categoriaId, subCategoriaId)) {
-                            clearTextSubCategoria(); // Limpiar campos si es necesario
+                            clearTextSubCategoria();
+                            controller.TableSubCategories();// Limpiar campos si es necesario
                             JOptionPane.showMessageDialog(null, "Subcategoría eliminada con éxito");
                         }
                     } catch (Exception ex) {
