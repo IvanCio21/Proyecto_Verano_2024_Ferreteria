@@ -65,6 +65,7 @@ public class Controller {
     }
 
     public void exit(){ service.saveXml();}
+
     public boolean agregarCategoria(String id, String nombre, String descripcion) {
         Category newCategory =  new Category(id,nombre,descripcion);
         try{
@@ -77,7 +78,7 @@ public class Controller {
 
 
     }
-    public  void  TableCategorias()  {
+    public void TableCategorias()  {
 
         DefaultTableModel TableModel = new DefaultTableModel(new String[]{"ID", "Nombre", "Descripcion"}, model.getCategories().size()) {
             @Override
@@ -100,6 +101,7 @@ public class Controller {
         model.getCategories().remove(row);
         TableCategorias();
     }
+
     public boolean editCategory(String id,String name, String descripcion) {
         List<Category> categories = model.getCategories();
         try{
@@ -116,29 +118,34 @@ public class Controller {
 
         return false;
     }
-    public   void searchCategoryTable(String dat) throws Exception {
+    public void searchCategoryTable(String dat) throws Exception {
+
         DefaultTableModel TableModel = new DefaultTableModel(new String[]{"ID", "Nombre", "Descripcion"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {return false; // Hacer que las celdas no sean editable
-
-                 }
+            }
         };
 
         Category cat = service.categoryGetId(dat);
+
         if (cat == null) {
             TableCategorias();
         } else {
+            /*
             TableModel.setValueAt(cat.getId(), 0, 0);
             TableModel.setValueAt(cat.getName(),1,1);
             TableModel.setValueAt(cat.getDescription(),2,2);
+             */
+            TableModel.addRow(new Object[]{cat.getId(), cat.getName(), cat.getDescription()});
 
         }
 
         this.gui.setTableCategoria(TableModel);
 
     }
-    public void  searchCategory(String dat) throws Exception {
+    public void searchCategory(String dat) throws Exception {
         searchCategoryTable(dat);
+        show();
     }
 
     //SubCategoria

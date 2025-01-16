@@ -1,5 +1,8 @@
 package Vista;
 
+import Logic.Category;
+import Logic.Service;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -154,6 +157,7 @@ public class GUI extends JFrame implements Observer {
                 formWindowClosing(evt);
             }
         });
+        //codigo.setEditable(true);
 
       //  subCategoriasTable = new JTable();
         this.guardarButton.addActionListener(new ActionListener() {
@@ -232,7 +236,7 @@ public class GUI extends JFrame implements Observer {
             }
         });
 
-        this.buscarCategoria.addActionListener(new ActionListener() {
+        this.searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -362,6 +366,7 @@ public class GUI extends JFrame implements Observer {
     }
 
     public String getCategoryId(){ return codigo.getText(); }
+
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_  formWindowClosing
         controller.exit();
     }
