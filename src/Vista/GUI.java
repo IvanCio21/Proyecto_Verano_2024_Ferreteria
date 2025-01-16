@@ -295,6 +295,19 @@ public class GUI extends JFrame {
         });
 
 
+        this.presentacionesTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int filaSeleccionada = presentacionesTable.getSelectedRow();
+                if(filaSeleccionada != -1){
+                    String unidad = presentacionesTable.getValueAt(filaSeleccionada, 0).toString();
+                    String cantidad = presentacionesTable.getValueAt(filaSeleccionada, 1).toString();
+                    unidadArt.setText(unidad);
+                    cantidadItems.setText(cantidad);
+                }
+            }
+        });
+
         // SUB-CATEGORY
 
 
@@ -464,12 +477,26 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int seleccion = jTableArticulos.getSelectedRow();
+
                 if (seleccion != -1) {
-                    controller.eliminarArticulo();
+                    try {
+                        boolean eliminado = controller.eliminarArticulo();
+
+                        if (eliminado) {
+                            JOptionPane.showMessageDialog(null, "Artículo eliminado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "No se encontró el artículo para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } catch (RuntimeException ex) {
+                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Seleccione un artículo para eliminar", "Advertencia", JOptionPane.WARNING_MESSAGE);
                 }
             }
         });
-        
+
+
     }
 
     public String getCategoryId(){ return codigo.getText(); }
@@ -588,6 +615,7 @@ public class GUI extends JFrame {
 
         return valid;
     }
+
 
 
     void  clearText(){

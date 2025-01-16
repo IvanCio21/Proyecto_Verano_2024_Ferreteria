@@ -337,11 +337,23 @@ public class Controller {
     }
 
 
-   public boolean eliminarArticulo(){
-        service.deleteItem(gui.getCategoryId(), gui.getIDSubCategoria(), gui.getArticuloId());
-        TablePresentacion();
-        return true;
+    public boolean eliminarArticulo() {
+        try {
+            boolean eliminado = service.deleteItem(gui.getCategoryId(), gui.getIDSubCategoria(), gui.getArticuloId());
+
+            if (eliminado) {
+                TablePresentacion(); // Refrescar la tabla de presentaciones
+                TableItems(); // Refrescar la tabla de artículos
+                return true;
+            } else {
+                return false; // No se encontró el artículo
+            }
+        } catch (Exception e) {
+            // Lanza la excepción para que la vista la maneje
+            throw new RuntimeException("Error al eliminar el artículo: " + e.getMessage(), e);
+        }
     }
+
 
 
 }

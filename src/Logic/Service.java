@@ -3,6 +3,7 @@ import Data.Data;
 import Data.XmlPersistent;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.PropertyResourceBundle;
 
@@ -208,9 +209,11 @@ public class Service {
 
                         List<Items> articulos = subCategoria.getItems();
 
-                        for (Items articulo : articulos) {
-                            if (articulo.getName().equalsIgnoreCase(itemId)) {
-                                articulos.remove(articulo);
+
+                        for (Iterator<Items> iterator = articulos.iterator(); iterator.hasNext();) {
+                            Items articulo = iterator.next();
+                            if (articulo.getId().equalsIgnoreCase(itemId)) {
+                                iterator.remove();
                                 saveXml();
                                 return true;
                             }
@@ -219,9 +222,9 @@ public class Service {
                 }
             }
         }
-
         return false;
     }
+
 
 
     public void saveXml() {
@@ -283,21 +286,19 @@ public class Service {
                 if (item.getId().equals(Ar)) {
 
                     boolean existe = item.getPresentation().stream()
-                            .anyMatch(p -> p.getMeasure().equals(presentation.getMeasure()) && p.getQuantity() == presentation.getQuantity());
+                            .anyMatch(p -> p.getMeasure().equals(presentation.getMeasure()));
 
                     if (existe) {
-                        // Lanza una excepción personalizada con el mensaje de error
+
                         throw new RuntimeException("La presentación ya existe");
                     } else {
-                        // Agregar la nueva presentación
                         item.getPresentation().add(presentation);
-                        data.setCategorias(data.getCategorias()); // Actualiza los datos
+                        data.setCategorias(data.getCategorias());
                     }
-                    break; // Salir del bucle una vez encontrado el ítem
+                    break;
                 }
             }
         } catch (Exception e) {
-            // Re-lanzar la excepción para manejarla en el nivel superior
             throw new RuntimeException(e.getMessage(), e);
         }
     }
