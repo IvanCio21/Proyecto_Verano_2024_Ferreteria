@@ -7,6 +7,30 @@
       <subcategoria id="HERM">
         <nombre>Herramientas Manuales</nombre>
         <descripcion>Martillos, destornilladores, llaves y más</descripcion>
+        <articulos>
+          <articulo id="29HB3">
+            <nombre>Jilet</nombre>
+            <marca>Destornillador</marca>
+            <descripcion>Punta plata</descripcion>
+            <presentaciones>
+              <presentacion>
+                <unidad>Unica</unidad>
+                <cantidad>18.0</cantidad>
+              </presentacion>
+            </presentaciones>
+          </articulo>
+          <articulo id="28GF">
+            <nombre>Destornillador</nombre>
+            <marca>Jilet</marca>
+            <descripcion>Punta estrella</descripcion>
+            <presentaciones>
+              <presentacion>
+                <unidad>Unica</unidad>
+                <cantidad>28.0</cantidad>
+              </presentacion>
+            </presentaciones>
+          </articulo>
+        </articulos>
       </subcategoria>
     </subCategorias>
   </categoria>
@@ -23,8 +47,8 @@
         <descripcion>Pinturas para interior y exterior</descripcion>
         <articulos>
           <articulo id="CLo">
-            <nombre>Sapo</nombre>
-            <marca>2222</marca>
+            <nombre>2222</nombre>
+            <marca>Sapo</marca>
             <descripcion>2333</descripcion>
             <presentaciones>
               <presentacion>
@@ -34,8 +58,8 @@
             </presentaciones>
           </articulo>
           <articulo id="008">
-            <nombre>eeee</nombre>
-            <marca>sopaa</marca>
+            <nombre>sopaa</nombre>
+            <marca>eeee</marca>
             <descripcion>seeee</descripcion>
             <presentaciones>
               <presentacion>
@@ -51,8 +75,8 @@
         <descripcion>Pinturas para interior y exterior</descripcion>
         <articulos>
           <articulo id="CO__">
-            <nombre>Cooka</nombre>
-            <marca>ssss</marca>
+            <nombre>ssss</nombre>
+            <marca>Cooka</marca>
             <descripcion>sssss</descripcion>
             <presentaciones>
               <presentacion>
@@ -64,5 +88,9 @@
         </articulos>
       </subcategoria>
     </subCategorias>
+  </categoria>
+  <categoria id="21">
+    <nombre>dwasd</nombre>
+    <descripcion>dasds</descripcion>
   </categoria>
 </inventario>

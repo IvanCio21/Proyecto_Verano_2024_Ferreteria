@@ -256,7 +256,8 @@ public class Controller {
         Presentation presentation = new Presentation(Prese,num);
         service.guardarArticulo(idC, sub,item, presentation);
         TablePresentacion();
-        TableCategorias();
+        TableItems();
+        TablePresentacion();
         service.saveXml();
         return true;
 
