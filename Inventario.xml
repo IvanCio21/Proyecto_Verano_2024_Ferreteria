@@ -21,5 +21,11 @@
   <categoria id="004">
     <nombre>Cables</nombre>
     <descripcion>Internet, electricos.</descripcion>
+    <subCategorias>
+      <subcategoria id="13">
+        <nombre>ewe</nombre>
+        <descripcion>ewqe</descripcion>
+      </subcategoria>
+    </subCategorias>
   </categoria>
 </inventario>
