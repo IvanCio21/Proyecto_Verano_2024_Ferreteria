@@ -3,6 +3,12 @@
   <categoria id="001">
     <nombre>Herramientas</nombre>
     <descripcion>Todo tipo de herramientas manuales y eléctricas.</descripcion>
+    <subCategorias>
+      <subcategoria id="HERM">
+        <nombre>Herramientas Manuales</nombre>
+        <descripcion>Martillos, destornilladores, llaves y más</descripcion>
+      </subcategoria>
+    </subCategorias>
   </categoria>
   <categoria id="002">
     <nombre>Materiales de Construcción</nombre>
@@ -15,16 +21,22 @@
       <subcategoria id="PINT">
         <nombre>Pinturas Acrílicas</nombre>
         <descripcion>Pinturas para interior y exterior</descripcion>
+        <articulos>
+          <articulo id="CLo">
+            <nombre>Sapo</nombre>
+            <marca>2222</marca>
+            <presentaciones>
+              <presentacion>
+                <unidad>222</unidad>
+                <cantidad>22.0</cantidad>
+              </presentacion>
+            </presentaciones>
+          </articulo>
+        </articulos>
       </subcategoria>
-    </subCategorias>
-  </categoria>
-  <categoria id="004">
-    <nombre>Cables</nombre>
-    <descripcion>Internet, electricos.</descripcion>
-    <subCategorias>
-      <subcategoria id="13">
-        <nombre>ewe</nombre>
-        <descripcion>ewqe</descripcion>
+      <subcategoria id="PINT_1">
+        <nombre>Pinturas De agua</nombre>
+        <descripcion>Pinturas para interior y exterior</descripcion>
       </subcategoria>
     </subCategorias>
   </categoria>

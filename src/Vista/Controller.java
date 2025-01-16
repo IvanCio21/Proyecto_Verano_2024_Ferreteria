@@ -11,13 +11,9 @@ public class Controller {
     private static Model model;
     private GUI gui;
     private static Service service;
-    private static JTable categoriesTable = new JTable();
-    private static final JTable SubcategoryTable = new JTable();
-    private  JTable categoryTable;
 
     public Controller(Model model, GUI gui) {
         service = new Service();
-        categoryTable = new JTable();
         Controller.model = model; // Aquí creas el modelo internamente
         this.gui = gui; // Aquí creas la vista internamente
 
@@ -29,10 +25,11 @@ public class Controller {
         if (model.getCategories().isEmpty()) {
             prueba();
         }
-
         gui.setController(this);
         iniciar();
         TableCategorias();
+        TableItems();
+        TablePresentacion();
     }
 
 
@@ -178,7 +175,15 @@ public class Controller {
 
     public boolean GuardarSubCategoria(String idCategoria,String idSub, String nombre, String descripcion) {
         try{
+            Category cat = service.categoryGetId(idCategoria);
+
             SubCategory newSubCategory = new SubCategory(idSub,nombre,descripcion);
+            for (SubCategory subCat : cat.getSubCategoryList()) {
+                if (subCat.getSubCategoryID().trim().equals(newSubCategory.getSubCategoryID().trim())) {
+                    JOptionPane.showMessageDialog(null, "La Sub Categoria ya existente", "Error", JOptionPane.ERROR_MESSAGE);
+                    return false;
+                }
+            }
             service.addSubCategory(idCategoria,newSubCategory);
             TableSubCategories(idCategoria);
             return true;
@@ -203,8 +208,6 @@ public class Controller {
             return false;
         }
     }
-
-
 
     public boolean editSubCategory(String idCat, String idSub, String nombre, String descripcion) {
         try {
@@ -241,7 +244,6 @@ public class Controller {
         searchSubCategoryTable(dat);
     }
 
-
     //Articulos
 
     public boolean saveItems(String idC, String sub, String cod, String marca,String nombre, String descripcion, String Prese, String e) throws Exception {
@@ -249,37 +251,56 @@ public class Controller {
         Items item = new Items(cod,marca,nombre,descripcion);
         Presentation presentation = new Presentation(Prese,num);
         service.guardarArticulo(idC, sub,item, presentation);
+        TablePresentacion();
+        TableCategorias();
         return true;
 
     }
 
-
-    public void TableItems(String dat) {
+    public void TableItems() {
 
         try{
-            List<SubCategory> subCategories = service.categoryGetId(dat).getSubCategoryList();
 
-            DefaultTableModel TableModel = new DefaultTableModel(new String[]{"ID", "Nombre", "Descripcion"}, subCategories.size()) {
+            List<Items> itemsList = service.allItems(gui.getCategoryId(),gui.getIDSubCategoria());
+            DefaultTableModel TableModel = new DefaultTableModel(new String[]{"ID", "Marca", "Nombre", "Descripcion"}, itemsList.size()) {
                 @Override
                 public boolean isCellEditable(int row, int column) {
                     return false;
                 }
             };
-            for (int i = 0; i < subCategories.size(); i++) {
-                List<Items> items  = subCategories.get(i).getItems();
-                for (int j = 0; j < items.size(); j++) {
-                    Items item = items.get(j);
+                for (int j = 0; j < itemsList.size(); j++) {
+                    Items item = itemsList.get(j);
                     TableModel.setValueAt(item.getId(), j, 0);
-                    TableModel.setValueAt(item.getName(),j,1);
-                    TableModel.setValueAt(item.getDescription(),j,2);
+                    TableModel.setValueAt(item.getBrand(),j,1);
+                    TableModel.setValueAt(item.getName(),j,2);
+                    TableModel.setValueAt(item.getDescription(),j,3);
                 }
-            }
             this.gui.setArticulosTable(TableModel);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
+    }
 
+    public void TablePresentacion(){
+
+        try{
+            List<Presentation> presentations = service.allPresentation(gui.getCategoryId(), gui.getIDSubCategoria(), gui.getArticuloId());
+            DefaultTableModel TableModel = new DefaultTableModel(new String[]{"Unidad", "Cantidad"}, presentations.size()) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            for (int j = 0; j < presentations.size(); j++) {
+                Presentation presentation = presentations.get(j);
+                TableModel.setValueAt(presentation.getMeasure(), j, 0);
+                TableModel.setValueAt(presentation.getQuantity(),j,1);
+            }
+            this.gui.setPresentacionesTable(TableModel);
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

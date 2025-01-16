@@ -110,6 +110,9 @@ public class GUI extends JFrame {
         this.subCategoriasTable.setModel(tableSubCategorias);
     }
 
+    public  void setPresentacionesTable(DefaultTableModel presentacionesTable) {
+        this.presentacionesTable.setModel(presentacionesTable);
+    }
 
     public DefaultTableModel getTableCategorias(){
         return tableCategorias;
@@ -400,8 +403,8 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if(validateArticulo()){
                     try{
-                        if(controller.saveItems(codigo.getText(),IDSubCategoria.getText(), codigoArticuloTf.getText(),
-                                nombreArticuloTf.getText(), marcaArticuloTf.getText(),descripcionArticuloTf.getText(),unidadArt.getText(),cantidadItems.getText())){
+                        if(controller.saveItems(codigo.getText(),IDSubCategoria.getText(), codigoArticuloTf.getText(),marcaArticuloTf.getText(),
+                                nombreArticuloTf.getText(),descripcionArticuloTf.getText(),unidadArt.getText(),cantidadItems.getText())){
                                clearTextArticulo();
                                JOptionPane.showMessageDialog(null, "Articulo guardada con exito");
                         }
@@ -420,6 +423,7 @@ public class GUI extends JFrame {
     }
 
     public String getCategoryId(){ return codigo.getText(); }
+    public String getArticuloId(){return codigoArticuloTf.getText(); }
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_  formWindowClosing
         controller.exit();
@@ -509,19 +513,27 @@ public class GUI extends JFrame {
         if (nombreArticuloTf.getText().isEmpty()) {
             valid = false;
             nombreArticuloTf.setBorder(errorBorder);
-           // nombreLabel.setToolTipText("Nombre requerido");
         } else {
             nombreArticuloTf.setBorder(null);
-         //   nombreLabel.setToolTipText(null);
         }
 
         if (descripcionArticuloTf.getText().isEmpty()) {
             valid = false;
             descripcionArticuloTf.setBorder(errorBorder);
-          //  descripcionArticuloTf.setToolTipText("Descripcion requerido");
         }else {
             descripcionArticuloTf.setBorder(null);
-            //descripcionLabel.setToolTipText(null);
+        }
+        if(unidadArt.getText().isEmpty()){
+            valid = false;
+            unidadArt.setBorder(errorBorder);
+        }else{
+            unidadArt.setBorder(null);
+        }
+        if(cantidadItems.getText().isEmpty()){
+            valid = false;
+            cantidadItems.setBorder(errorBorder);
+        }else{
+            cantidadItems.setBorder(null);
         }
 
         return valid;
@@ -554,6 +566,7 @@ public class GUI extends JFrame {
         jTableArticulos.clearSelection();
         unidadArt.setText("");
         cantidadItems.setText("");
+        marcaArticuloTf.setText(" ");
 
     }
 }

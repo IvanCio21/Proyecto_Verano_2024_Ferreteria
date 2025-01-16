@@ -52,10 +52,3 @@ public class Data {
 
 }
 
-
-//public void loadXML(){
-//XmlPersistent source = new XmlPersistent();
-//source.cargarCategorias();
-//categorias = source.getCategorias();
-//}
-

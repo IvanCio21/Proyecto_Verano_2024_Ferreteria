@@ -648,8 +648,14 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="33278" class="javax.swing.JTable" binding="presentacionesTable">
-                    <constraints border-constraint="Center"/>
+                  <scrollpane id="cf865">
+                    <constraints border-constraint="North"/>
+                    <properties/>
+                    <border type="none"/>
+                    <children/>
+                  </scrollpane>
+                  <component id="188a9" class="javax.swing.JTable" binding="presentacionesTable">
+                    <constraints border-constraint="West"/>
                     <properties/>
                   </component>
                 </children>
@@ -686,23 +692,7 @@
                 </constraints>
                 <properties/>
                 <border type="none"/>
-                <children>
-                  <vspacer id="4b948">
-                    <constraints border-constraint="Center"/>
-                  </vspacer>
-                  <component id="22e3c" class="javax.swing.JLabel">
-                    <constraints border-constraint="West"/>
-                    <properties>
-                      <text value="Unidad"/>
-                    </properties>
-                  </component>
-                  <component id="18556" class="javax.swing.JLabel">
-                    <constraints border-constraint="East"/>
-                    <properties>
-                      <text value="    Cantidad/Capacidad"/>
-                    </properties>
-                  </component>
-                </children>
+                <children/>
               </grid>
               <component id="935a8" class="javax.swing.JButton" binding="limpiarArticulosBtn">
                 <constraints>

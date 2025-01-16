@@ -44,6 +44,17 @@ public class Service {
         else throw new Exception("SubCategoria no existe");
     }
 
+    public void CategoryEdit(String id, String nombre, String descrpcion) throws Exception {
+        List<Category> categories = data.getCategorias();
+
+        for (Category category1 : categories) {
+            if (category1.getId().equals(id)) {
+                category1.setName(nombre);
+                category1.setDescription(descrpcion);
+                saveXml();
+            }
+        }
+    }
 
 
 
@@ -83,28 +94,12 @@ public class Service {
         saveXml();
     }
 
-    public void CategoryEdit(String id, String nombre, String descrpcion) throws Exception {
-        List<Category> categories = data.getCategorias();
-
-        for (Category category1 : categories) {
-            if (category1.getId().equals(id)) {
-                category1.setName(nombre);
-                category1.setDescription(descrpcion);
-                saveXml();
-            }
-        }
-    }
 
 
     //SubCategory
 
     public void addSubCategory(String id, SubCategory subCategory) throws Exception {
         Category cat = categoryGetId(id);
-        for (SubCategory subCat : cat.getSubCategoryList()) {
-            if (subCat.getSubCategoryID().trim().equals(id.trim())) {
-                throw new Exception("Subcategoria ya existe");
-            }
-        }
         cat.getSubCategoryList().add(subCategory);
         saveXml();
     }
@@ -161,25 +156,19 @@ public class Service {
 
 
     public void guardarArticulo(String cat, String subCategory, Items items, Presentation presentation) throws Exception {
-        // Validar si la categoría proporcionada es válida
         Category category = categoryGetId(cat);
         if (category == null) {
             throw new Exception("Categoría no encontrada.");
         }
-
-        // Obtener la lista de subcategorías y validarla
         List<SubCategory> subCategories = category.getSubCategoryList();
         if (subCategories == null || subCategories.isEmpty()) {
             throw new Exception("No hay subcategorías disponibles en esta categoría.");
         }
 
-        // Validar si la subcategoría proporcionada existe
         boolean subCategoryFound = false;
         for (SubCategory subCat : subCategories) {
             if (subCat.getSubCategoryID().equals(subCategory)) {
                 subCategoryFound = true;
-
-                // Validar si el artículo y presentación no son nulos
                 if (items == null) {
                     throw new Exception("El artículo no puede ser nulo.");
                 }
@@ -187,15 +176,12 @@ public class Service {
                     throw new Exception("La presentación no puede ser nula.");
                 }
 
-                // Agregar el artículo y la presentación a la subcategoría
                 subCat.getItems().add(items);
                 items.getPresentation().add(presentation);
                 saveXml();
                 break;
             }
         }
-
-        // Si no se encontró la subcategoría, lanzar una excepción
         if (!subCategoryFound) {
             throw new Exception("Subcategoría no encontrada.");
         }
@@ -247,12 +233,36 @@ public class Service {
         return data.getSubcategorias();
     }
 
-    public List<Items> allItems() {
-        return data.getArticulos();
+    public List<Items> allItems(String id, String idSub) throws Exception {
+        List<Items> items = new ArrayList<>();
+        try{
+
+            Category cat = categoryGetId(id);
+            List<SubCategory> subCategories = cat.getSubCategoryList();
+
+            for(SubCategory subCat : subCategories){
+                if(subCat.getSubCategoryID().equals(idSub)){
+                    items = subCat.getItems();
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return items;
     }
 
-    public List<Presentation> allPresentation() {
-        return data.getPresentations();
+    public List<Presentation> allPresentation(String id, String idSub, String cod) {
+
+        List<Presentation> presentations = new ArrayList<>();
+        try{
+            List<Items> items = allItems(id,idSub);
+            for(Items item : items){
+                presentations = item.getPresentation();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return presentations;
     }
 }
 
