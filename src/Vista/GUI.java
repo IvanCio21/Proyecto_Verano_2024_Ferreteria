@@ -1,5 +1,8 @@
 package Vista;
 
+import Logic.Category;
+import Logic.Service;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -128,6 +131,7 @@ public class GUI extends JFrame implements Observer {
         this.subCategoriasTable.setModel(tableSubCategorias);
     }
 
+
     public DefaultTableModel getTableCategorias(){
         return tableCategorias;
     }
@@ -155,6 +159,7 @@ public class GUI extends JFrame implements Observer {
                 formWindowClosing(evt);
             }
         });
+        //codigo.setEditable(true);
 
       //  subCategoriasTable = new JTable();
         this.guardarButton.addActionListener(new ActionListener() {
@@ -233,7 +238,7 @@ public class GUI extends JFrame implements Observer {
             }
         });
 
-        this.buscarCategoria.addActionListener(new ActionListener() {
+        this.searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -286,9 +291,6 @@ public class GUI extends JFrame implements Observer {
             }
         });
 
-
-
-
         assert this.eliminarsubcategoriaBtn != null;
         this.eliminarsubcategoriaBtn.addActionListener(new ActionListener() {
             @Override
@@ -318,6 +320,21 @@ public class GUI extends JFrame implements Observer {
                 }
             }
         });
+
+        buscarSubcategoriaBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            if(!buscarSubCategoria.getText().isEmpty()){
+                try {
+                    controller.searchSubCategory(buscarSubCategoria.getText());
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+            }
+        });
+
+
 
 
         this.editarButtonSubCat.addActionListener(new ActionListener() {
@@ -363,6 +380,7 @@ public class GUI extends JFrame implements Observer {
     }
 
     public String getCategoryId(){ return codigo.getText(); }
+
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_  formWindowClosing
         controller.exit();
     }
@@ -404,7 +422,7 @@ public class GUI extends JFrame implements Observer {
 
         javax.swing.border.Border errorBorder = BorderFactory.createLineBorder(Color.RED, 1);
         boolean valid = true;
-        if (codigoArticuloTf.getText().isEmpty()) {
+        if (IDSubCategoria.getText().isEmpty()) {
             valid = false;
             codigoLabel_Sub.setBorder(errorBorder);
             codigoLabel_Sub.setToolTipText("ID requerido");
