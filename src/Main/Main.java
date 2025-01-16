@@ -11,6 +11,7 @@ import javax.swing.*;
 public class Main {
     public static void main(String[] args) {
 
+        new CategoriaController();
             SwingUtilities.invokeLater(() -> {
                 try {
                   new Controller(new Model(), new GUI());
