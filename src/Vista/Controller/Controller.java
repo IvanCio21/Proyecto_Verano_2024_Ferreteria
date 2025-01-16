@@ -279,16 +279,34 @@ public class Controller {
 
     //Articulos
 
-    public boolean saveItems(String idC, String sub, String cod, String marca,String nombre, String descripcion, String Prese, String e) throws Exception {
-        double num = Double.parseDouble(e);
-        Items item = new Items(cod,marca,nombre,descripcion);
-        Presentation presentation = new Presentation(Prese,num);
-        service.guardarArticulo(idC, sub,item, presentation);
-        TableItems();
-        service.saveXml();
-        return true;
+    public boolean saveItems(String idC, String sub, String cod, String marca, String nombre, String descripcion, String Prese, String e) {
+        try {
+            // Convertir la cantidad de la presentación a double
+            double num = Double.parseDouble(e);
 
+            // Crear el objeto Item y Presentation
+            Items item = new Items(cod, marca, nombre, descripcion);
+            Presentation presentation = new Presentation(Prese, num);
+
+            // Intentar guardar el artículo
+            service.guardarArticulo(idC, sub, item, presentation);
+            TableItems(); // Actualizar la tabla de artículos
+            service.saveXml(); // Guardar cambios en el XML
+            return true;
+
+        } catch (NumberFormatException ex) {
+            // Mostrar error si la cantidad no es válida
+            JOptionPane.showMessageDialog(null, "El valor de la cantidad debe ser un número válido: " + e, "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+
+        } catch (Exception ex) {
+            // Mostrar cualquier otra excepción
+            JOptionPane.showMessageDialog(null, "Error al guardar el artículo: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
     }
+
+
 
     public void TableItems() {
 
