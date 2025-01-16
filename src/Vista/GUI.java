@@ -1,5 +1,8 @@
 package Vista;
 
+import Vista.Controller.Controller;
+import Vista.Model.Model;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;

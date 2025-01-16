@@ -1,6 +1,8 @@
-package Vista;
+package Vista.Controller;
 
 import Logic.*;
+import Vista.GUI;
+import Vista.Model.Model;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -186,6 +188,7 @@ public class Controller {
             }
             service.addSubCategory(idCategoria,newSubCategory);
             TableSubCategories(idCategoria);
+            service.saveXml();
             return true;
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -202,6 +205,7 @@ public class Controller {
 
             // Refrescar la vista de categorías
             TableCategorias();
+            service.saveXml();
             return true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al eliminar subcategoría: " + e.getMessage());
@@ -253,6 +257,7 @@ public class Controller {
         service.guardarArticulo(idC, sub,item, presentation);
         TablePresentacion();
         TableCategorias();
+        service.saveXml();
         return true;
 
     }

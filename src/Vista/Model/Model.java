@@ -1,13 +1,9 @@
-package Vista;
+package Vista.Model;
 
 import Logic.Category;
 
-import javax.swing.*;
-import javax.swing.table.TableModel;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 //Observable:Genera eventos o notificaciones
 //se registra en el observable
 

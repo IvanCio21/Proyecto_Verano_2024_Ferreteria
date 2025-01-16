@@ -1,10 +1,9 @@
 package Main;
 
 
-import Vista.CategoriaController;
-import Vista.Controller;
+import Vista.Controller.Controller;
 import Vista.GUI;
-import Vista.Model;
+import Vista.Model.Model;
 
 import javax.swing.*;
 

@@ -93,8 +93,8 @@ public class XmlPersistent {
 
                                 //Descripcion//
                                 Element itemDescription = doc.createElement("descripcion");
-                                itemDescription.appendChild(doc.createTextNode(items.getBrand()));
-                                itemsElement.appendChild(itemBrand);
+                                itemDescription.appendChild(doc.createTextNode(items.getDescription()));
+                                itemsElement.appendChild(itemDescription);
 
                                 List<Presentation> presentationList = items.getPresentation();
                                 if (presentationList.size() > 0) {

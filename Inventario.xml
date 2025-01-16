@@ -25,10 +25,22 @@
           <articulo id="CLo">
             <nombre>Sapo</nombre>
             <marca>2222</marca>
+            <descripcion>2333</descripcion>
             <presentaciones>
               <presentacion>
                 <unidad>222</unidad>
                 <cantidad>22.0</cantidad>
+              </presentacion>
+            </presentaciones>
+          </articulo>
+          <articulo id="008">
+            <nombre>eeee</nombre>
+            <marca>sopaa</marca>
+            <descripcion>seeee</descripcion>
+            <presentaciones>
+              <presentacion>
+                <unidad>cajs</unidad>
+                <cantidad>33.0</cantidad>
               </presentacion>
             </presentaciones>
           </articulo>
@@ -37,6 +49,19 @@
       <subcategoria id="PINT_1">
         <nombre>Pinturas De agua</nombre>
         <descripcion>Pinturas para interior y exterior</descripcion>
+        <articulos>
+          <articulo id="CO__">
+            <nombre>Cooka</nombre>
+            <marca>ssss</marca>
+            <descripcion>sssss</descripcion>
+            <presentaciones>
+              <presentacion>
+                <unidad>eee</unidad>
+                <cantidad>202.0</cantidad>
+              </presentacion>
+            </presentaciones>
+          </articulo>
+        </articulos>
       </subcategoria>
     </subCategorias>
   </categoria>
