@@ -53,6 +53,26 @@ public class Service {
         return resultSubCategory;
     }
 
+    public Items articuloGetId(String id) throws Exception {
+        for (Category category : data.getCategorias()) {
+            for (SubCategory subCategory : category.getSubCategoryList()) {
+                Items resultItem = subCategory.getItems().stream()
+                        .filter(item -> item.getId().equals(id) || item.getBrand().equals(id))
+                        .findFirst()
+                        .orElse(null);
+
+                if (resultItem != null) {
+                    return resultItem;
+                }
+            }
+        }
+        throw new Exception("Artículo no encontrado con el ID o nombre: " + id);
+    }
+
+
+
+
+
     public void CategoryEdit(String id, String nombre, String descrpcion) throws Exception {
         List<Category> categories = data.getCategorias();
 

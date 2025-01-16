@@ -268,6 +268,7 @@ public class Controller {
         this.gui.setTableSubCategorias(TableModel);
 
     }
+
     public void searchSubCategory(String dat) throws Exception {
         try{
             searchSubCategoryTable(dat);
@@ -278,6 +279,33 @@ public class Controller {
     }
 
     //Articulos
+    public void searchArticuloTable(String dat) throws Exception {
+        DefaultTableModel TableModel = new DefaultTableModel(new String[]{"ID", "Nombre", "Marca", "Descripción"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Hacer que las celdas no sean editables
+            }
+        };
+
+        // Buscar artículo en la base de datos utilizando el ID o el nombre
+        Items articulo = service.articuloGetId(dat); // Utilizamos el método articuloGetId que ya tenemos
+
+        if (articulo != null) {
+            // Si se encuentra el artículo, se agrega a la tabla
+            TableModel.addRow(new Object[]{articulo.getId(), articulo.getName(), articulo.getBrand(), articulo.getDescription()});
+        }
+
+        // Actualizar la tabla en la interfaz
+        this.gui.setTableArticulos(TableModel); // Método para actualizar la tabla en la GUI
+    }
+
+    public void searchArticulo(String dat) throws Exception {
+        try{
+            searchArticuloTable(dat);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Articulo no encontrada ");
+        }
+    }
 
     public boolean saveItems(String idC, String sub, String cod, String marca, String nombre, String descripcion, String Prese, String e) {
         try {

@@ -113,6 +113,9 @@ public class GUI extends JFrame {
         this.subCategoriasTable.setModel(tableSubCategorias);
     }
 
+    public void setTableArticulos(DefaultTableModel tableArticulos) {
+        this.jTableArticulos.setModel(tableArticulos);
+    }
     public  void setPresentacionesTable(DefaultTableModel presentacionesTable) {
         this.presentacionesTable.setModel(presentacionesTable);
     }
@@ -394,7 +397,19 @@ public class GUI extends JFrame {
             }
         });
 
-
+        //HSUDAJHD
+buscarArticuloBtn.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(!buscarIdArticuloTf.getText().isEmpty()){
+            try {
+                controller.searchArticulo(buscarIdArticuloTf.getText());
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+    }
+});
 
 
         this.editarButtonSubCat.addActionListener(new ActionListener() {
@@ -647,6 +662,6 @@ public class GUI extends JFrame {
         marcaArticuloTf.setText(" ");
         guardarArticulosBtn.setEnabled(true);
         codigoArticuloTf.setEditable(true);
-
+        controller.TableItems();
     }
 }
