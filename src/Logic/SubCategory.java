@@ -10,6 +10,7 @@ public class SubCategory {
     private String subCategoryDescription;
     private List<Items> items;
 
+    public SubCategory() {}
     public SubCategory(String subCategoryID, String subCategoryName, String subCategoryDescription, List<Items> articulos) {
         this.subCategoryID = subCategoryID;
         this.subCategoryName = subCategoryName;

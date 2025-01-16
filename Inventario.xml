@@ -5,12 +5,12 @@
     <descripcion>Todo tipo de herramientas manuales y eléctricas.</descripcion>
     <subCategorias>
       <subcategoria id="HERM">
-        <nombre>Herramientas Manuales</nombre>
-        <descripcion>Martillos, destornilladores, l</descripcion>
+        <nombre>Herramientas</nombre>
+        <descripcion>Martillos, destornilladores</descripcion>
         <articulos>
           <articulo id="28GF">
-            <nombre>Destornillador</nombre>
-            <marca>Jilet</marca>
+            <nombre>Jilet</nombre>
+            <marca>Destornillador</marca>
             <descripcion>Punta estrella</descripcion>
             <presentaciones>
               <presentacion>
@@ -20,8 +20,8 @@
             </presentaciones>
           </articulo>
           <articulo id="23Df">
-            <nombre>WorksT</nombre>
-            <marca>Alicate</marca>
+            <nombre>Alicate</nombre>
+            <marca>WorksT</marca>
             <descripcion>Punta fina</descripcion>
             <presentaciones>
               <presentacion>
@@ -31,8 +31,8 @@
             </presentaciones>
           </articulo>
           <articulo id="23Hj">
-            <nombre>Martillo</nombre>
-            <marca>Jilet</marca>
+            <nombre>Jilet</nombre>
+            <marca>Martillo</marca>
             <descripcion>Martillo grueso</descripcion>
             <presentaciones>
               <presentacion>
@@ -42,6 +42,10 @@
             </presentaciones>
           </articulo>
         </articulos>
+      </subcategoria>
+      <subcategoria id="222">
+        <nombre>dddd</nombre>
+        <descripcion>dddd</descripcion>
       </subcategoria>
     </subCategorias>
   </categoria>
@@ -58,8 +62,8 @@
         <descripcion>Pinturas para interior y </descripcion>
         <articulos>
           <articulo id="CLo">
-            <nombre>2222</nombre>
-            <marca>Sapo</marca>
+            <nombre>Sapo</nombre>
+            <marca>2222</marca>
             <descripcion>2333</descripcion>
             <presentaciones>
               <presentacion>
@@ -69,8 +73,8 @@
             </presentaciones>
           </articulo>
           <articulo id="008">
-            <nombre>sopaa</nombre>
-            <marca>eeee</marca>
+            <nombre>eeee</nombre>
+            <marca>sopaa</marca>
             <descripcion>seeee</descripcion>
             <presentaciones>
               <presentacion>
@@ -80,8 +84,8 @@
             </presentaciones>
           </articulo>
           <articulo id="Esee">
-            <nombre>eeee</nombre>
-            <marca>Holaaa</marca>
+            <nombre>Holaaa</nombre>
+            <marca>eeee</marca>
             <descripcion>Ellll</descripcion>
             <presentaciones>
               <presentacion>
@@ -97,8 +101,8 @@
         <descripcion>Pinturas para interior y exterior.</descripcion>
         <articulos>
           <articulo id="CO__">
-            <nombre>ssss</nombre>
-            <marca>Cooka</marca>
+            <nombre>Cooka</nombre>
+            <marca>ssss</marca>
             <descripcion>sssss</descripcion>
             <presentaciones>
               <presentacion>
@@ -112,8 +116,8 @@
             </presentaciones>
           </articulo>
           <articulo id="0078">
-            <nombre>Pintura</nombre>
-            <marca> 333</marca>
+            <nombre> 333</nombre>
+            <marca>Pintura</marca>
             <descripcion>33</descripcion>
             <presentaciones>
               <presentacion>

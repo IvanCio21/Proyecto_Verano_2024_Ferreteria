@@ -179,7 +179,7 @@
                   </component>
                   <component id="4c34e" class="javax.swing.JButton" binding="eliminarButton" default-binding="true">
                     <constraints>
-                      <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <icon value="icons/delete.png"/>
@@ -188,7 +188,7 @@
                   </component>
                   <component id="91783" class="javax.swing.JButton" binding="editCategory">
                     <constraints>
-                      <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value="Editar"/>
@@ -247,7 +247,7 @@
                   </grid>
                 </children>
               </grid>
-              <grid id="aa352" layout-manager="GridLayoutManager" row-count="4" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="aa352" layout-manager="GridLayoutManager" row-count="4" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
                   <grid row="3" column="0" row-span="1" col-span="6" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -309,7 +309,7 @@
                   </component>
                   <grid id="62f3b" layout-manager="BorderLayout" hgap="0" vgap="0">
                     <constraints>
-                      <grid row="3" column="0" row-span="1" col-span="4" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <grid row="3" column="0" row-span="1" col-span="6" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties/>
                     <border type="none" title="Busqueda"/>
@@ -333,9 +333,26 @@
                       </component>
                     </children>
                   </grid>
+                  <component id="80c72" class="javax.swing.JButton" binding="editarButtonSubCat">
+                    <constraints>
+                      <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Editar"/>
+                    </properties>
+                  </component>
+                  <component id="75fad" class="javax.swing.JButton" binding="eliminarsubcategoriaBtn">
+                    <constraints>
+                      <grid row="1" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <icon value="icons/delete.png"/>
+                      <text value="Eliminar"/>
+                    </properties>
+                  </component>
                   <component id="49be5" class="javax.swing.JButton" binding="limpiarSubcategoriaBtn">
                     <constraints>
-                      <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <icon value="icons/clear.png"/>
@@ -344,28 +361,11 @@
                   </component>
                   <component id="eb609" class="javax.swing.JButton" binding="GuardarSubcategoriaBtn">
                     <constraints>
-                      <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <icon value="icons/save.png"/>
                       <text value="Guardar"/>
-                    </properties>
-                  </component>
-                  <component id="75fad" class="javax.swing.JButton" binding="eliminarsubcategoriaBtn">
-                    <constraints>
-                      <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <icon value="icons/delete.png"/>
-                      <text value="Eliminar"/>
-                    </properties>
-                  </component>
-                  <component id="80c72" class="javax.swing.JButton" binding="editarButtonSubCat">
-                    <constraints>
-                      <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Editar"/>
                     </properties>
                   </component>
                 </children>
@@ -529,15 +529,6 @@
                       </component>
                     </children>
                   </grid>
-                  <component id="f9cc0" class="javax.swing.JButton" binding="guardarArticulosBtn">
-                    <constraints>
-                      <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <icon value="icons/save.png"/>
-                      <text value="Guardar"/>
-                    </properties>
-                  </component>
                   <component id="7b74b" class="javax.swing.JLabel" binding="cantidadLa">
                     <constraints>
                       <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -588,15 +579,6 @@
                       <text value="Editar "/>
                     </properties>
                   </component>
-                  <component id="f8d63" class="javax.swing.JButton" binding="eliminarArticulosBtn">
-                    <constraints>
-                      <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <icon value="icons/delete.png"/>
-                      <text value="Eliminar"/>
-                    </properties>
-                  </component>
                   <component id="259b4" class="javax.swing.JLabel" binding="marcaLabel">
                     <constraints>
                       <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -613,13 +595,31 @@
                     </constraints>
                     <properties/>
                   </component>
+                  <component id="f9cc0" class="javax.swing.JButton" binding="guardarArticulosBtn">
+                    <constraints>
+                      <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <icon value="icons/save.png"/>
+                      <text value="Guardar"/>
+                    </properties>
+                  </component>
                   <component id="935a8" class="javax.swing.JButton" binding="limpiarArticulosBtn">
                     <constraints>
-                      <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <icon value="icons/clear.png"/>
                       <text value="Limpiar"/>
+                    </properties>
+                  </component>
+                  <component id="f8d63" class="javax.swing.JButton" binding="eliminarArticulosBtn">
+                    <constraints>
+                      <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <icon value="icons/delete.png"/>
+                      <text value="Eliminar"/>
                     </properties>
                   </component>
                 </children>

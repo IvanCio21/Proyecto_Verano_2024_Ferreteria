@@ -271,7 +271,7 @@ public class GUI extends JFrame {
                     categorySubCategory.setEditable(false);
                     categoriaArticuloTf.setText(codigoCategoria[0] + "-" + nombreCategoria);
                     categoriaArticuloTf.setEditable(false);
-                    controller.TableSubCategories(codigoCategoria[0]);
+                    controller.TableSubCategories();
                 }
             }
         });
@@ -287,7 +287,7 @@ public class GUI extends JFrame {
                     PestaniasPanel.setSelectedIndex(2);
                     PestaniasPanel.setEnabledAt(0, false);
                     PestaniasPanel.setEnabledAt(1, false);
-                    controller.TableSubCategories(codigoCategoria);
+                    controller.TableSubCategories();
                     controller.TableItems();
                    // controller.TablePresentacion(I);
                 }
@@ -303,6 +303,7 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 clearTextSubCategoria();
+                controller.TableSubCategories();
             }
         });
 
@@ -458,6 +459,16 @@ public class GUI extends JFrame {
                         clearTextArticulo();
                         controller.TablePresentacion();
                     }
+                }
+            }
+        });
+
+        this.eliminarArticulosBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int seleccion = jTableArticulos.getSelectedRow();
+                if (seleccion != -1) {
+                    controller.eliminarArticulo();
                 }
             }
         });

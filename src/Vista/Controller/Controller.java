@@ -30,6 +30,7 @@ public class Controller {
         gui.setController(this);
         iniciar();
         TableCategorias();
+        TableSubCategories();
         TableItems();
         TablePresentacion();
     }
@@ -72,6 +73,12 @@ public class Controller {
     public boolean agregarCategoria(String id, String nombre, String descripcion) {
         Category newCategory =  new Category(id,nombre,descripcion);
         try{
+           for(Category category: model.getCategories()){
+               if(category.getId().trim().equals(id)){
+                   JOptionPane.showMessageDialog(null, "Categoria existente", "Error", JOptionPane.ERROR_MESSAGE);
+                   return false;
+               }
+           }
             service.addCategory(newCategory);
             model.setCategories(service.allCategories());
             TableCategorias();
@@ -105,7 +112,8 @@ public class Controller {
             model.setCategories(service.allCategories());
             TableCategorias();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            JOptionPane.showMessageDialog(null, "Categoria no puede ser eliminada porque contiene Subcategorias",
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -152,10 +160,10 @@ public class Controller {
 
     //SubCategoria
 
-    public void TableSubCategories(String dat) {
+    public void TableSubCategories() {
 
         try{
-            List<SubCategory> subCategories = service.categoryGetId(dat).getSubCategoryList();
+            List<SubCategory> subCategories = service.categoryGetId(gui.getCategoryId()).getSubCategoryList();
 
             DefaultTableModel TableModel = new DefaultTableModel(new String[]{"ID", "Nombre", "Descripcion"}, subCategories.size()) {
                 @Override
@@ -187,7 +195,7 @@ public class Controller {
                 }
             }
             service.addSubCategory(idCategoria,newSubCategory);
-            TableSubCategories(idCategoria);
+            TableSubCategories();
             service.saveXml();
             return true;
         } catch (Exception e) {
@@ -205,13 +213,8 @@ public class Controller {
 
     public boolean eliminarSubcategoria(String categoriaId, String subCategoriaId) {
         try {
-            // Llamar al servicio para eliminar la subcategoría usando los IDs
             service.EliminateSubcategory(categoriaId, subCategoriaId);
-
-            // Actualizar el modelo de categorías
             model.setCategories(service.allCategories());
-
-            // Refrescar la vista de categorías
             TableCategorias();
             service.saveXml();
             return true;
@@ -224,7 +227,8 @@ public class Controller {
     public boolean editSubCategory(String idCat, String idSub, String nombre, String descripcion) {
         try {
             service.setEditSubCategory(idCat,idSub,nombre,descripcion);
-            TableSubCategories(idCat);
+            TableSubCategories();
+            JOptionPane.showMessageDialog(null, "Sub Categoria editada");
             return true;
 
         } catch (Exception e) {
@@ -240,7 +244,7 @@ public class Controller {
             }
         };
 
-        SubCategory subCategory = service.subCategoryGetId(dat);
+        SubCategory subCategory = service.subCategoryGetId(gui.getCategoryId(),dat);
 
         if (subCategory == null) {
 
@@ -253,7 +257,12 @@ public class Controller {
 
     }
     public void searchSubCategory(String dat) throws Exception {
-        searchSubCategoryTable(dat);
+        try{
+            searchSubCategoryTable(dat);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "SubCategoria no encontrada ");
+        }
+
     }
 
     //Articulos
@@ -315,6 +324,12 @@ public class Controller {
         }
     }
 
+
+   public boolean eliminarArticulo(){
+        service.deleteItem(gui.getCategoryId(), gui.getIDSubCategoria(), gui.getArticuloId());
+        TablePresentacion();
+        return true;
+    }
 
 
 }

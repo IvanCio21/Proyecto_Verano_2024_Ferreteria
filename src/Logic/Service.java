@@ -37,11 +37,20 @@ public class Service {
     }
 
 
-    public SubCategory subCategoryGetId(String id) throws Exception {
-        SubCategory resultsubCategory = data.getSubcategorias().stream().filter(c -> c.getSubCategoryID().contains(id)).findFirst().orElse(null);
-        if (resultsubCategory != null)
-            return resultsubCategory;
-        else throw new Exception("SubCategoria no existe");
+    public SubCategory subCategoryGetId(String id, String idC) throws Exception {
+        List<SubCategory> listSub = categoryGetId(id).getSubCategoryList();
+        SubCategory resultSubCategory = null;
+        for (SubCategory subCategory : listSub) {
+            if (subCategory.getSubCategoryID().equals(idC) || subCategory.getSubCategoryName().equals(idC)) {
+                resultSubCategory = subCategory;
+                break;
+            }
+        }
+        if (resultSubCategory == null) {
+            throw new Exception();
+        }
+
+        return resultSubCategory;
     }
 
     public void CategoryEdit(String id, String nombre, String descrpcion) throws Exception {
@@ -56,20 +65,6 @@ public class Service {
         }
     }
 
-
-    public SubCategory subCategoryGetName(String name) throws Exception {
-        SubCategory resultsubCategory = data.getSubcategorias().stream().filter(c -> c.getSubCategoryName().contains(name)).findFirst().orElse(null);
-        if (resultsubCategory != null)
-            return resultsubCategory;
-        else throw new Exception("SubCategoria no existe");
-    }
-
-    public Items itemsGetId(String id) throws Exception {
-        Items resultItems = data.getArticulos().stream().filter(c -> c.getId().contains(id)).findFirst().orElse(null);
-        if (resultItems != null)
-            return resultItems;
-        else throw new Exception("Articulo no existe");
-    }
 
     public Items itemsGetName(String name) throws Exception {
         Items resultItems = data.getArticulos().stream().filter(c -> c.getName().contains(name)).findFirst().orElse(null);
@@ -123,9 +118,15 @@ public class Service {
     }
 
     public void CategoryDelete(int row) throws Exception {
+
         Category cat = data.getCategorias().get(row);
-        List<Category> categoryList = data.getCategorias();
-        data.getCategorias().remove(cat);
+        if(cat.getSubCategoryList().size() == 0){
+            data.getCategorias().remove(cat);
+        }else{
+            throw new Exception();
+        }
+
+
     }
 
     public void EliminateSubcategory(String categoriaId, String subCategoriaId) throws Exception {
