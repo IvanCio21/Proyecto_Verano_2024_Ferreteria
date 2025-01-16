@@ -288,6 +288,7 @@ public class GUI extends JFrame {
                     PestaniasPanel.setEnabledAt(1, false);
                     controller.TableSubCategories(codigoCategoria);
                     controller.TableItems();
+                    controller.TablePresentacion();
                 }
             }
         });

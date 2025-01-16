@@ -291,7 +291,7 @@ public class Controller {
     public void TablePresentacion(){
 
         try{
-            List<Presentation> presentations = service.allPresentation(gui.getCategoryId(), gui.getIDSubCategoria(), gui.getArticuloId());
+            List<Presentation> presentations = service.allPresentation(gui.getCategoryId(), gui.getIDSubCategoria());
             DefaultTableModel TableModel = new DefaultTableModel(new String[]{"Unidad", "Cantidad"}, presentations.size()) {
                 @Override
                 public boolean isCellEditable(int row, int column) {

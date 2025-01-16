@@ -8,17 +8,6 @@
         <nombre>Herramientas Manuales</nombre>
         <descripcion>Martillos, destornilladores, llaves y más</descripcion>
         <articulos>
-          <articulo id="29HB3">
-            <nombre>Jilet</nombre>
-            <marca>Destornillador</marca>
-            <descripcion>Punta plata</descripcion>
-            <presentaciones>
-              <presentacion>
-                <unidad>Unica</unidad>
-                <cantidad>18.0</cantidad>
-              </presentacion>
-            </presentaciones>
-          </articulo>
           <articulo id="28GF">
             <nombre>Destornillador</nombre>
             <marca>Jilet</marca>
@@ -27,6 +16,28 @@
               <presentacion>
                 <unidad>Unica</unidad>
                 <cantidad>28.0</cantidad>
+              </presentacion>
+            </presentaciones>
+          </articulo>
+          <articulo id="23Df">
+            <nombre>WorksT</nombre>
+            <marca>Alicate</marca>
+            <descripcion>Punta fina</descripcion>
+            <presentaciones>
+              <presentacion>
+                <unidad>Unidad</unidad>
+                <cantidad>34.0</cantidad>
+              </presentacion>
+            </presentaciones>
+          </articulo>
+          <articulo id="23Hj">
+            <nombre>Martillo</nombre>
+            <marca>Jilet</marca>
+            <descripcion>Martillo grueso</descripcion>
+            <presentaciones>
+              <presentacion>
+                <unidad>Unico</unidad>
+                <cantidad>3.0</cantidad>
               </presentacion>
             </presentaciones>
           </articulo>

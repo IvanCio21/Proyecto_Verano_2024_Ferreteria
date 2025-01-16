@@ -251,7 +251,7 @@ public class Service {
         return items;
     }
 
-    public List<Presentation> allPresentation(String id, String idSub, String cod) {
+    public List<Presentation> allPresentation(String id, String idSub) {
 
         List<Presentation> presentations = new ArrayList<>();
         try{
