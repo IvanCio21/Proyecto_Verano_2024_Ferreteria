@@ -75,8 +75,15 @@ public class Controller {
         try{
            for(Category category: model.getCategories()){
                if(category.getId().trim().equals(id)){
-                   JOptionPane.showMessageDialog(null, "Categoria existente", "Error", JOptionPane.ERROR_MESSAGE);
+                   JOptionPane.showMessageDialog(null, "ID de categoria repetido", "Error", JOptionPane.ERROR_MESSAGE);
                    return false;
+               }
+               else if (category.getName().trim().equals(nombre)) {
+                   int opcion = JOptionPane.showConfirmDialog(
+                        null,"Nombre de la categoría repetido, ¿desea continuar?","Advertencia",JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+                   if (opcion != JOptionPane.OK_OPTION) {
+                    return false;
+                   }
                }
            }
             service.addCategory(newCategory);
@@ -106,14 +113,17 @@ public class Controller {
         }
         this.gui.setTableCategoria(TableModel);
     }
-    public void deleteCategory(int row){
+    public boolean deleteCategory(int row){
         try{
             service.CategoryDelete(row);
             model.setCategories(service.allCategories());
+            service.saveXml();
             TableCategorias();
+            return true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Categoria no puede ser eliminada porque contiene Subcategorias",
                     "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
 
     }
@@ -190,8 +200,15 @@ public class Controller {
             SubCategory newSubCategory = new SubCategory(idSub,nombre,descripcion);
             for (SubCategory subCat : cat.getSubCategoryList()) {
                 if (subCat.getSubCategoryID().trim().equals(newSubCategory.getSubCategoryID().trim())) {
-                    JOptionPane.showMessageDialog(null, "La Sub Categoria ya existente", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "ID de SubCateogira repetido", "Error", JOptionPane.ERROR_MESSAGE);
                     return false;
+                }
+                else if (subCat.getSubCategoryName().trim().equals(nombre)) {
+                    int opcion = JOptionPane.showConfirmDialog(
+                            null,"Nombre de la SubCategoria repetido, ¿desea continuar?","Advertencia",JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+                    if (opcion != JOptionPane.OK_OPTION) {
+                        return false;
+                    }
                 }
             }
             service.addSubCategory(idCategoria,newSubCategory);
