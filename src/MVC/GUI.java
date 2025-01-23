@@ -4,12 +4,10 @@ import MVC.Controller.Controller;
 import MVC.Model.Model;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 //Este sera el observado: Escucha los cambios
 //actualiza cuando algo del observable cambia
 
@@ -92,6 +90,7 @@ public class GUI extends JFrame {
     private JButton regresarCategoriaButton;
     private JButton eliminarPresentacionButton;
     private JButton CategoriaSubButton;
+    private JLabel buscarCategori;
 
 
     public GUI(){
@@ -133,10 +132,9 @@ public class GUI extends JFrame {
     public void initComponets(){
 
         final String[] codigoCategoria = new String[1];
-        String codigoSubCategory;
         this.setContentPane(panelPrincipal);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
@@ -152,10 +150,12 @@ public class GUI extends JFrame {
         eliminarPresentacionButton.setEnabled(false);
 
         editCategory.setEnabled(false);
+        eliminarButton.setEnabled(false);
         guardarButton.setEnabled(true);
 
         editarButtonSubCat.setEnabled(false);
         GuardarSubcategoriaBtn.setEnabled(true);
+        eliminarButton.setEnabled(false);
 
         //Categporia
         this.guardarButton.addActionListener(new ActionListener() {
@@ -189,6 +189,7 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (listaCategoria.getSelectedRow() != -1) {
+
                     String categoriaId = (String) listaCategoria.getValueAt(listaCategoria.getSelectedRow(), 0);
 
                     try {
@@ -220,8 +221,10 @@ public class GUI extends JFrame {
                     nombre.setText(nombreCategoria);
                     descripcionCategoria.setText(descripcion);
 
+                    codigo.setEditable(false);
                     NEXTTTButton.setEnabled(true);
                     editCategory.setEnabled(true);
+                    eliminarButton.setEnabled(true);
                     guardarButton.setEnabled(false);
                 } else {
                     editCategory.setEnabled(false);
@@ -230,28 +233,6 @@ public class GUI extends JFrame {
             }
         });
 
-        /*
-       this.listaCategoria.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int filaSeleccionada = listaCategoria.getSelectedRow();
-                if (filaSeleccionada != -1) {
-                    codigo.setEditable(false);
-                    String codigoCategoria = listaCategoria.getValueAt(filaSeleccionada, 0).toString();
-                    String nombreCategoria = listaCategoria.getValueAt(filaSeleccionada, 1).toString();
-                    String descripcion = listaCategoria.getValueAt(filaSeleccionada, 2).toString();
-                    NEXTTTButton.setEnabled(true);
-                    codigo.setText(codigoCategoria);
-                    nombre.setText(nombreCategoria);
-                    descripcionCategoria.setText(descripcion);
-
-                    editCategory.setEnabled(true);
-                    guardarButton.setEnabled(false);
-                }
-            }
-        });
-
-        */
 
         this.editCategory.addActionListener(new ActionListener() {
             @Override
@@ -276,10 +257,10 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     if(buscarCategoria.getText().isEmpty()){
-                        buscarCategoria.setBorder( BorderFactory.createLineBorder(Color.RED, 2));
+                        buscarCategori.setBorder( BorderFactory.createLineBorder(Color.RED, 2));
 
                     }else{
-                        buscarCategoria.setBorder(null);
+                        buscarCategori.setBorder(null);
                         controller.searchCategory(buscarCategoria.getText());
                     }
 
@@ -378,11 +359,9 @@ public class GUI extends JFrame {
         this.eliminarsubcategoriaBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (listaCategoria.getSelectedRow() != -1) {
+                if(!IDSubCategoria.getText().isEmpty()){
                     String categoriaId = (String) listaCategoria.getValueAt(listaCategoria.getSelectedRow(), 0);
-
                     String subCategoriaId = getIDSubCategoria();
-
                     try {
                         if (controller.eliminarSubcategoria(categoriaId, subCategoriaId)) {
                             clearTextSubCategoria();
@@ -392,9 +371,9 @@ public class GUI extends JFrame {
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(null, "Error al eliminar la subcategoría: " + ex.getMessage());
                     }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Por favor, selecciona una categoría.");
-                }
+                   }else{
+                        JOptionPane.showMessageDialog(null, "Por favor, ingrese el codigo. ");
+                    }
             }
         });
 
@@ -439,7 +418,9 @@ public class GUI extends JFrame {
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
+            }else{
             }
+                JOptionPane.showMessageDialog(null, "Por favor, ingrese ID o nombre.");
             }
         });
 
@@ -620,19 +601,19 @@ public class GUI extends JFrame {
     public String getCategoryId(){ return codigo.getText(); }
     public String getArticuloId(){return codigoArticuloTf.getText(); }
 
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_  formWindowClosing
+    private void formWindowClosing(WindowEvent evt) {//GEN-FIRST:event_  formWindowClosing
         controller.exit();
     }
     private boolean validateForm() {
 
-        javax.swing.border.Border errorBorder = BorderFactory.createLineBorder(Color.RED, 2);
+        Border errorBorder = BorderFactory.createLineBorder(Color.RED, 2);
         boolean valid = true;
         if (codigo.getText().isEmpty()) {
             valid = false;
             codigoLabel.setBorder(errorBorder);
             codigoLabel.setToolTipText("ID requerido");
         } else {
-            codigo.setBorder(null);
+            codigoLabel.setBorder(null);
             codigoLabel.setToolTipText(null);
         }
 
@@ -655,12 +636,13 @@ public class GUI extends JFrame {
         }
 
 
+
         return valid;
     }
 
     private boolean validateSubCategoria() {
 
-        javax.swing.border.Border errorBorder = BorderFactory.createLineBorder(Color.RED, 2);
+        Border errorBorder = BorderFactory.createLineBorder(Color.RED, 2);
         boolean valid = true;
         if (IDSubCategoria.getText().isEmpty()) {
             valid = false;
@@ -695,7 +677,7 @@ public class GUI extends JFrame {
 
     private boolean validateArticulo() {
 
-        javax.swing.border.Border errorBorder = BorderFactory.createLineBorder(Color.RED, 2);
+        Border errorBorder = BorderFactory.createLineBorder(Color.RED, 2);
         boolean valid = true;
         if (codigoArticuloTf.getText().isEmpty()) {
             valid = false;
@@ -731,6 +713,7 @@ public class GUI extends JFrame {
             cantidadItems.setBorder(null);
         }
 
+
         return valid;
     }
 
@@ -738,17 +721,26 @@ public class GUI extends JFrame {
 
     void  clearText(){
         nombre.setText("");
+        nombreLabel.setBorder(null);
         codigo.setText("");
+        codigoLabel.setBorder(null);
         descripcionCategoria.setText("");
+        descripcionLabel.setBorder(null);
         buscarCategoria.setText("");
         listaCategoria.clearSelection();
         codigo.setEditable(true);
         NEXTTTButton.setEnabled(false);
+        eliminarButton.setEnabled(false);
+        buscarCategori.setBorder(null);
+
     }
     void  clearTextSubCategoria(){
         IDSubCategoria.setText("");
+        codigoLabel_Sub.setBorder(null);
         NameSubCategoria.setText("");
+        nombreLabel_Sub.setBorder(null);
         Descripcion_SubCategoria.setText("");
+        descrpcionLabel_SubCategoria.setBorder(null);
         buscarSubCategoria.setText("");
         subCategoriasTable.clearSelection();
         IDSubCategoria.setEditable(true);

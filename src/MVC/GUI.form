@@ -138,7 +138,7 @@
                     <properties/>
                     <border type="none" title="Busqueda"/>
                     <children>
-                      <component id="3affe" class="javax.swing.JLabel">
+                      <component id="3affe" class="javax.swing.JLabel" binding="buscarCategori">
                         <constraints border-constraint="West"/>
                         <properties>
                           <text value="Nombre o Id: "/>
