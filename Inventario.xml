@@ -156,4 +156,27 @@
       </subcategoria>
     </subCategorias>
   </categoria>
+  <categoria id="004">
+    <nombre>Pruebas</nombre>
+    <descripcion>pruebas</descripcion>
+    <subCategorias>
+      <subcategoria id="000112">
+        <nombre>Prueba</nombre>
+        <descripcion>vvv</descripcion>
+        <articulos>
+          <articulo id="5346">
+            <nombre>adfn</nombre>
+            <marca>Yale</marca>
+            <descripcion>gns</descripcion>
+            <presentaciones>
+              <presentacion>
+                <unidad>Litro</unidad>
+                <cantidad>56.0</cantidad>
+              </presentacion>
+            </presentaciones>
+          </articulo>
+        </articulos>
+      </subcategoria>
+    </subCategorias>
+  </categoria>
 </inventario>
