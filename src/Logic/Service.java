@@ -24,7 +24,16 @@ public class Service {
         return theInstance;
     }
 
-    //BUSQUEDA PRUEBA
+    //ARCHIVO
+    public void saveXml() {
+        xmlPersistent.guardarCategorias(data);
+    }
+    public void loadXml() {
+        List<Category> categorias = xmlPersistent.cargarCategorias();
+        data.setCategorias(categorias);
+    }
+
+    // CATEGORIA
     public Category categoryGetId(String id) throws Exception {
         Category resultCategory = data.getCategorias().stream()
                 .filter(c -> c.getId().contains(id) || c.getName().contains(id)) // Filtra por id o nombre
@@ -35,8 +44,47 @@ public class Service {
             return resultCategory;
         else throw new Exception("Categoria no existe");
     }
+    public void CategoryEdit(String id, String nombre, String descrpcion) throws Exception {
+        List<Category> categories = data.getCategorias();
+
+        for (Category category1 : categories) {
+            if (category1.getId().equals(id)) {
+                category1.setName(nombre);
+                category1.setDescription(descrpcion);
+                saveXml();
+            }
+        }
+    }
+    public void addCategory(Category category) throws Exception {
+        List<Category> categories = data.getCategorias();
+
+        for (Category category1 : categories) {
+            if (category1.getId().equals(category.getId())) {
+                throw new Exception("Categoría ya existe");
+            }
+        }
+        categories.add(category);
+        data.setCategorias(categories);
+
+        saveXml();
+    }
+    public void CategoryDelete(String id) throws Exception {
+
+        Category cat = categoryGetId(id);
+        if(cat.getSubCategoryList().isEmpty()){
+            data.getCategorias().remove(cat);
+        }else{
+            throw new Exception();
+        }
 
 
+    }
+    public List<Category> allCategories() {
+        return data.getCategorias();
+    }
+
+
+    //Sub Categorias
     public SubCategory subCategoryGetId(String id, String idC) throws Exception {
         List<SubCategory> listSub = categoryGetId(id).getSubCategoryList();
         SubCategory resultSubCategory = null;
@@ -52,63 +100,11 @@ public class Service {
 
         return resultSubCategory;
     }
-
-    public Items articuloGetId(String id) throws Exception {
-        for (Category category : data.getCategorias()) {
-            for (SubCategory subCategory : category.getSubCategoryList()) {
-                Items resultItem = subCategory.getItems().stream()
-                        .filter(item -> item.getId().equals(id) || item.getBrand().equals(id))
-                        .findFirst()
-                        .orElse(null);
-
-                if (resultItem != null) {
-                    return resultItem;
-                }
-            }
-        }
-        throw new Exception("Artículo no encontrado con el ID o nombre: " + id);
-    }
-
-
-
-
-
-    public void CategoryEdit(String id, String nombre, String descrpcion) throws Exception {
-        List<Category> categories = data.getCategorias();
-
-        for (Category category1 : categories) {
-            if (category1.getId().equals(id)) {
-                category1.setName(nombre);
-                category1.setDescription(descrpcion);
-                saveXml();
-            }
-        }
-    }
-
-    /// Category
-    public void addCategory(Category category) throws Exception {
-        List<Category> categories = data.getCategorias();
-
-        for (Category category1 : categories) {
-            if (category1.getId().equals(category.getId())) {
-                throw new Exception("Categoría ya existe");
-            }
-        }
-        categories.add(category);
-        data.setCategorias(categories);
-
-        saveXml();
-    }
-
-
-    //SubCategory
-
     public void addSubCategory(String id, SubCategory subCategory) throws Exception {
         Category cat = categoryGetId(id);
         cat.getSubCategoryList().add(subCategory);
         saveXml();
     }
-
     public void setEditSubCategory(String idC, String id, String name, String descrpcion) throws Exception {
 
         Category categoria = categoryGetId(idC);
@@ -128,8 +124,6 @@ public class Service {
             saveXml();
         }
     }
-
-
     public boolean consultarNombre(String cat, String sub) throws Exception {
         Category categoria = categoryGetId(cat);
         for(SubCategory subCat : categoria.getSubCategoryList()){
@@ -140,19 +134,6 @@ public class Service {
         return false;
 
     }
-
-    public void CategoryDelete(String id) throws Exception {
-
-        Category cat = categoryGetId(id);
-        if(cat.getSubCategoryList().isEmpty()){
-            data.getCategorias().remove(cat);
-        }else{
-            throw new Exception();
-        }
-
-
-    }
-
     public void EliminateSubcategory(String categoriaId, String subCategoriaId) throws Exception {
 
         Category categoria = categoryGetId(categoriaId);
@@ -181,12 +162,22 @@ public class Service {
     }
 
 
+    //Articulps
+    public Items articuloGetId(String id) throws Exception {
+        for (Category category : data.getCategorias()) {
+            for (SubCategory subCategory : category.getSubCategoryList()) {
+                Items resultItem = subCategory.getItems().stream()
+                        .filter(item -> item.getId().equals(id) || item.getBrand().equals(id))
+                        .findFirst()
+                        .orElse(null);
 
-
-
-
-
-
+                if (resultItem != null) {
+                    return resultItem;
+                }
+            }
+        }
+        throw new Exception("Artículo no encontrado con el ID o nombre: " + id);
+    }
     public void guardarArticulo(String cat, String subCategory, Items items, Presentation presentation) throws Exception {
 
         Category category = categoryGetId(cat);
@@ -236,8 +227,6 @@ public class Service {
             throw new Exception("Subcategoría no encontrada.");
         }
     }
-
-
     public boolean deleteItem(String categoryName, String subCategoryName, String itemId) {
         try {
 
@@ -265,26 +254,6 @@ public class Service {
         }
     }
 
-
-
-
-    public void saveXml() {
-        xmlPersistent.guardarCategorias(data);
-    }
-
-    public void loadXml() {
-        List<Category> categorias = xmlPersistent.cargarCategorias();
-        data.setCategorias(categorias);
-    }
-
-    public List<Category> allCategories() {
-        return data.getCategorias();
-    }
-
-    public List<SubCategory> allSubCategories() {
-        return data.getSubcategorias();
-    }
-
     public List<Items> allItems(String id, String idSub) throws Exception {
         List<Items> items = new ArrayList<>();
         try{
@@ -302,7 +271,40 @@ public class Service {
         }
         return items;
     }
+    public void editarArticulo ( String idCat, String idSub, String id, String nombre, String marca, String descricion) {
+        try {
+            List<Items> items = allItems(idCat, idSub);
+            for (Items item : items) {
+                if (item.getId().equals(id)) {
+                    item.setBrand(marca);
+                    item.setDescription(descricion);
+                    item.setName(nombre);
+                    data.setArticulos(data.getArticulos());
+                }
+            }
 
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+    public boolean BuscarNameArticulos(String idCat, String idSub, String nombre) {
+        try {
+            List<Items> items = allItems(idCat, idSub);
+            boolean nombreExiste = items.stream()
+                    .anyMatch(item -> item.getName().equalsIgnoreCase(nombre));
+
+            return nombreExiste;
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error al buscar el artículo: " + e.getMessage(), e);
+        }
+    }
+
+
+
+
+    //PRESENTACIONES
     public List<Presentation> allPresentation(String id, String idSub, String ar) {
 
         List<Presentation> presentations = new ArrayList<>();
@@ -318,7 +320,6 @@ public class Service {
         }
         return presentations;
     }
-
     public void agregarPresentation(String id, String sub, String Ar, Presentation presentation) {
 
         try {
@@ -343,7 +344,6 @@ public class Service {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
-
     public void eliminarPresentation(String id, String sub, String Ar, Presentation presentation) {
         try {
             List<Items> items = allItems(id, sub);
@@ -371,23 +371,7 @@ public class Service {
 
     }
 
-    public void editarArticulo ( String idCat, String idSub, String id, String nombre, String marca, String descricion, int row, String cant) {
 
-        try {
-            List<Items> items = allItems(idCat, idSub);
-            for (Items item : items) {
-                if (item.getId().equals(id)) {
-                    item.setBrand(marca);
-                    item.setDescription(descricion);
-                    item.setName(nombre);
-                    item.getPresentation().get(row).setQuantity(Integer.parseInt(cant));
-                }
-            }
 
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-    }
 }
 

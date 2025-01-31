@@ -95,6 +95,14 @@ public class GUI extends JFrame {
     private JLabel buscarCategori;
     private JComboBox unidadCombo;
     private JComboBox marcaCombo;
+    private JButton regresarSubCategoria;
+    private JPanel Pedidos;
+    private JTextField buscarArticulo;
+    private JButton buscarButton;
+    private JScrollPane articulosVender;
+    private JTextField subtotal;
+    private JTextField descuento;
+    private JTextField Total;
 
     public GUI(){
         initComponets();
@@ -164,6 +172,11 @@ public class GUI extends JFrame {
         buscarSubcategoriaBtn.setEnabled(false);
         limpiarSubcategoriaBtn.setEnabled(false);
         eliminarsubcategoriaBtn.setEnabled(false);
+
+        eliminarArticulosBtn.setEnabled(false);
+        buscarArticuloBtn.setEnabled(false);
+        limpiarArticulosBtn.setEnabled(false);
+        editarButton.setEnabled(false);
 
         //Categporia
         this.guardarButton.addActionListener(new ActionListener() {
@@ -304,22 +317,17 @@ public class GUI extends JFrame {
                 }
             }
         });
-
-        this.presentacionesTable.addMouseListener(new MouseAdapter() {
+        this.regresarSubCategoria.addActionListener(new ActionListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                int filaSeleccionada = presentacionesTable.getSelectedRow();
-                if(filaSeleccionada != -1){
-                    eliminarPresentacionButton.setEnabled(true);
-                    String unidad = presentacionesTable.getValueAt(filaSeleccionada, 0).toString();
-                    String cantidad = presentacionesTable.getValueAt(filaSeleccionada, 1).toString();;
-                    cantidadItems.setText(cantidad);
-                }
+            public void actionPerformed(ActionEvent e) {
+                    PestaniasPanel.setEnabledAt(0, false);
+                    PestaniasPanel.setEnabledAt(1, true);
+                    PestaniasPanel.setSelectedIndex(1);
+                    PestaniasPanel.setEnabledAt(2, false);
             }
         });
 
         // SUB-CATEGORY
-
         this.limpiarSubcategoriaBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -390,7 +398,6 @@ public class GUI extends JFrame {
                 }
             }
         });
-
         buscarSubcategoriaBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -405,10 +412,6 @@ public class GUI extends JFrame {
                 JOptionPane.showMessageDialog(null, "Por favor, ingrese ID o nombre.");
             }
         });
-
-
-
-
         this.editarButtonSubCat.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -417,7 +420,6 @@ public class GUI extends JFrame {
                 }
             }
         });
-
         this.CategoriaSubButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -438,7 +440,6 @@ public class GUI extends JFrame {
                 JOptionPane.showMessageDialog(null, "La ventana de Articulos se a limpiado correctamente");
             }
         });
-
         this.guardarArticulosBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -457,22 +458,18 @@ public class GUI extends JFrame {
                 }
             }
         });
-
-
         this.editarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int seleccion = presentacionesTable.getSelectedRow();
                 if (seleccion != -1) {
-                controller.editarItems(nombreArticuloTf.getText(), (String)marcaCombo.getSelectedItem(),descripcionArticuloTf.getText(),
-                        seleccion,cantidadItems.getText());
+                controller.editarItems(categoriaArticuloTf.getText(), subCategoriaArticuloTf.getText(),codigoArticuloTf.getText(), nombre.getText(), (String)marcaCombo.getSelectedItem(),descripcionArticuloTf.getText());
 
                    clearTextArticulo();
                    controller.TableItems();
                }
             }
         });
-
         buscarArticuloBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -485,8 +482,6 @@ public class GUI extends JFrame {
                 }
             }
         });
-
-
         this.jTableArticulos.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -498,19 +493,45 @@ public class GUI extends JFrame {
                     String marca = jTableArticulos.getValueAt(seleccion, 1).toString(); // Descripción
                     String nombreArticulo = jTableArticulos.getValueAt(seleccion, 2).toString();
                     String descripcion = jTableArticulos.getValueAt(seleccion, 3).toString(); // Marca
-
-
                     codigoArticuloTf.setText(codigoArticulo);
                     descripcionArticuloTf.setText(descripcion);
                     nombreArticuloTf.setText(nombreArticulo);
                     marcaCombo.setSelectedItem(marca);
                     controller.TablePresentacion();
                     codigoArticuloTf.setEditable(false);
+                    editarButton.setEnabled(true);
+                    eliminarArticulosBtn.setEnabled(true);
+                    guardarArticulosBtn.setEnabled(false);
+                }
+            }
+        });
+        this.eliminarArticulosBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int seleccion = jTableArticulos.getSelectedRow();
+
+                if (seleccion != -1) {
+
+                    try {
+                        boolean eliminado = controller.eliminarArticulo();
+
+                        if (eliminado) {
+                            JOptionPane.showMessageDialog(null, "Artículo eliminado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                            clearTextArticulo();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "No se encontró el artículo para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } catch (RuntimeException ex) {
+                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Seleccione un artículo para eliminar", "Advertencia", JOptionPane.WARNING_MESSAGE);
                 }
             }
         });
 
 
+        //PRESENTACIONES
         this.agregarPresentacionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -525,46 +546,35 @@ public class GUI extends JFrame {
                 }
             }
         });
-
-        this.eliminarArticulosBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int seleccion = jTableArticulos.getSelectedRow();
-
-                if (seleccion != -1) {
-
-                    try {
-                        boolean eliminado = controller.eliminarArticulo();
-
-                        if (eliminado) {
-                            JOptionPane.showMessageDialog(null, "Artículo eliminado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                        } else {
-                            JOptionPane.showMessageDialog(null, "No se encontró el artículo para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
-                        }
-                    } catch (RuntimeException ex) {
-                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Seleccione un artículo para eliminar", "Advertencia", JOptionPane.WARNING_MESSAGE);
-                }
-            }
-        });
-
         this.eliminarPresentacionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int seleccion = presentacionesTable.getSelectedRow();
                 if (seleccion != -1) {
-                    //unidadArt.setEditable(false);
                      if(controller.deletePresentacion((String)unidadCombo.getSelectedItem(),cantidadItems.getText())){
                          JOptionPane.showMessageDialog(null, "Presentacion eliminado con exito");
                          controller.TablePresentacion();
-                         //unidadArt.setText("");
                          cantidadItems.setText("");
+                         eliminarPresentacionButton.setEnabled(false);
                      }
                  }
             }
         });
+        this.presentacionesTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int filaSeleccionada = presentacionesTable.getSelectedRow();
+                if(filaSeleccionada != -1){
+                    eliminarPresentacionButton.setEnabled(true);
+                    String unidad = presentacionesTable.getValueAt(filaSeleccionada, 0).toString();
+                    String cantidad = presentacionesTable.getValueAt(filaSeleccionada, 1).toString();;
+                    cantidadItems.setText(cantidad);
+                    agregarPresentacionButton.setEnabled(false);
+                }
+            }
+        });
+
+        //BONOTES REGRESAR O NEXT ARTCICULO
         this.regresarCategoriaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -574,6 +584,8 @@ public class GUI extends JFrame {
                 PestaniasPanel.setEnabledAt(2, false);
             }
         });
+
+
 
         this.nombre.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -687,7 +699,76 @@ public class GUI extends JFrame {
                 validarBottenSubCategoria();
             }
         });
-
+        this.nombreArticuloTf.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                validarArticulo();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                validarArticulo();
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                validarArticulo();
+            }
+        });
+        this.codigoArticuloTf.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                validarArticulo();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                validarArticulo();
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                validarArticulo();
+            }
+        });
+        this.buscarIdArticuloTf.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                validarArticulo();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                validarArticulo();
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                validarArticulo();
+            }
+        });
+        this.descripcionArticuloTf.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                validarArticulo();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                validarArticulo();
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                validarArticulo();
+            }
+        });
+        this.cantidadItems.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                validarArticulo();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                validarArticulo();
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                validarArticulo();
+            }
+        });
     }
 
     public void validar(){
@@ -781,6 +862,23 @@ public class GUI extends JFrame {
     }
 
 
+    private void validarArticulo() {
+        if(!(codigoArticuloTf.getText().isEmpty() &&
+        nombreArticuloTf.getText().isEmpty()
+        && descripcionArticuloTf.getText().isEmpty()
+        && cantidadLa.getText().isEmpty() && buscarIdArticuloTf.getText().isEmpty())){
+           limpiarArticulosBtn.setEnabled(true);
+        }else{
+            limpiarArticulosBtn.setEnabled(false);
+        }
+
+        if(buscarIdArticuloTf.getText().isEmpty()){
+            buscarArticuloBtn.setEnabled(false);
+        }else{
+            buscarArticuloBtn.setEnabled(true);
+        }
+    }
+
     private boolean validateArticulo() {
 
         Border errorBorder = BorderFactory.createLineBorder(Color.RED, 2);
@@ -806,12 +904,6 @@ public class GUI extends JFrame {
         }else {
             descripcionArticuloTf.setBorder(null);
         }
-       /* if(unidadArt.getText().isEmpty()){
-            valid = false;
-            unidadArt.setBorder(errorBorder);
-        }else{
-            unidadArt.setBorder(null);
-        }*/
         if(cantidadItems.getText().isEmpty()){
             valid = false;
             cantidadItems.setBorder(errorBorder);
@@ -822,9 +914,6 @@ public class GUI extends JFrame {
 
         return valid;
     }
-
-
-
     void  clearText(){
         nombre.setText("");
         nombreLabel.setBorder(null);
@@ -852,7 +941,6 @@ public class GUI extends JFrame {
         IDSubCategoria.setEditable(true);
        eliminarsubcategoriaBtn.setEnabled(false);
     }
-
     void clearTextArticulo(){
         codigoArticuloTf.setText("");
         nombreArticuloTf.setText("");
@@ -864,9 +952,13 @@ public class GUI extends JFrame {
         codigoArticuloTf.setEditable(true);
         presentacionesTable.clearSelection();
         agregarPresentacionButton.setEnabled(false);
+        limpiarArticulosBtn.setEnabled(false);
+        editarButton.setEnabled(false);
+        eliminarArticulosBtn.setEnabled(false);
+        controller.TablePresentacion();
+        eliminarPresentacionButton.setEnabled(false);
 
     }
-
     private void validarBottenSubCategoria(){
         if(!(IDSubCategoria.getText().isEmpty() && NameSubCategoria.getText().isEmpty()
         && Descripcion_SubCategoria.getText().isEmpty() && buscarSubCategoria.getText().isEmpty())){

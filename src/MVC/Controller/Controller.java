@@ -127,7 +127,6 @@ public class Controller {
         }
 
     }
-
     public boolean editCategory(String id, String name, String descripcion) {
         List<Category> categories = model.getCategories();
         try {
@@ -157,7 +156,6 @@ public class Controller {
             throw new RuntimeException(e);
         }
     }
-
     public void searchCategoryTable(String dat) throws Exception {
 
         DefaultTableModel TableModel = new DefaultTableModel(new String[]{"ID", "Nombre", "Descripcion"}, 0) {
@@ -206,7 +204,6 @@ public class Controller {
             throw new RuntimeException(e);
         }
     }
-
     public boolean GuardarSubCategoria(String idCategoria,String idSub, String nombre, String descripcion) {
         try{
             Category cat = service.categoryGetId(idCategoria);
@@ -233,28 +230,6 @@ public class Controller {
             throw new RuntimeException(e);
         }
     }
-
-
-    public boolean agregarPresentaciones(String un, String pre) {
-        try {
-            double numeroComoDouble = Double.parseDouble(pre);
-
-            // Llamar al servicio para agregar la presentación
-            service.agregarPresentation(gui.getCategoryId(), gui.getIDSubCategoria(), gui.getArticuloId(),
-                    new Presentation(un, numeroComoDouble));
-
-
-            JOptionPane.showMessageDialog(null, "Presentación agregada correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            return true;
-
-        } catch (RuntimeException e) {
-
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-    }
-
-
     public boolean eliminarSubcategoria(String categoriaId, String subCategoriaId) {
         try {
             service.EliminateSubcategory(categoriaId, subCategoriaId);
@@ -266,7 +241,6 @@ public class Controller {
             return false;
         }
     }
-
     public boolean editSubCategory(String idCat, String idSub, String nombre, String descripcion) {
         try {
             if (!service.consultarNombre(idCat,  nombre)) {
@@ -300,9 +274,6 @@ public class Controller {
             return false;
         }
     }
-
-
-
     public void searchSubCategoryTable(String dat) throws Exception {
 
         DefaultTableModel TableModel = new DefaultTableModel(new String[]{"ID", "Nombre", "Descripcion"}, 0) {
@@ -323,7 +294,6 @@ public class Controller {
         this.gui.setTableSubCategorias(TableModel);
 
     }
-
     public void searchSubCategory(String dat) throws Exception {
         try{
             searchSubCategoryTable(dat);
@@ -334,6 +304,7 @@ public class Controller {
     }
 
     //Articulos
+
     public void searchArticuloTable(String dat) throws Exception {
         DefaultTableModel TableModel = new DefaultTableModel(new String[]{"ID", "Nombre", "Marca", "Descripción"}, 0) {
             @Override
@@ -352,7 +323,6 @@ public class Controller {
 
         this.gui.setTableArticulos(TableModel); // Método para actualizar la tabla en la GUI
     }
-
     public void searchArticulo(String dat) throws Exception {
         try{
             searchArticuloTable(dat);
@@ -360,36 +330,44 @@ public class Controller {
             JOptionPane.showMessageDialog(null, "Articulo no encontrada ");
         }
     }
-
     public boolean saveItems(String idC, String sub, String cod, String marca, String nombre, String descripcion, String Prese, String e) {
         try {
-
-            double num = Double.parseDouble(e);
-
-
-            Items item = new Items(cod, marca, nombre, descripcion);
-            Presentation presentation = new Presentation(Prese, num);
-
-
-            service.guardarArticulo(idC, sub, item, presentation);
-            TableItems();
-            service.saveXml();
-            return true;
-
+            if (!service.BuscarNameArticulos(idC, sub, nombre)) {
+                double num = Double.parseDouble(e);
+                Items item = new Items(cod, marca, nombre, descripcion);
+                Presentation presentation = new Presentation(Prese, num);
+                service.guardarArticulo(idC, sub, item, presentation);
+                TableItems();
+                service.saveXml();
+                return true;
+            } else {
+                int option = JOptionPane.showConfirmDialog(
+                        null,
+                        "Ya existe un artículo con el mismo nombre. ¿Desea agregar este artículo de todos modos?",
+                        "Advertencia",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE
+                );
+                if (option == JOptionPane.YES_OPTION) {
+                    double num = Double.parseDouble(e);
+                    Items item = new Items(cod, marca, nombre, descripcion);
+                    Presentation presentation = new Presentation(Prese, num);
+                    service.guardarArticulo(idC, sub, item, presentation);
+                    TableItems();
+                    service.saveXml();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
         } catch (NumberFormatException ex) {
-
             JOptionPane.showMessageDialog(null, "El valor de la cantidad debe ser un número válido: " + e, "Error", JOptionPane.ERROR_MESSAGE);
             return false;
-
         } catch (Exception ex) {
-
             JOptionPane.showMessageDialog(null, "Error al guardar el artículo: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
-
-
-
     public void TableItems() {
 
         try{
@@ -414,7 +392,62 @@ public class Controller {
         }
 
     }
+    public boolean eliminarArticulo() {
+        try {
+            boolean eliminado = service.deleteItem(gui.getCategoryId(), gui.getIDSubCategoria(), gui.getArticuloId());
 
+            if (eliminado) {
+                TablePresentacion();
+                TableItems();
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+
+            throw new RuntimeException("Error al eliminar el artículo: " + e.getMessage(), e);
+        }
+    }
+    public boolean editarItems(String idC, String sub,String cod,String nombre, String marca, String descripcion) {
+        try {
+            if (!service.BuscarNameArticulos(idC, sub, nombre)) {
+                service.editarArticulo(idC,sub,cod,nombre,marca,descripcion);
+                TableItems();
+                service.saveXml();
+                return true;
+            } else {
+                int option = JOptionPane.showConfirmDialog(
+                        null,
+                        "Ya existe un artículo con el mismo nombre. ¿Desea agregar este artículo de todos modos?",
+                        "Advertencia",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE
+                );
+                if (option == JOptionPane.YES_OPTION) {
+                    service.editarArticulo(idC,sub,cod,nombre,marca,descripcion);
+                    TableItems();
+                    service.saveXml();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        } catch (NumberFormatException ex) {
+            return false;
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error al guardar el artículo: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+
+    //Presentaciones
+    public boolean deletePresentacion(String me, String e){
+            double ee = Double.parseDouble(e);
+            service.eliminarPresentation(gui.getCategoryId(), gui.getIDSubCategoria(), gui.getArticuloId(
+            )   , new Presentation(me,ee));
+            return true;
+
+    }
     public void TablePresentacion(){
 
         try{
@@ -435,36 +468,23 @@ public class Controller {
             throw new RuntimeException(e);
         }
     }
-
-
-    public boolean eliminarArticulo() {
+    public boolean agregarPresentaciones(String un, String pre) {
         try {
-            boolean eliminado = service.deleteItem(gui.getCategoryId(), gui.getIDSubCategoria(), gui.getArticuloId());
+            double numeroComoDouble = Double.parseDouble(pre);
 
-            if (eliminado) {
-                TablePresentacion();
-                TableItems();
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception e) {
+            // Llamar al servicio para agregar la presentación
+            service.agregarPresentation(gui.getCategoryId(), gui.getIDSubCategoria(), gui.getArticuloId(),
+                    new Presentation(un, numeroComoDouble));
 
-            throw new RuntimeException("Error al eliminar el artículo: " + e.getMessage(), e);
-        }
-    }
 
-    public boolean deletePresentacion(String me, String e){
-            double ee = Double.parseDouble(e);
-            service.eliminarPresentation(gui.getCategoryId(), gui.getIDSubCategoria(), gui.getArticuloId(
-            )   , new Presentation(me,ee));
+            JOptionPane.showMessageDialog(null, "Presentación agregada correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             return true;
 
-    }
+        } catch (RuntimeException e) {
 
-    public boolean editarItems(String nombre, String marca, String descripcion, int uni, String cantidas){
-        service.editarArticulo(gui.getCategoryId(),gui.getIDSubCategoria(),gui.getArticuloId(),nombre,marca,descripcion,uni,cantidas);
-        return true;
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
     }
 
 
