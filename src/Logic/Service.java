@@ -85,14 +85,6 @@ public class Service {
         }
     }
 
-
-    public Items itemsGetName(String name) throws Exception {
-        Items resultItems = data.getArticulos().stream().filter(c -> c.getName().contains(name)).findFirst().orElse(null);
-        if (resultItems != null)
-            return resultItems;
-        else throw new Exception("Categoria no existe");
-    }
-
     /// Category
     public void addCategory(Category category) throws Exception {
         List<Category> categories = data.getCategorias();
@@ -137,10 +129,22 @@ public class Service {
         }
     }
 
-    public void CategoryDelete(int row) throws Exception {
 
-        Category cat = data.getCategorias().get(row);
-        if(cat.getSubCategoryList().size() == 0){
+    public boolean consultarNombre(String cat, String sub) throws Exception {
+        Category categoria = categoryGetId(cat);
+        for(SubCategory subCat : categoria.getSubCategoryList()){
+            if(subCat.getSubCategoryName().equals(sub)){
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+    public void CategoryDelete(String id) throws Exception {
+
+        Category cat = categoryGetId(id);
+        if(cat.getSubCategoryList().isEmpty()){
             data.getCategorias().remove(cat);
         }else{
             throw new Exception();

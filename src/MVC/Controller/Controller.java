@@ -113,9 +113,9 @@ public class Controller {
         }
         this.gui.setTableCategoria(TableModel);
     }
-    public boolean deleteCategory(int row){
+    public boolean deleteCategory(String id){
         try{
-            service.CategoryDelete(row);
+            service.CategoryDelete(id);
             model.setCategories(service.allCategories());
             service.saveXml();
             TableCategorias();
@@ -127,23 +127,37 @@ public class Controller {
         }
 
     }
-    public boolean editCategory(String id,String name, String descripcion) {
+
+    public boolean editCategory(String id, String name, String descripcion) {
         List<Category> categories = model.getCategories();
-        try{
-            for(int i = 0; i < categories.size(); i++){
-                if(categories.get(i).getId().equals(id)){
-                    service.CategoryEdit(id,name,descripcion);
-                    model.setCategories(service.allCategories());
-                    TableCategorias();
-                    return true;
+        try {
+            for (Category category : categories) {
+                if (category.getId().equals(id)) {
+                    continue;
+                }
+                if (category.getName().equals(name)) {
+                    int option = JOptionPane.showConfirmDialog(null,
+                            "El nombre de categoría ya existe. ¿Desea agregar otra categoría o cancelar la operación?",
+                            "Nombre existente",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.WARNING_MESSAGE);
+
+                    if (option == JOptionPane.NO_OPTION) {
+                        return false;
+                    }
+                    break;
                 }
             }
+
+            service.CategoryEdit(id, name, descripcion);
+            model.setCategories(service.allCategories());
+            TableCategorias();
+            return true;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        return false;
     }
+
     public void searchCategoryTable(String dat) throws Exception {
 
         DefaultTableModel TableModel = new DefaultTableModel(new String[]{"ID", "Nombre", "Descripcion"}, 0) {
@@ -255,15 +269,39 @@ public class Controller {
 
     public boolean editSubCategory(String idCat, String idSub, String nombre, String descripcion) {
         try {
-            service.setEditSubCategory(idCat,idSub,nombre,descripcion);
-            TableSubCategories();
-            JOptionPane.showMessageDialog(null, "Sub Categoria editada");
-            return true;
+            if (!service.consultarNombre(idCat,  nombre)) {
+                service.setEditSubCategory(idCat, idSub, nombre, descripcion);
+                TableSubCategories();
+                return true;
+            } else {
+                int option = JOptionPane.showConfirmDialog(
+                        null,
+                        "Ya existe una subcategoría con ese nombre. ¿Desea editar la subcategoría de todos modos?",
+                        "Error",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE
+                );
 
+                if (option == JOptionPane.YES_OPTION) {
+                    try {
+                        service.setEditSubCategory(idCat, idSub, nombre, descripcion);
+                        TableSubCategories();
+                        return true;
+                    } catch (Exception retryException) {
+                        JOptionPane.showMessageDialog(null, "Error al editar la subcategoría: " + retryException.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            JOptionPane.showMessageDialog(null, "Error al realizar la operación: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
     }
+
+
 
     public void searchSubCategoryTable(String dat) throws Exception {
 

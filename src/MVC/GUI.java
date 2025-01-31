@@ -5,6 +5,8 @@ import MVC.Model.Model;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
@@ -157,6 +159,11 @@ public class GUI extends JFrame {
         editarButtonSubCat.setEnabled(false);
         GuardarSubcategoriaBtn.setEnabled(true);
         eliminarButton.setEnabled(false);
+        limpiarCategoriaButton.setEnabled(false);
+        searchButton.setEnabled(false);
+        buscarSubcategoriaBtn.setEnabled(false);
+        limpiarSubcategoriaBtn.setEnabled(false);
+        eliminarsubcategoriaBtn.setEnabled(false);
 
         //Categporia
         this.guardarButton.addActionListener(new ActionListener() {
@@ -174,7 +181,6 @@ public class GUI extends JFrame {
                 }
             }
         });
-
         this.limpiarCategoriaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -183,32 +189,27 @@ public class GUI extends JFrame {
                 JOptionPane.showMessageDialog(null,"La ventana de categoria se a limpiado correctamente");
             }
         });
-
-        assert this.eliminarButton != null;
         this.eliminarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (listaCategoria.getSelectedRow() != -1) {
-
                     String categoriaId = (String) listaCategoria.getValueAt(listaCategoria.getSelectedRow(), 0);
 
                     try {
-                        int categoriaIdInt = Integer.parseInt(categoriaId);
-                        if (controller.deleteCategory(categoriaIdInt)) {
+                        if (controller.deleteCategory(categoriaId)) {
                             clearText();
                             controller.TableCategorias();
                             listaCategoria.clearSelection();
-                            JOptionPane.showMessageDialog(null, "Categoría eliminada con éxito");
+                            JOptionPane.showMessageDialog(null, "Categoría eliminada ");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "No se pudo eliminar la categoría.");
                         }
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(null, "Error al eliminar la categoría: " + ex.getMessage());
                     }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Por favor, selecciona una categoría.");
                 }
             }
         });
-
         this.listaCategoria.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 int filaSeleccionada = listaCategoria.getSelectedRow();
@@ -232,8 +233,6 @@ public class GUI extends JFrame {
                 }
             }
         });
-
-
         this.editCategory.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -251,7 +250,6 @@ public class GUI extends JFrame {
             }
 
         });
-
         this.searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -269,8 +267,6 @@ public class GUI extends JFrame {
                 }
             }
         });
-
-
         this.NEXTTTButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -305,30 +301,24 @@ public class GUI extends JFrame {
                     PestaniasPanel.setEnabledAt(1, false);
                     controller.TableSubCategories();
                     controller.TableItems();
-                   // controller.TablePresentacion(I);
                 }
             }
         });
-
 
         this.presentacionesTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int filaSeleccionada = presentacionesTable.getSelectedRow();
                 if(filaSeleccionada != -1){
-                   // unidadArt.setEditable(false);
                     eliminarPresentacionButton.setEnabled(true);
                     String unidad = presentacionesTable.getValueAt(filaSeleccionada, 0).toString();
-                    String cantidad = presentacionesTable.getValueAt(filaSeleccionada, 1).toString();
-                    //unidadArt.setText(unidad);
+                    String cantidad = presentacionesTable.getValueAt(filaSeleccionada, 1).toString();;
                     cantidadItems.setText(cantidad);
                 }
             }
         });
 
         // SUB-CATEGORY
-
-
 
         this.limpiarSubcategoriaBtn.addActionListener(new ActionListener() {
             @Override
@@ -338,7 +328,6 @@ public class GUI extends JFrame {
                 JOptionPane.showMessageDialog(null, "La ventana de subcategoria se a limpiado correctamente");
             }
         });
-
         this.GuardarSubcategoriaBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -352,36 +341,29 @@ public class GUI extends JFrame {
                   }
             }
         });
-
-
-
-        assert this.eliminarsubcategoriaBtn != null;
         this.eliminarsubcategoriaBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!IDSubCategoria.getText().isEmpty()){
-                    String categoriaId = (String) listaCategoria.getValueAt(listaCategoria.getSelectedRow(), 0);
-                    String subCategoriaId = getIDSubCategoria();
-                    try {
-                        if (controller.eliminarSubcategoria(categoriaId, subCategoriaId)) {
-                            clearTextSubCategoria();
-                            controller.TableSubCategories();// Limpiar campos si es necesario
-                            JOptionPane.showMessageDialog(null, "Subcategoría eliminada con éxito");
-                        }
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Error al eliminar la subcategoría: " + ex.getMessage());
+                String categoriaId = (String) listaCategoria.getValueAt(listaCategoria.getSelectedRow(), 0);
+                String subCategoriaId = getIDSubCategoria();
+                try {
+                    if (controller.eliminarSubcategoria(categoriaId, subCategoriaId)) {
+                        clearTextSubCategoria();
+                        controller.TableSubCategories();// Limpiar campos si es necesario
+                        JOptionPane.showMessageDialog(null, "Subcategoría eliminada con éxito");
+                        eliminarsubcategoriaBtn.setEnabled(false);
                     }
-                   }else{
-                        JOptionPane.showMessageDialog(null, "Por favor, ingrese el codigo. ");
-                    }
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Error al eliminar la subcategoría: " + ex.getMessage());
+                }
             }
         });
-
         this.subCategoriasTable.getSelectionModel().addListSelectionListener(e -> {
             if(!e.getValueIsAdjusting()){
                 if (subCategoriasTable.getSelectedRow() != -1){
                     editarButtonSubCat.setEnabled(true);
                     GuardarSubcategoriaBtn.setEnabled(false);
+                    eliminarsubcategoriaBtn.setEnabled(true);
                 } else {
                     editarButtonSubCat.setEnabled(false);
                     GuardarSubcategoriaBtn.setEnabled(true);
@@ -504,6 +486,7 @@ public class GUI extends JFrame {
             }
         });
 
+
         this.jTableArticulos.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -567,7 +550,7 @@ public class GUI extends JFrame {
             }
         });
 
-        eliminarPresentacionButton.addActionListener(new ActionListener() {
+        this.eliminarPresentacionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int seleccion = presentacionesTable.getSelectedRow();
@@ -582,8 +565,6 @@ public class GUI extends JFrame {
                  }
             }
         });
-
-
         this.regresarCategoriaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -594,8 +575,133 @@ public class GUI extends JFrame {
             }
         });
 
+        this.nombre.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                validar();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                validar();
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                validar();
+            }
+        });
+        this.codigo.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                validar();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                validar();
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                validar();
+            }
+        });
+        this.descripcionCategoria.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                validar();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                validar();
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                validar();
+            }
+        });
+        this.buscarCategoria.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                validar();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                validar();
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                validar();
+            }
+        });
+        this.IDSubCategoria.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                validarBottenSubCategoria();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                validarBottenSubCategoria();
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                validarBottenSubCategoria();
+            }
+        });
+        this.NameSubCategoria.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                validarBottenSubCategoria();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                validarBottenSubCategoria();
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                validarBottenSubCategoria();
+            }
+        });
+        this.Descripcion_SubCategoria.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                validarBottenSubCategoria();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                validarBottenSubCategoria();
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                validarBottenSubCategoria();
+            }
+        });
+        this.buscarSubCategoria.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                validarBottenSubCategoria();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                validarBottenSubCategoria();
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                validarBottenSubCategoria();
+            }
+        });
 
+    }
 
+    public void validar(){
+        if(!(codigo.getText().isEmpty() && descripcionCategoria.getText().isEmpty() &&
+                nombre.getText().isEmpty() && buscarCategoria.getText().isEmpty())){
+            limpiarCategoriaButton.setEnabled(true);
+        }else{
+            limpiarCategoriaButton.setEnabled(false);
+        }
+        if(!(buscarCategoria.getText().isEmpty())){
+            searchButton.setEnabled(true);
+        }else{
+            searchButton.setEnabled(false);
+        }
     }
 
     public String getCategoryId(){ return codigo.getText(); }
@@ -744,6 +850,7 @@ public class GUI extends JFrame {
         buscarSubCategoria.setText("");
         subCategoriasTable.clearSelection();
         IDSubCategoria.setEditable(true);
+       eliminarsubcategoriaBtn.setEnabled(false);
     }
 
     void clearTextArticulo(){
@@ -752,9 +859,7 @@ public class GUI extends JFrame {
         descripcionArticuloTf.setText("");
         buscarIdArticuloTf.setText("");
         jTableArticulos.clearSelection();
-       // unidadArt.setText("");
         cantidadItems.setText("");
-       // marcaArticuloTf.setText(" ");
         guardarArticulosBtn.setEnabled(true);
         codigoArticuloTf.setEditable(true);
         presentacionesTable.clearSelection();
@@ -762,6 +867,19 @@ public class GUI extends JFrame {
 
     }
 
+    private void validarBottenSubCategoria(){
+        if(!(IDSubCategoria.getText().isEmpty() && NameSubCategoria.getText().isEmpty()
+        && Descripcion_SubCategoria.getText().isEmpty() && buscarSubCategoria.getText().isEmpty())){
+            limpiarSubcategoriaBtn.setEnabled(true);
+        }else{
+        limpiarSubcategoriaBtn.setEnabled(false);
+     }
+        if(buscarSubCategoria.getText().isEmpty()){
+            buscarSubcategoriaBtn.setEnabled(false);
+        }else{
+            buscarSubcategoriaBtn.setEnabled(true);
+        }
+    }
     private void Acercade() {
         String texto = "Esta Aplicación Fue Creada Por Grupo F.\n\n"
                 + "Integrantes:\n"
