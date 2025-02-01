@@ -360,14 +360,14 @@ public class Controller {
             throw new RuntimeException("Error al eliminar el artículo: " + e.getMessage(), e);
         }
     }
-    public boolean editarItems(String idC, String sub, String cod, String nombre, String marca, String descripcion) {
+    public boolean editarItems(String idC, String sub, String cod, String nombre, String marca, String descripcion, String presentacion, String cantidad) {
         try {
             if (service.BuscarNameArticulos(idC, sub, nombre)) {
                 JOptionPane.showMessageDialog(null,"Ya existe un artículo con el mismo nombre. No se puede editar con un nombre duplicado.","Error", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
 
-            service.editarArticulo(idC, sub, cod, nombre, marca, descripcion);
+            service.editarArticulo(idC, sub, cod, nombre, marca, descripcion, presentacion, cantidad);
             TableItems();
             service.saveXml();
             return true;
@@ -384,11 +384,18 @@ public class Controller {
     //Presentaciones
     public boolean deletePresentacion(String me, String e){
             double ee = Double.parseDouble(e);
-            service.eliminarPresentation(gui.getCategoryId(), gui.getIDSubCategoria(), gui.getArticuloId(
-            )   , new Presentation(me,ee));
+            service.eliminarPresentation(gui.getCategoryId(), gui.getIDSubCategoria(), gui.getArticuloId()
+                    , new Presentation(me,ee));
             return true;
 
     }
+
+    public boolean editPresentacion(String me,String e){
+        double ee = Double.parseDouble(e);
+        service.editarPresentation(gui.getCategoryId(), gui.getIDSubCategoria(), gui.getArticuloId(), new Presentation(me, ee));
+        return true;
+    }
+
     public void TablePresentacion(){
 
         try{
@@ -409,6 +416,7 @@ public class Controller {
             throw new RuntimeException(e);
         }
     }
+
     public boolean agregarPresentaciones(String un, String pre) {
         try {
             double numeroComoDouble = Double.parseDouble(pre);

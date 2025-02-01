@@ -9,8 +9,8 @@
         <descripcion>Martillos, destornilladores</descripcion>
         <articulos>
           <articulo id="28GF">
-            <nombre>Destornillador</nombre>
-            <marca>Jilet</marca>
+            <nombre>Jilet</nombre>
+            <marca>Destornillador</marca>
             <descripcion>Punta estrella</descripcion>
             <presentaciones>
               <presentacion>
@@ -20,8 +20,8 @@
             </presentaciones>
           </articulo>
           <articulo id="23Df">
-            <nombre>WorksT</nombre>
-            <marca>Alicate</marca>
+            <nombre>Alicate</nombre>
+            <marca>WorksT</marca>
             <descripcion>Punta fina</descripcion>
             <presentaciones>
               <presentacion>
@@ -31,8 +31,8 @@
             </presentaciones>
           </articulo>
           <articulo id="23Hj">
-            <nombre>Martillo</nombre>
-            <marca>Jilet</marca>
+            <nombre>Jilet</nombre>
+            <marca>Martillo</marca>
             <descripcion>Martillo grueso</descripcion>
             <presentaciones>
               <presentacion>
@@ -42,8 +42,8 @@
             </presentaciones>
           </articulo>
           <articulo id="22333">
-            <nombre>sssss</nombre>
-            <marca>Zapato</marca>
+            <nombre>Zapato</nombre>
+            <marca>sssss</marca>
             <descripcion>ssss</descripcion>
             <presentaciones>
               <presentacion>
@@ -53,8 +53,8 @@
             </presentaciones>
           </articulo>
           <articulo id="00005">
-            <nombre>WorksT</nombre>
-            <marca>Yale</marca>
+            <nombre>Yale</nombre>
+            <marca>WorksT</marca>
             <descripcion>weee</descripcion>
             <presentaciones>
               <presentacion>
@@ -76,8 +76,8 @@
         <descripcion>Diferentes tipos de cementos para piso</descripcion>
         <articulos>
           <articulo id="324g">
-            <nombre>Cemento Azul</nombre>
-            <marca>LeonH</marca>
+            <nombre>LeonH</nombre>
+            <marca>Cemento Azul</marca>
             <descripcion>Cemento para piso color Azul.</descripcion>
             <presentaciones>
               <presentacion>
@@ -87,8 +87,8 @@
             </presentaciones>
           </articulo>
           <articulo id="2222">
-            <nombre>Yale</nombre>
-            <marca>LeonH</marca>
+            <nombre>LeonH</nombre>
+            <marca>Yale</marca>
             <descripcion>ssss</descripcion>
             <presentaciones>
               <presentacion>
@@ -104,8 +104,8 @@
         <descripcion>otros</descripcion>
         <articulos>
           <articulo id="0005">
-            <nombre>HILTI</nombre>
-            <marca>Sopa</marca>
+            <nombre>Sopa</nombre>
+            <marca>HILTI</marca>
             <descripcion>Sooo</descripcion>
             <presentaciones>
               <presentacion>
@@ -127,8 +127,8 @@
         <descripcion>Pinturas para interior y </descripcion>
         <articulos>
           <articulo id="CLo">
-            <nombre>2222</nombre>
-            <marca>Sapo</marca>
+            <nombre>Sapo</nombre>
+            <marca>2222</marca>
             <descripcion>2333</descripcion>
             <presentaciones>
               <presentacion>
@@ -138,8 +138,8 @@
             </presentaciones>
           </articulo>
           <articulo id="008">
-            <nombre>sopaa</nombre>
-            <marca>eeee</marca>
+            <nombre>eeee</nombre>
+            <marca>sopaa</marca>
             <descripcion>seeee</descripcion>
             <presentaciones>
               <presentacion>
@@ -149,8 +149,8 @@
             </presentaciones>
           </articulo>
           <articulo id="Esee">
-            <nombre>eeee</nombre>
-            <marca>Holaaa</marca>
+            <nombre>Holaaa</nombre>
+            <marca>eeee</marca>
             <descripcion>Ellll</descripcion>
             <presentaciones>
               <presentacion>
@@ -160,8 +160,8 @@
             </presentaciones>
           </articulo>
           <articulo id="3333">
-            <nombre>Yale</nombre>
-            <marca>Sapo</marca>
+            <nombre>Sapo</nombre>
+            <marca>Yale</marca>
             <descripcion>eee</descripcion>
             <presentaciones>
               <presentacion>
@@ -177,8 +177,8 @@
         <descripcion>Pinturas para interior y exterior.</descripcion>
         <articulos>
           <articulo id="CO__">
-            <nombre>ssss</nombre>
-            <marca>Cooka</marca>
+            <nombre>Cooka</nombre>
+            <marca>ssss</marca>
             <descripcion>sssss</descripcion>
             <presentaciones>
               <presentacion>
@@ -192,8 +192,8 @@
             </presentaciones>
           </articulo>
           <articulo id="0078">
-            <nombre>Pintura</nombre>
-            <marca> 333</marca>
+            <nombre> 333</nombre>
+            <marca>Pintura</marca>
             <descripcion>33</descripcion>
             <presentaciones>
               <presentacion>
@@ -220,41 +220,47 @@
       </subcategoria>
     </subCategorias>
   </categoria>
-  <categoria id="005">
-    <nombre>Prueba</nombre>
-    <descripcion>asdf</descripcion>
+  <categoria id="0005">
+    <nombre>Pruebas</nombre>
+    <descripcion>otroo</descripcion>
     <subCategorias>
-      <subcategoria id="001">
-        <nombre>aaa</nombre>
-        <descripcion>aaa</descripcion>
+      <subcategoria id="123">
+        <nombre>fff</nombre>
+        <descripcion>ffff</descripcion>
         <articulos>
-          <articulo id="01">
-            <nombre>aa</nombre>
+          <articulo id="123">
+            <nombre>ff</nombre>
             <marca>Yale</marca>
-            <descripcion>aa</descripcion>
+            <descripcion>ffff</descripcion>
             <presentaciones>
               <presentacion>
-                <unidad>Litro</unidad>
+                <unidad>Mililitro</unidad>
                 <cantidad>5.0</cantidad>
               </presentacion>
-            </presentaciones>
-          </articulo>
-          <articulo id="02">
-            <nombre>aaa</nombre>
-            <marca>Yale</marca>
-            <descripcion>adsf</descripcion>
-            <presentaciones>
               <presentacion>
-                <unidad>Litro</unidad>
-                <cantidad>8.0</cantidad>
+                <unidad>Centimetro</unidad>
+                <cantidad>6.0</cantidad>
               </presentacion>
             </presentaciones>
           </articulo>
         </articulos>
       </subcategoria>
-      <subcategoria id="002">
-        <nombre>aaaa</nombre>
-        <descripcion>asdf</descripcion>
+      <subcategoria id="005">
+        <nombre>Prueba subCategoria</nombre>
+        <descripcion>prueba</descripcion>
+        <articulos>
+          <articulo id="0005">
+            <nombre>prueba articulo</nombre>
+            <marca>Pintuco</marca>
+            <descripcion>pruebaaaa</descripcion>
+            <presentaciones>
+              <presentacion>
+                <unidad>Litro</unidad>
+                <cantidad>3.0</cantidad>
+              </presentacion>
+            </presentaciones>
+          </articulo>
+        </articulos>
       </subcategoria>
     </subCategorias>
   </categoria>

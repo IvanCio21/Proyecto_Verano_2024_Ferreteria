@@ -104,6 +104,8 @@ public class GUI extends JFrame {
     private JTextField descuento;
     private JTextField Total;
     private JLabel codigoArticuloLabel;
+    private JTextField nombreCategoriaArticuloTf;
+    private JTextField nombresubCategoriaArticuloTf;
 
     public GUI(){
         initComponets();
@@ -295,8 +297,10 @@ public class GUI extends JFrame {
 
                     categorySubCategory.setText(codigoCategoria[0] + "-" + nombreCategoria);
                     categorySubCategory.setEditable(false);
-                    categoriaArticuloTf.setText(codigoCategoria[0] + "-" + nombreCategoria);
+                    categoriaArticuloTf.setText(codigoCategoria[0]);
+                    nombreCategoriaArticuloTf.setText(nombreCategoria);
                     categoriaArticuloTf.setEditable(false);
+                    nombreCategoriaArticuloTf.setEditable(false);
                     controller.TableSubCategories();
                 }
             }
@@ -318,6 +322,7 @@ public class GUI extends JFrame {
                 }
             }
         });
+
         this.regresarSubCategoria.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -379,6 +384,7 @@ public class GUI extends JFrame {
                 }
             }
         });
+
         this.subCategoriasTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -391,8 +397,10 @@ public class GUI extends JFrame {
                     IDSubCategoria.setText(codigoSubCategoria);
                     NameSubCategoria.setText(nombreSubCategoria);
                     Descripcion_SubCategoria.setText(descripcionSub);
-                    subCategoriaArticuloTf.setText(codigoSubCategoria+ "-" + nombreSubCategoria);
+                    subCategoriaArticuloTf.setText(codigoSubCategoria);
                     subCategoriaArticuloTf.setEditable(false);
+                    nombresubCategoriaArticuloTf.setText(nombreSubCategoria);
+                    nombreCategoriaArticuloTf.setEditable(false);
                     NextButtonSub.setEnabled(true);
                     editarButtonSubCat.setEnabled(true);
                     GuardarSubcategoriaBtn.setEnabled(false);
@@ -464,7 +472,8 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int seleccion = presentacionesTable.getSelectedRow();
                 if (seleccion != -1) {
-                controller.editarItems(categoriaArticuloTf.getText(), subCategoriaArticuloTf.getText(),codigoArticuloTf.getText(), nombre.getText(), (String)marcaCombo.getSelectedItem(),descripcionArticuloTf.getText());
+                controller.editarItems(categoriaArticuloTf.getText(), subCategoriaArticuloTf.getText(), codigoArticuloTf.getText(), nombre.getText(),
+                        (String)marcaCombo.getSelectedItem(),descripcionArticuloTf.getText(), (String) unidadCombo.getSelectedItem(),cantidadItems.getText());
 
                    controller.TableItems();
                    clearTextArticulo();

@@ -44,6 +44,7 @@ public class Service {
             return resultCategory;
         else throw new Exception("Categoria no existe");
     }
+
     public void CategoryEdit(String id, String nombre, String descrpcion) throws Exception {
         List<Category> categories = data.getCategorias();
 
@@ -271,27 +272,51 @@ public class Service {
         }
         return items;
     }
-    public void editarArticulo(String idCat, String idSub, String id, String nombre, String marca, String descripcion) {
+
+    public void editarArticulo(String idCat, String idSub, String id, String nombre, String marca, String descripcion, String cantidad, String presentacion) {
         try {
             List<Items> items = allItems(idCat, idSub);
+            boolean encontrado = false;
             for (Items item : items) {
                 if (item.getId().equals(id)) {
+                    encontrado = true;
                     item.setBrand(marca);
                     item.setName(nombre);
                     item.setDescription(descripcion);
+
+                    boolean presentacionEncontrada = false;
+                    for (Presentation p : item.getPresentation()) {
+                        if (p.getMeasure().equals(presentacion)) {
+                            p.setQuantity(Double.parseDouble(cantidad));
+                            presentacionEncontrada = true;
+                        }
+                    }
+                    if (!presentacionEncontrada) {
+                        throw new IllegalArgumentException("No se encontró la presentación especificada.");
+                    }
+                    break; // Salimos del loop después de encontrar el artículo
                 }
             }
+
+            if (!encontrado) {
+                throw new IllegalArgumentException("No se encontró el artículo con el ID especificado.");
+            }
+
+            // Actualizar lista de artículos en data
             data.setArticulos(items);
+
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Error: La cantidad debe ser un número válido.", e);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error al editar el artículo: " + e.getMessage(), e);
         }
     }
+
     public boolean BuscarNameArticulos(String idCat, String idSub, String nombre) {
         try {
             List<Items> items = allItems(idCat, idSub);
             boolean nombreExiste = items.stream()
                     .anyMatch(item -> item.getName().equalsIgnoreCase(nombre));
-
             return nombreExiste;
 
         } catch (Exception e) {
@@ -318,6 +343,7 @@ public class Service {
         }
         return presentations;
     }
+
     public void agregarPresentation(String id, String sub, String Ar, Presentation presentation) {
 
         try {
@@ -342,6 +368,7 @@ public class Service {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
+
     public void eliminarPresentation(String id, String sub, String Ar, Presentation presentation) {
         try {
             List<Items> items = allItems(id, sub);
@@ -365,11 +392,28 @@ public class Service {
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         }
-
-
     }
 
+        public void editarPresentation (String id, String sub, String Ar, Presentation presentation){
+            try {
+                List<Items> items = allItems(id, sub);
 
+                for (Items item : items) {
+                    if (item.getId().equals(Ar)) {
+                        for (Presentation p : item.getPresentation()) {
+                            p.setMeasure(presentation.getMeasure());
+                            p.setQuantity(Double.parseDouble(String.valueOf(p.getQuantity())));
+                            data.setCategorias(data.getCategorias());
+                        }
+                    } else {
+                        throw new IllegalArgumentException("La presentación no existe en el ítem especificado.");
+                    }
+                    return;
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage(), e);
+            }
+        }
 
 }
 
