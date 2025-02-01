@@ -79,8 +79,8 @@ public class GUI extends JFrame {
     private JButton editarButtonSubCat;
     private JPanel codigoArticuloLa;
     private JLabel nombreArticuloLa;
-    private JLabel descrpcionLabel;
-    private JLabel cantidadLa;
+    private JLabel descrpcionArticuloLabel;
+    private JLabel cantidadArticuloLa;
     private JTextField cantidadItems;
     private JButton agregarPresentacionButton;
     private JTextField unidadArt;
@@ -103,6 +103,7 @@ public class GUI extends JFrame {
     private JTextField subtotal;
     private JTextField descuento;
     private JTextField Total;
+    private JLabel codigoArticuloLabel;
 
     public GUI(){
         initComponets();
@@ -424,9 +425,9 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Cambiar a la pestaña de Categoría
-                PestaniasPanel.setSelectedIndex(0); // Índice de la pestaña Categoría
-                PestaniasPanel.setEnabledAt(1, false); // Desactivar la pestaña Subcategoría si es necesario
-                clearTextSubCategoria(); // Limpiar los campos de la subcategoría
+                PestaniasPanel.setSelectedIndex(0);
+                PestaniasPanel.setEnabledAt(1, false);
+                clearTextSubCategoria();
             }
         });
 
@@ -465,9 +466,9 @@ public class GUI extends JFrame {
                 if (seleccion != -1) {
                 controller.editarItems(categoriaArticuloTf.getText(), subCategoriaArticuloTf.getText(),codigoArticuloTf.getText(), nombre.getText(), (String)marcaCombo.getSelectedItem(),descripcionArticuloTf.getText());
 
-                   clearTextArticulo();
                    controller.TableItems();
-               }
+                   clearTextArticulo();
+                }
             }
         });
         buscarArticuloBtn.addActionListener(new ActionListener() {
@@ -866,7 +867,7 @@ public class GUI extends JFrame {
         if(!(codigoArticuloTf.getText().isEmpty() &&
         nombreArticuloTf.getText().isEmpty()
         && descripcionArticuloTf.getText().isEmpty()
-        && cantidadLa.getText().isEmpty() && buscarIdArticuloTf.getText().isEmpty())){
+        && cantidadArticuloLa.getText().isEmpty() && buscarIdArticuloTf.getText().isEmpty())){
            limpiarArticulosBtn.setEnabled(true);
         }else{
             limpiarArticulosBtn.setEnabled(false);
@@ -885,30 +886,30 @@ public class GUI extends JFrame {
         boolean valid = true;
         if (codigoArticuloTf.getText().isEmpty()) {
             valid = false;
-            codigoArticuloTf.setBorder(errorBorder);
+            codigoArticuloLabel.setBorder(errorBorder);
         } else {
-            codigoArticuloTf.setBorder(null);
-            codigoArticuloTf.setToolTipText(null);
+            codigoArticuloLabel.setBorder(null);
+            codigoArticuloLabel.setToolTipText(null);
         }
 
         if (nombreArticuloTf.getText().isEmpty()) {
             valid = false;
-            nombreArticuloTf.setBorder(errorBorder);
+            nombreArticuloLa.setBorder(errorBorder);
         } else {
-            nombreArticuloTf.setBorder(null);
+            nombreArticuloLa.setBorder(null);
         }
 
         if (descripcionArticuloTf.getText().isEmpty()) {
             valid = false;
-            descripcionArticuloTf.setBorder(errorBorder);
+            descrpcionArticuloLabel.setBorder(errorBorder);
         }else {
-            descripcionArticuloTf.setBorder(null);
+            descrpcionArticuloLabel.setBorder(null);
         }
         if(cantidadItems.getText().isEmpty()){
             valid = false;
-            cantidadItems.setBorder(errorBorder);
+            cantidadArticuloLa.setBorder(errorBorder);
         }else{
-            cantidadItems.setBorder(null);
+            cantidadArticuloLa.setBorder(null);
         }
 
 

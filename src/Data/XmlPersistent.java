@@ -202,8 +202,8 @@ public class XmlPersistent {
                                     }
 
                                     Items items = new Items(itemElement.getAttribute("id"),
-                                            itemElement.getElementsByTagName("nombre").item(0).getTextContent(),
                                             itemElement.getElementsByTagName("marca").item(0).getTextContent(),
+                                            itemElement.getElementsByTagName("nombre").item(0).getTextContent(),
                                             itemElement.getElementsByTagName("descripcion").item(0).getTextContent(),
                                             presentationList);
                                     itemsList.add(items);

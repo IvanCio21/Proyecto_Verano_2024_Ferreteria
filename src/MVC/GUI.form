@@ -470,7 +470,7 @@
                 <properties/>
                 <border type="none" title=""/>
                 <children>
-                  <component id="1ffdb" class="javax.swing.JLabel">
+                  <component id="1ffdb" class="javax.swing.JLabel" binding="codigoArticuloLabel">
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -502,7 +502,7 @@
                     </constraints>
                     <properties/>
                   </component>
-                  <component id="a27a9" class="javax.swing.JLabel" binding="descrpcionLabel">
+                  <component id="a27a9" class="javax.swing.JLabel" binding="descrpcionArticuloLabel">
                     <constraints>
                       <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -544,14 +544,6 @@
                       </component>
                     </children>
                   </grid>
-                  <component id="5d267" class="javax.swing.JLabel">
-                    <constraints>
-                      <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Unidad: "/>
-                    </properties>
-                  </component>
                   <component id="f9cc0" class="javax.swing.JButton" binding="guardarArticulosBtn">
                     <constraints>
                       <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -559,39 +551,6 @@
                     <properties>
                       <icon value="icons/save.png"/>
                       <text value="Guardar"/>
-                    </properties>
-                  </component>
-                  <component id="75892" class="javax.swing.JComboBox" binding="unidadCombo">
-                    <constraints>
-                      <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <model>
-                        <item value="Litro"/>
-                        <item value="Mililitro"/>
-                        <item value="Metro"/>
-                        <item value="Centimetro"/>
-                        <item value="Kilo"/>
-                        <item value="Gramo"/>
-                        <item value="Pie"/>
-                        <item value="Pulgada"/>
-                      </model>
-                    </properties>
-                  </component>
-                  <component id="7b74b" class="javax.swing.JLabel" binding="cantidadLa">
-                    <constraints>
-                      <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Cantidad: "/>
-                    </properties>
-                  </component>
-                  <component id="259b4" class="javax.swing.JLabel" binding="marcaLabel">
-                    <constraints>
-                      <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Marca"/>
                     </properties>
                   </component>
                   <component id="5e7b1" class="javax.swing.JButton" binding="editarButton" default-binding="true">
@@ -621,9 +580,33 @@
                       <text value="Eliminar"/>
                     </properties>
                   </component>
+                  <component id="bb974" class="javax.swing.JButton" binding="agregarPresentacionButton" default-binding="true">
+                    <constraints>
+                      <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Agregar Presentacion"/>
+                    </properties>
+                  </component>
+                  <component id="afa27" class="javax.swing.JButton" binding="eliminarPresentacionButton" default-binding="true">
+                    <constraints>
+                      <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Eliminar Presentacion "/>
+                    </properties>
+                  </component>
+                  <component id="7b74b" class="javax.swing.JLabel" binding="cantidadArticuloLa">
+                    <constraints>
+                      <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Cantidad: "/>
+                    </properties>
+                  </component>
                   <component id="a41be" class="javax.swing.JTextField" binding="cantidadItems">
                     <constraints>
-                      <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                      <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
                       </grid>
                     </constraints>
@@ -631,9 +614,25 @@
                       <text value=""/>
                     </properties>
                   </component>
+                  <component id="5d267" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Unidad: "/>
+                    </properties>
+                  </component>
+                  <component id="259b4" class="javax.swing.JLabel" binding="marcaLabel">
+                    <constraints>
+                      <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Marca"/>
+                    </properties>
+                  </component>
                   <component id="dc902" class="javax.swing.JComboBox" binding="marcaCombo">
                     <constraints>
-                      <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <model>
@@ -650,20 +649,21 @@
                       </model>
                     </properties>
                   </component>
-                  <component id="bb974" class="javax.swing.JButton" binding="agregarPresentacionButton" default-binding="true">
+                  <component id="75892" class="javax.swing.JComboBox" binding="unidadCombo">
                     <constraints>
-                      <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Agregar Presentacion"/>
-                    </properties>
-                  </component>
-                  <component id="afa27" class="javax.swing.JButton" binding="eliminarPresentacionButton" default-binding="true">
-                    <constraints>
-                      <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Eliminar Presentacion "/>
+                      <model>
+                        <item value="Litro"/>
+                        <item value="Mililitro"/>
+                        <item value="Metro"/>
+                        <item value="Centimetro"/>
+                        <item value="Kilo"/>
+                        <item value="Gramo"/>
+                        <item value="Pie"/>
+                        <item value="Pulgada"/>
+                      </model>
                     </properties>
                   </component>
                 </children>

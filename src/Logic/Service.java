@@ -271,22 +271,20 @@ public class Service {
         }
         return items;
     }
-    public void editarArticulo ( String idCat, String idSub, String id, String nombre, String marca, String descricion) {
+    public void editarArticulo(String idCat, String idSub, String id, String nombre, String marca, String descripcion) {
         try {
             List<Items> items = allItems(idCat, idSub);
             for (Items item : items) {
                 if (item.getId().equals(id)) {
                     item.setBrand(marca);
-                    item.setDescription(descricion);
                     item.setName(nombre);
-                    data.setArticulos(data.getArticulos());
+                    item.setDescription(descripcion);
                 }
             }
-
+            data.setArticulos(items);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
     public boolean BuscarNameArticulos(String idCat, String idSub, String nombre) {
         try {

@@ -78,12 +78,9 @@ public class Controller {
                    JOptionPane.showMessageDialog(null, "ID de categoria repetido", "Error", JOptionPane.ERROR_MESSAGE);
                    return false;
                }
-               else if (category.getName().trim().equals(nombre)) {
-                   int opcion = JOptionPane.showConfirmDialog(
-                        null,"Nombre de la categoría repetido, ¿desea continuar?","Advertencia",JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-                   if (opcion != JOptionPane.OK_OPTION) {
-                    return false;
-                   }
+               if (category.getName().trim().equals(nombre)) {
+                   JOptionPane.showMessageDialog(null, "Nombre de categoria repetido", "Error", JOptionPane.ERROR_MESSAGE);
+                   return false;
                }
            }
             service.addCategory(newCategory);
@@ -131,20 +128,9 @@ public class Controller {
         List<Category> categories = model.getCategories();
         try {
             for (Category category : categories) {
-                if (category.getId().equals(id)) {
-                    continue;
-                }
-                if (category.getName().equals(name)) {
-                    int option = JOptionPane.showConfirmDialog(null,
-                            "El nombre de categoría ya existe. ¿Desea agregar otra categoría o cancelar la operación?",
-                            "Nombre existente",
-                            JOptionPane.YES_NO_OPTION,
-                            JOptionPane.WARNING_MESSAGE);
-
-                    if (option == JOptionPane.NO_OPTION) {
-                        return false;
-                    }
-                    break;
+                if (!category.getId().equals(id) && category.getName().equalsIgnoreCase(name)) {
+                    JOptionPane.showMessageDialog(null,"El nombre de categoría ya existe. No se puede editar con un nombre duplicado.","Error",JOptionPane.ERROR_MESSAGE);
+                    return false;
                 }
             }
 
@@ -152,6 +138,7 @@ public class Controller {
             model.setCategories(service.allCategories());
             TableCategorias();
             return true;
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -214,12 +201,10 @@ public class Controller {
                     JOptionPane.showMessageDialog(null, "ID de SubCateogira repetido", "Error", JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
-                else if (subCat.getSubCategoryName().trim().equals(nombre)) {
-                    int opcion = JOptionPane.showConfirmDialog(
-                            null,"Nombre de la SubCategoria repetido, ¿desea continuar?","Advertencia",JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-                    if (opcion != JOptionPane.OK_OPTION) {
-                        return false;
-                    }
+                if (subCat.getSubCategoryName().trim().equals(nombre)) {
+                    JOptionPane.showMessageDialog(null, "Nombre de SubCateogira repetido", "Error", JOptionPane.ERROR_MESSAGE);
+                    return false;
+
                 }
             }
             service.addSubCategory(idCategoria,newSubCategory);
@@ -243,34 +228,17 @@ public class Controller {
     }
     public boolean editSubCategory(String idCat, String idSub, String nombre, String descripcion) {
         try {
-            if (!service.consultarNombre(idCat,  nombre)) {
-                service.setEditSubCategory(idCat, idSub, nombre, descripcion);
-                TableSubCategories();
-                return true;
-            } else {
-                int option = JOptionPane.showConfirmDialog(
-                        null,
-                        "Ya existe una subcategoría con ese nombre. ¿Desea editar la subcategoría de todos modos?",
-                        "Error",
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.WARNING_MESSAGE
-                );
-
-                if (option == JOptionPane.YES_OPTION) {
-                    try {
-                        service.setEditSubCategory(idCat, idSub, nombre, descripcion);
-                        TableSubCategories();
-                        return true;
-                    } catch (Exception retryException) {
-                        JOptionPane.showMessageDialog(null, "Error al editar la subcategoría: " + retryException.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
+            if (service.consultarNombre(idCat, nombre)) {
+                JOptionPane.showMessageDialog(null,"Ya existe una subcategoría con ese nombre. No se puede editar con un nombre duplicado.","Error",JOptionPane.ERROR_MESSAGE);
+                return false;
             }
+
+            service.setEditSubCategory(idCat, idSub, nombre, descripcion);
+            TableSubCategories();
+            return true;
+
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al realizar la operación: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Error al realizar la operación: " + e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
@@ -332,39 +300,23 @@ public class Controller {
     }
     public boolean saveItems(String idC, String sub, String cod, String marca, String nombre, String descripcion, String Prese, String e) {
         try {
-            if (!service.BuscarNameArticulos(idC, sub, nombre)) {
-                double num = Double.parseDouble(e);
-                Items item = new Items(cod, marca, nombre, descripcion);
-                Presentation presentation = new Presentation(Prese, num);
-                service.guardarArticulo(idC, sub, item, presentation);
-                TableItems();
-                service.saveXml();
-                return true;
-            } else {
-                int option = JOptionPane.showConfirmDialog(
-                        null,
-                        "Ya existe un artículo con el mismo nombre. ¿Desea agregar este artículo de todos modos?",
-                        "Advertencia",
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.WARNING_MESSAGE
-                );
-                if (option == JOptionPane.YES_OPTION) {
-                    double num = Double.parseDouble(e);
-                    Items item = new Items(cod, marca, nombre, descripcion);
-                    Presentation presentation = new Presentation(Prese, num);
-                    service.guardarArticulo(idC, sub, item, presentation);
-                    TableItems();
-                    service.saveXml();
-                    return true;
-                } else {
-                    return false;
-                }
+            if (service.BuscarNameArticulos(idC, sub, nombre)) {
+                JOptionPane.showMessageDialog(null,"Ya existe un artículo con el mismo nombre. No se puede agregar.","Error",JOptionPane.ERROR_MESSAGE);
+                return false;
             }
+            double num = Double.parseDouble(e);
+            Items item = new Items(cod, marca, nombre, descripcion);
+            Presentation presentation = new Presentation(Prese, num);
+            service.guardarArticulo(idC, sub, item, presentation);
+            TableItems();
+            service.saveXml();
+            return true;
+
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "El valor de la cantidad debe ser un número válido: " + e, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,"El valor de la cantidad debe ser un número válido: " + e,"Error", JOptionPane.ERROR_MESSAGE);
             return false;
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error al guardar el artículo: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Error al guardar el artículo: " + ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
@@ -408,37 +360,26 @@ public class Controller {
             throw new RuntimeException("Error al eliminar el artículo: " + e.getMessage(), e);
         }
     }
-    public boolean editarItems(String idC, String sub,String cod,String nombre, String marca, String descripcion) {
+    public boolean editarItems(String idC, String sub, String cod, String nombre, String marca, String descripcion) {
         try {
-            if (!service.BuscarNameArticulos(idC, sub, nombre)) {
-                service.editarArticulo(idC,sub,cod,nombre,marca,descripcion);
-                TableItems();
-                service.saveXml();
-                return true;
-            } else {
-                int option = JOptionPane.showConfirmDialog(
-                        null,
-                        "Ya existe un artículo con el mismo nombre. ¿Desea agregar este artículo de todos modos?",
-                        "Advertencia",
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.WARNING_MESSAGE
-                );
-                if (option == JOptionPane.YES_OPTION) {
-                    service.editarArticulo(idC,sub,cod,nombre,marca,descripcion);
-                    TableItems();
-                    service.saveXml();
-                    return true;
-                } else {
-                    return false;
-                }
+            if (service.BuscarNameArticulos(idC, sub, nombre)) {
+                JOptionPane.showMessageDialog(null,"Ya existe un artículo con el mismo nombre. No se puede editar con un nombre duplicado.","Error", JOptionPane.ERROR_MESSAGE);
+                return false;
             }
+
+            service.editarArticulo(idC, sub, cod, nombre, marca, descripcion);
+            TableItems();
+            service.saveXml();
+            return true;
+
         } catch (NumberFormatException ex) {
             return false;
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error al guardar el artículo: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Error al guardar el artículo: " + ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
+
 
     //Presentaciones
     public boolean deletePresentacion(String me, String e){
