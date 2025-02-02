@@ -368,7 +368,9 @@ public class Controller {
             }
 
             service.editarArticulo(idC, sub, cod, nombre, marca, descripcion, presentacion, cantidad);
+            //editPresentation(presentacion, cantidad);
             TableItems();
+            TablePresentacion();
             service.saveXml();
             return true;
 
@@ -390,9 +392,10 @@ public class Controller {
 
     }
 
-    public boolean editPresentacion(String me,String e){
+    public boolean editPresentation(String me, String e){
         double ee = Double.parseDouble(e);
-        service.editarPresentation(gui.getCategoryId(), gui.getIDSubCategoria(), gui.getArticuloId(), new Presentation(me, ee));
+        service.EditarPresentation(gui.getCategoryId(), gui.getIDSubCategoria(), gui.getArticuloId(),
+                new Presentation(me,ee));
         return true;
     }
 

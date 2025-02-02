@@ -276,19 +276,20 @@ public class Service {
     public void editarArticulo(String idCat, String idSub, String id, String nombre, String marca, String descripcion, String cantidad, String presentacion) {
         try {
             List<Items> items = allItems(idCat, idSub);
-            boolean encontrado = false;
             for (Items item : items) {
                 if (item.getId().equals(id)) {
-                    encontrado = true;
                     item.setBrand(marca);
                     item.setName(nombre);
                     item.setDescription(descripcion);
 
                     boolean presentacionEncontrada = false;
+
                     for (Presentation p : item.getPresentation()) {
                         if (p.getMeasure().equals(presentacion)) {
-                            p.setQuantity(Double.parseDouble(cantidad));
                             presentacionEncontrada = true;
+                            // Llamar a EditarPresentation con la presentación correcta
+                            EditarPresentation(idCat, idSub, id, new Presentation(presentacion, Double.parseDouble(cantidad)));
+                            break;
                         }
                     }
                     if (!presentacionEncontrada) {
@@ -297,12 +298,6 @@ public class Service {
                     break; // Salimos del loop después de encontrar el artículo
                 }
             }
-
-            if (!encontrado) {
-                throw new IllegalArgumentException("No se encontró el artículo con el ID especificado.");
-            }
-
-            // Actualizar lista de artículos en data
             data.setArticulos(items);
 
         } catch (NumberFormatException e) {
@@ -369,6 +364,26 @@ public class Service {
         }
     }
 
+    public void EditarPresentation(String id, String sub, String Ar, Presentation presentation) {
+
+        try {
+            List<Items> items = allItems(id, sub);
+            for (Items item : items) {
+                if (item.getId().equals(Ar)) {
+
+                   for(Presentation p : item.getPresentation()){
+                       if(p.getMeasure().equals(presentation.getMeasure())){
+                           p.setQuantity(presentation.getQuantity());
+                           data.setCategorias(data.getCategorias());
+                       }
+                   }
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
+
     public void eliminarPresentation(String id, String sub, String Ar, Presentation presentation) {
         try {
             List<Items> items = allItems(id, sub);
@@ -393,27 +408,5 @@ public class Service {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
-
-        public void editarPresentation (String id, String sub, String Ar, Presentation presentation){
-            try {
-                List<Items> items = allItems(id, sub);
-
-                for (Items item : items) {
-                    if (item.getId().equals(Ar)) {
-                        for (Presentation p : item.getPresentation()) {
-                            p.setMeasure(presentation.getMeasure());
-                            p.setQuantity(Double.parseDouble(String.valueOf(p.getQuantity())));
-                            data.setCategorias(data.getCategorias());
-                        }
-                    } else {
-                        throw new IllegalArgumentException("La presentación no existe en el ítem especificado.");
-                    }
-                    return;
-                }
-            } catch (Exception e) {
-                throw new RuntimeException(e.getMessage(), e);
-            }
-        }
-
 }
 

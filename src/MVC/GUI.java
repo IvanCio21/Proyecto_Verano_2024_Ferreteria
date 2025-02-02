@@ -473,9 +473,9 @@ public class GUI extends JFrame {
                 int seleccion = presentacionesTable.getSelectedRow();
                 if (seleccion != -1) {
                 controller.editarItems(categoriaArticuloTf.getText(), subCategoriaArticuloTf.getText(), codigoArticuloTf.getText(), nombre.getText(),
-                        (String)marcaCombo.getSelectedItem(),descripcionArticuloTf.getText(), (String) unidadCombo.getSelectedItem(),cantidadItems.getText());
-
+                        (String)marcaCombo.getSelectedItem(),descripcionArticuloTf.getText(), cantidadItems.getText(), (String) unidadCombo.getSelectedItem());
                    controller.TableItems();
+                   controller.TablePresentacion();
                    clearTextArticulo();
                 }
             }

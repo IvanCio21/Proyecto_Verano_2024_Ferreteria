@@ -250,13 +250,13 @@
         <descripcion>prueba</descripcion>
         <articulos>
           <articulo id="0005">
-            <nombre>prueba articulo</nombre>
+            <nombre>Pruebas</nombre>
             <marca>Pintuco</marca>
             <descripcion>pruebaaaa</descripcion>
             <presentaciones>
               <presentacion>
                 <unidad>Litro</unidad>
-                <cantidad>3.0</cantidad>
+                <cantidad>4.0</cantidad>
               </presentacion>
             </presentaciones>
           </articulo>
