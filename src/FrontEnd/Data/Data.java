@@ -1,9 +1,9 @@
-package Data;
+package FrontEnd.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import Logic.*;
+import FrontEnd.Logic.*;
 
 public class Data {
 

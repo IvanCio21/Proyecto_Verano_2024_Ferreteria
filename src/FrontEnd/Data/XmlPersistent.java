@@ -1,6 +1,6 @@
-package Data;
+package FrontEnd.Data;
 
-import Logic.*;
+import FrontEnd.Logic.*;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
@@ -113,6 +113,10 @@ public class XmlPersistent {
                                         Element quantity = doc.createElement("cantidad");
                                         quantity.appendChild(doc.createTextNode(String.valueOf(presentation.getQuantity())));
                                         presentationElement.appendChild(quantity);
+
+                                        Element price = doc.createElement("precio");
+                                        price.appendChild(doc.createTextNode(String.valueOf(presentation.getPrice())));
+                                        presentationElement.appendChild(price);
                                     }
                                     itemsElement.appendChild(presentationsE);
                                 }
@@ -196,7 +200,8 @@ public class XmlPersistent {
                                         if (presentationNode.getNodeType() == Node.ELEMENT_NODE) {
                                             Element presentationElement = (Element) presentationNode;
                                             Presentation presentation = new Presentation(presentationElement.getElementsByTagName("unidad").item(0).getTextContent(),
-                                                    Double.parseDouble(presentationElement.getElementsByTagName("cantidad").item(0).getTextContent()));
+                                                    Double.parseDouble(presentationElement.getElementsByTagName("cantidad").item(0).getTextContent()),
+                                                    Double.parseDouble(presentationElement.getElementsByTagName("precio").item(0).getTextContent()));
                                             presentationList.add(presentation);
                                         }
                                     }

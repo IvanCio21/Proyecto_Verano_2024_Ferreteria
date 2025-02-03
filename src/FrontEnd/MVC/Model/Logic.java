@@ -1,4 +1,4 @@
-package MVC.Model;
+package FrontEnd.MVC.Model;
 
 import javax.swing.*;
 

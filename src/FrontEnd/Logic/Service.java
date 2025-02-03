@@ -1,10 +1,9 @@
-package Logic;
-import Data.Data;
-import Data.XmlPersistent;
+package FrontEnd.Logic;
+import FrontEnd.Data.Data;
+import FrontEnd.Data.XmlPersistent;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.PropertyResourceBundle;
 
 public class Service {
 
@@ -273,7 +272,7 @@ public class Service {
         return items;
     }
 
-    public void editarArticulo(String idCat, String idSub, String id, String nombre, String marca, String descripcion, String cantidad, String presentacion) {
+    public void editarArticulo(String idCat, String idSub, String id, String nombre, String marca, String descripcion, String cantidad, String presentacion, String precio) {
         try {
             List<Items> items = allItems(idCat, idSub);
             for (Items item : items) {
@@ -287,15 +286,14 @@ public class Service {
                     for (Presentation p : item.getPresentation()) {
                         if (p.getMeasure().equals(presentacion)) {
                             presentacionEncontrada = true;
-                            // Llamar a EditarPresentation con la presentación correcta
-                            EditarPresentation(idCat, idSub, id, new Presentation(presentacion, Double.parseDouble(cantidad)));
+                            EditarPresentation(idCat, idSub, id, new Presentation(presentacion, Double.parseDouble(cantidad), Double.parseDouble(precio)));
                             break;
                         }
                     }
                     if (!presentacionEncontrada) {
                         throw new IllegalArgumentException("No se encontró la presentación especificada.");
                     }
-                    break; // Salimos del loop después de encontrar el artículo
+                    break;
                 }
             }
             data.setArticulos(items);
@@ -374,6 +372,7 @@ public class Service {
                    for(Presentation p : item.getPresentation()){
                        if(p.getMeasure().equals(presentation.getMeasure())){
                            p.setQuantity(presentation.getQuantity());
+                           p.setPrice(presentation.getPrice());
                            data.setCategorias(data.getCategorias());
                        }
                    }

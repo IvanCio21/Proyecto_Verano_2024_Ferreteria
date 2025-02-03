@@ -1,6 +1,6 @@
-package MVC.Model;
+package FrontEnd.MVC.Model;
 
-import Logic.Category;
+import FrontEnd.Logic.Category;
 
 import java.util.ArrayList;
 import java.util.List;

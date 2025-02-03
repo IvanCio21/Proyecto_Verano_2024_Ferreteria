@@ -1,7 +1,7 @@
-package MVC;
+package FrontEnd.MVC;
 
-import MVC.Controller.Controller;
-import MVC.Model.Model;
+import FrontEnd.MVC.Controller.Controller;
+import FrontEnd.MVC.Model.Model;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -106,6 +106,11 @@ public class GUI extends JFrame {
     private JLabel codigoArticuloLabel;
     private JTextField nombreCategoriaArticuloTf;
     private JTextField nombresubCategoriaArticuloTf;
+    private JTextField precioArticuloTf;
+    private JLabel precioLb;
+    private JLabel buscarArticuloLb;
+    private JTable tableArticulosVender;
+    private JButton volverCategoriaBtn;
 
     public GUI(){
         initComponets();
@@ -136,6 +141,13 @@ public class GUI extends JFrame {
         this.presentacionesTable.setModel(presentacionesTable);
     }
 
+    public JTable getTableArticulosVender() {
+        return tableArticulosVender;
+    }
+
+    public void setTableArticulosVender(DefaultTableModel tableArticulosVender) {
+        this.tableArticulosVender.setModel(tableArticulosVender);
+    }
 
     public String getIDSubCategoria() {
         return IDSubCategoria.getText();
@@ -455,7 +467,7 @@ public class GUI extends JFrame {
                 if(validateArticulo()){
                     try{
                         if(controller.saveItems(codigo.getText(),IDSubCategoria.getText(), codigoArticuloTf.getText(),(String)marcaCombo.getSelectedItem(),
-                                nombreArticuloTf.getText(),descripcionArticuloTf.getText(),(String)unidadCombo.getSelectedItem(),cantidadItems.getText())){
+                                nombreArticuloTf.getText(),descripcionArticuloTf.getText(),(String)unidadCombo.getSelectedItem(),cantidadItems.getText(), precioArticuloTf.getText())){
                                clearTextArticulo();
                                JOptionPane.showMessageDialog(null, "Articulo guardada con exito");
                         }
@@ -473,7 +485,7 @@ public class GUI extends JFrame {
                 int seleccion = presentacionesTable.getSelectedRow();
                 if (seleccion != -1) {
                 controller.editarItems(categoriaArticuloTf.getText(), subCategoriaArticuloTf.getText(), codigoArticuloTf.getText(), nombre.getText(),
-                        (String)marcaCombo.getSelectedItem(),descripcionArticuloTf.getText(), cantidadItems.getText(), (String) unidadCombo.getSelectedItem());
+                        (String)marcaCombo.getSelectedItem(),descripcionArticuloTf.getText(), cantidadItems.getText(), (String) unidadCombo.getSelectedItem(), precioArticuloTf.getText());
                    controller.TableItems();
                    controller.TablePresentacion();
                    clearTextArticulo();
@@ -548,7 +560,7 @@ public class GUI extends JFrame {
                 if( cantidadItems.getText().isEmpty()){
                     JOptionPane.showMessageDialog(null, "Ingrese los datos de articulo");
                 }else{
-                    if(controller.agregarPresentaciones((String)unidadCombo.getSelectedItem(),cantidadItems.getText())){
+                    if(controller.agregarPresentaciones((String)unidadCombo.getSelectedItem(),cantidadItems.getText(), precioArticuloTf.getText())){
                         JOptionPane.showMessageDialog(null, "Presentacion agregado con exito");
                         clearTextArticulo();
                         controller.TablePresentacion();
@@ -561,7 +573,7 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int seleccion = presentacionesTable.getSelectedRow();
                 if (seleccion != -1) {
-                     if(controller.deletePresentacion((String)unidadCombo.getSelectedItem(),cantidadItems.getText())){
+                     if(controller.deletePresentacion((String)unidadCombo.getSelectedItem(),cantidadItems.getText(), precioArticuloTf.getText())){
                          JOptionPane.showMessageDialog(null, "Presentacion eliminado con exito");
                          controller.TablePresentacion();
                          cantidadItems.setText("");
@@ -578,7 +590,10 @@ public class GUI extends JFrame {
                     eliminarPresentacionButton.setEnabled(true);
                     String unidad = presentacionesTable.getValueAt(filaSeleccionada, 0).toString();
                     String cantidad = presentacionesTable.getValueAt(filaSeleccionada, 1).toString();;
+                    String precio = presentacionesTable.getValueAt(filaSeleccionada, 2).toString();
+                    unidadCombo.setSelectedItem(unidad);
                     cantidadItems.setText(cantidad);
+                    precioArticuloTf.setText(precio);
                     agregarPresentacionButton.setEnabled(false);
                 }
             }
@@ -595,6 +610,56 @@ public class GUI extends JFrame {
             }
         });
 
+        //Pedidos//
+        buscarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    if(validarPedidoForm()) {
+                        controller.searchArticuloVenta(buscarArticulo.getText());
+                    }
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+
+        this.getTableArticulosVender().addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+
+                int columnaSeleccionada = tableArticulosVender.getSelectedColumn();
+                int filaSeleccionada = tableArticulosVender.getSelectedRow();
+
+                if ((columnaSeleccionada == 7 || columnaSeleccionada == 8) && filaSeleccionada != -1) {
+                    try {
+                        double cantidadUsuario = Double.parseDouble(tableArticulosVender.getValueAt(filaSeleccionada, 7).toString());
+                        double precioUnitario = Double.parseDouble(tableArticulosVender.getValueAt(filaSeleccionada, 6).toString());
+                        double cantidadActual = Double.parseDouble(tableArticulosVender.getValueAt(filaSeleccionada, 5).toString());
+                        String presentacion = tableArticulosVender.getValueAt(filaSeleccionada, 4).toString();
+                        //String
+                        double total = cantidadUsuario * precioUnitario;
+                        //double actualizar = controller.actualizarCantidades(presentacion, cantidadActual);
+                        tableArticulosVender.setValueAt(total, filaSeleccionada, 8);
+                        //tableArticulosVender.setValueAt(actualizar, filaSeleccionada, 5);
+
+                    } catch (NumberFormatException ex) {
+                        tableArticulosVender.setValueAt(0, filaSeleccionada, 0);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            }
+        });
+
+        volverCategoriaBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PestaniasPanel.setEnabledAt(0, true);
+                PestaniasPanel.setSelectedIndex(0);
+                PestaniasPanel.setEnabledAt(1, false);
+                PestaniasPanel.setEnabledAt(2, false);
+            }
+        });
 
 
         this.nombre.getDocument().addDocumentListener(new DocumentListener() {
@@ -779,6 +844,24 @@ public class GUI extends JFrame {
                 validarArticulo();
             }
         });
+
+        this.precioArticuloTf.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                validarArticulo();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                validarArticulo();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                validarArticulo();
+            }
+        });
     }
 
     public void validar(){
@@ -876,7 +959,7 @@ public class GUI extends JFrame {
         if(!(codigoArticuloTf.getText().isEmpty() &&
         nombreArticuloTf.getText().isEmpty()
         && descripcionArticuloTf.getText().isEmpty()
-        && cantidadArticuloLa.getText().isEmpty() && buscarIdArticuloTf.getText().isEmpty())){
+        && cantidadArticuloLa.getText().isEmpty() && buscarIdArticuloTf.getText().isEmpty() && precioArticuloTf.getText().isEmpty())){
            limpiarArticulosBtn.setEnabled(true);
         }else{
             limpiarArticulosBtn.setEnabled(false);
@@ -920,10 +1003,37 @@ public class GUI extends JFrame {
         }else{
             cantidadArticuloLa.setBorder(null);
         }
+        if(precioArticuloTf.getText().isEmpty()){
+            valid = false;
+            precioLb.setBorder(errorBorder);
+        }else{
+            precioLb.setBorder(null);
+        }
 
 
         return valid;
     }
+    private void validarPedido(){
+        if(!buscarArticulo.getText().isEmpty()){
+            buscarButton.setEnabled(true);
+        }else{
+            buscarButton.setEnabled(false);
+        }
+    }
+
+    private boolean validarPedidoForm(){
+        Border errorBorder = BorderFactory.createLineBorder(Color.RED, 2);
+        boolean valid = true;
+        if (buscarArticulo.getText().isEmpty()) {
+            valid = false;
+            buscarArticuloLb.setBorder(errorBorder);
+        } else {
+            buscarArticuloLb.setBorder(null);
+            buscarArticuloLb.setToolTipText(null);
+        }
+        return valid;
+    }
+
     void  clearText(){
         nombre.setText("");
         nombreLabel.setBorder(null);
@@ -958,6 +1068,7 @@ public class GUI extends JFrame {
         buscarIdArticuloTf.setText("");
         jTableArticulos.clearSelection();
         cantidadItems.setText("");
+        precioArticuloTf.setText("");
         guardarArticulosBtn.setEnabled(true);
         codigoArticuloTf.setEditable(true);
         presentacionesTable.clearSelection();

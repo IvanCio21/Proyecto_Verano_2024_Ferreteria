@@ -1,9 +1,9 @@
-package Main;
+package FrontEnd.Main;
 
 
-import MVC.Controller.Controller;
-import MVC.GUI;
-import MVC.Model.Model;
+import FrontEnd.MVC.Controller.Controller;
+import FrontEnd.MVC.GUI;
+import FrontEnd.MVC.Model.Model;
 
 import javax.swing.*;
 

@@ -16,6 +16,7 @@
               <presentacion>
                 <unidad>Unica</unidad>
                 <cantidad>28.0</cantidad>
+                <precio>10.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>
@@ -27,6 +28,7 @@
               <presentacion>
                 <unidad>Unidad</unidad>
                 <cantidad>34.0</cantidad>
+                <precio>10.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>
@@ -38,6 +40,7 @@
               <presentacion>
                 <unidad>Unico</unidad>
                 <cantidad>3.0</cantidad>
+                <precio>10.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>
@@ -49,6 +52,7 @@
               <presentacion>
                 <unidad>ess</unidad>
                 <cantidad>20.0</cantidad>
+                <precio>10.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>
@@ -60,6 +64,7 @@
               <presentacion>
                 <unidad>Litro</unidad>
                 <cantidad>2.0</cantidad>
+                <precio>10.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>
@@ -83,6 +88,7 @@
               <presentacion>
                 <unidad>Costal 1 kg</unidad>
                 <cantidad>4.0</cantidad>
+                <precio>10.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>
@@ -94,6 +100,7 @@
               <presentacion>
                 <unidad>Litro</unidad>
                 <cantidad>2.0</cantidad>
+                <precio>10.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>
@@ -111,6 +118,7 @@
               <presentacion>
                 <unidad>Metro</unidad>
                 <cantidad>22.0</cantidad>
+                <precio>10.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>
@@ -134,6 +142,7 @@
               <presentacion>
                 <unidad>222</unidad>
                 <cantidad>22.0</cantidad>
+                <precio>10.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>
@@ -145,6 +154,7 @@
               <presentacion>
                 <unidad>cajs</unidad>
                 <cantidad>33.0</cantidad>
+                <precio>10.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>
@@ -156,6 +166,7 @@
               <presentacion>
                 <unidad>caja</unidad>
                 <cantidad>25.0</cantidad>
+                <precio>10.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>
@@ -167,6 +178,7 @@
               <presentacion>
                 <unidad>Litro</unidad>
                 <cantidad>2.0</cantidad>
+                <precio>10.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>
@@ -184,10 +196,12 @@
               <presentacion>
                 <unidad>eee</unidad>
                 <cantidad>202.0</cantidad>
+                <precio>10.0</precio>
               </presentacion>
               <presentacion>
                 <unidad>Cajas</unidad>
                 <cantidad>2023.0</cantidad>
+                <precio>10.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>
@@ -199,6 +213,7 @@
               <presentacion>
                 <unidad>sss</unidad>
                 <cantidad>22.0</cantidad>
+                <precio>10.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>
@@ -217,6 +232,20 @@
       <subcategoria id="0003">
         <nombre>Prueba2</nombre>
         <descripcion>otro</descripcion>
+        <articulos>
+          <articulo id="123">
+            <nombre>PruebaPrecio</nombre>
+            <marca>Yale</marca>
+            <descripcion>adadada</descripcion>
+            <presentaciones>
+              <presentacion>
+                <unidad>Centimetro</unidad>
+                <cantidad>10.0</cantidad>
+                <precio>50.0</precio>
+              </presentacion>
+            </presentaciones>
+          </articulo>
+        </articulos>
       </subcategoria>
     </subCategorias>
   </categoria>
@@ -236,10 +265,12 @@
               <presentacion>
                 <unidad>Mililitro</unidad>
                 <cantidad>5.0</cantidad>
+                <precio>10.0</precio>
               </presentacion>
               <presentacion>
                 <unidad>Centimetro</unidad>
                 <cantidad>6.0</cantidad>
+                <precio>10.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>
@@ -257,6 +288,19 @@
               <presentacion>
                 <unidad>Litro</unidad>
                 <cantidad>4.0</cantidad>
+                <precio>10.0</precio>
+              </presentacion>
+            </presentaciones>
+          </articulo>
+          <articulo id="123">
+            <nombre>Pruebas</nombre>
+            <marca>Tricolor</marca>
+            <descripcion>adadad</descripcion>
+            <presentaciones>
+              <presentacion>
+                <unidad>Mililitro</unidad>
+                <cantidad>6.0</cantidad>
+                <precio>10.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>
