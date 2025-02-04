@@ -36,16 +36,24 @@ public class Presentation {
         this.price = price;
     }
 
-    public double precioVenta(double precioVenta){
-        return precioVenta / quantity;
+    public double precioVenta(double precioCompra) {
+        return precioCompra / quantity;
     }
 
-    public void actualizarCantidad(double cantidadVender){
+    public void actualizarCantidad(double cantidadVender) {
         if (this.quantity >= cantidadVender) {
             this.quantity -= cantidadVender;
         } else {
             throw new IllegalArgumentException("Stock insuficiente para la venta.");
         }
+    }
+
+    public double descuentoDiezUnidades(int cantidadAVender, double precioVenta) {
+        double descuento = 0.0;
+        if (cantidadAVender == 10) {
+             descuento = precioVenta * 0.10;
+        }
+        return precioVenta - descuento;
     }
 }
 
