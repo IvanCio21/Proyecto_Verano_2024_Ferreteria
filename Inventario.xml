@@ -9,8 +9,8 @@
         <descripcion>Martillos, destornilladores</descripcion>
         <articulos>
           <articulo id="28GF">
-            <nombre>Jilet</nombre>
-            <marca>Destornillador</marca>
+            <nombre>Herramientas</nombre>
+            <marca>Yale</marca>
             <descripcion>Punta estrella</descripcion>
             <presentaciones>
               <presentacion>
@@ -21,8 +21,8 @@
             </presentaciones>
           </articulo>
           <articulo id="23Df">
-            <nombre>Alicate</nombre>
-            <marca>WorksT</marca>
+            <nombre>Destornillador</nombre>
+            <marca>Fischer</marca>
             <descripcion>Punta fina</descripcion>
             <presentaciones>
               <presentacion>
@@ -33,8 +33,8 @@
             </presentaciones>
           </articulo>
           <articulo id="23Hj">
-            <nombre>Jilet</nombre>
-            <marca>Martillo</marca>
+            <nombre>Herramientas</nombre>
+            <marca>Yale</marca>
             <descripcion>Martillo grueso</descripcion>
             <presentaciones>
               <presentacion>
@@ -57,14 +57,14 @@
             </presentaciones>
           </articulo>
           <articulo id="00005">
-            <nombre>Yale</nombre>
-            <marca>WorksT</marca>
-            <descripcion>weee</descripcion>
+            <nombre>Pintura</nombre>
+            <marca>Yale</marca>
+            <descripcion>dasddasdas</descripcion>
             <presentaciones>
               <presentacion>
                 <unidad>Litro</unidad>
-                <cantidad>2.0</cantidad>
-                <precio>10.0</precio>
+                <cantidad>5.0</cantidad>
+                <precio>100.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>
@@ -222,12 +222,38 @@
     </subCategorias>
   </categoria>
   <categoria id="004">
-    <nombre>Pruebas</nombre>
+    <nombre>Pruebas34</nombre>
     <descripcion>pruebas</descripcion>
     <subCategorias>
       <subcategoria id="000112">
-        <nombre>Prueba</nombre>
+        <nombre>Prueba34</nombre>
         <descripcion>vvv</descripcion>
+        <articulos>
+          <articulo id="986">
+            <nombre>Pruebas34</nombre>
+            <marca>Fischer</marca>
+            <descripcion>Corta</descripcion>
+            <presentaciones>
+              <presentacion>
+                <unidad>Centimetro</unidad>
+                <cantidad>34.0</cantidad>
+                <precio>50000.0</precio>
+              </presentacion>
+            </presentaciones>
+          </articulo>
+          <articulo id="5435">
+            <nombre>fdsfsd</nombre>
+            <marca>Fischer</marca>
+            <descripcion>fsdfsdfsd</descripcion>
+            <presentaciones>
+              <presentacion>
+                <unidad>Centimetro</unidad>
+                <cantidad>5.0</cantidad>
+                <precio>50000.0</precio>
+              </presentacion>
+            </presentaciones>
+          </articulo>
+        </articulos>
       </subcategoria>
       <subcategoria id="0003">
         <nombre>Prueba2</nombre>

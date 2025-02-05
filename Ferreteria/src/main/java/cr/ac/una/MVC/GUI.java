@@ -195,6 +195,9 @@ public class GUI extends JFrame {
         editarButton.setEnabled(false);
         buscarButton.setEnabled(false);
 
+        nombresubCategoriaArticuloTf.setEditable(false);
+
+
         //Categporia
         this.guardarButton.addActionListener(new ActionListener() {
             @Override
@@ -487,7 +490,7 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int seleccion = presentacionesTable.getSelectedRow();
                 if (seleccion != -1) {
-                controller.editarItems(categoriaArticuloTf.getText(), subCategoriaArticuloTf.getText(), codigoArticuloTf.getText(), nombre.getText(),
+                controller.editarItems(categoriaArticuloTf.getText(), subCategoriaArticuloTf.getText(), codigoArticuloTf.getText(), nombreArticuloTf.getText(),
                         (String)marcaCombo.getSelectedItem(),descripcionArticuloTf.getText(), cantidadItems.getText(), (String) unidadCombo.getSelectedItem(), precioArticuloTf.getText());
                    controller.TableItems();
                    controller.TablePresentacion();
