@@ -34,6 +34,7 @@ public class Controller {
         TableItems();
         TablePresentacion();
         TablePedidos();
+        llenarCombos(model.getCategories());
     }
 
 
@@ -89,6 +90,7 @@ public class Controller {
             service.addCategory(newCategory);
             model.setCategories(service.allCategories());
             TableCategorias();
+            llenarCombos(model.getCategories());
             return true;
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -512,24 +514,30 @@ public class Controller {
             JOptionPane.showMessageDialog(null, "Articulo no encontrado ");
         }
     }
-
-    /*
-    public double actualizarCantidades(String presentacion, double cantidadVender) throws Exception {
-
-        for (Items item : service.allItems(gui.getCategoryId(), gui.getIDSubCategoria())) {
-            for (Presentation p : item.getPresentation()) {
-                    if (p.getMeasure().equals(presentacion)) {
-                        p.actualizarCantidad(cantidadVender);
-
-                    return p.getQuantity(); // Retorna la nueva cantidad disponible
-                }
-            }
+    public void llenarCombos(List<Category> categories){
+        gui.comboCategoria().removeAllItems();
+        for(Category cat : categories){
+            gui.comboCategoria().addItem(cat.getId() + "-" + cat.getName());
         }
-
-        throw new IllegalArgumentException("No se encontró la presentación: " + presentacion);
     }
 
-     */
+    public void llenarSubCategoria(String categ) {
+        try {
+            List<SubCategory> subCategories = Service.instance().allSubCategories(categ);
+
+            if (subCategories.isEmpty()) {
+                gui.comboSubCategoria().addItem("No hay subcategorías");
+            } else {
+                for (SubCategory subCat : subCategories) {
+                    gui.comboSubCategoria().addItem(subCat.getSubCategoryName());
+                }
+            }
+        } catch (Exception e) {
+
+            gui.comboSubCategoria().addItem("Error al cargar subcategorías");
+        }
+    }
+
 }
 
 

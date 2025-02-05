@@ -308,4 +308,16 @@
       </subcategoria>
     </subCategorias>
   </categoria>
+  <categoria id="00277">
+    <nombre>Sopa</nombre>
+    <descripcion>sssss</descripcion>
+  </categoria>
+  <categoria id="789999">
+    <nombre>jjjjj</nombre>
+    <descripcion>iiiii</descripcion>
+  </categoria>
+  <categoria id="0043333ss">
+    <nombre>aaaaa</nombre>
+    <descripcion>ddddd</descripcion>
+  </categoria>
 </inventario>

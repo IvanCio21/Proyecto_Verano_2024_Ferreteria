@@ -82,7 +82,10 @@ public class Service {
     public List<Category> allCategories() {
         return data.getCategorias();
     }
-
+    public List<SubCategory> allSubCategories(String cat) throws Exception {
+        Category category = categoryGetId(cat);
+        return category.getSubCategoryList();
+    }
 
     //Sub Categorias
     public SubCategory subCategoryGetId(String id, String idC) throws Exception {

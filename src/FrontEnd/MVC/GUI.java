@@ -10,6 +10,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Objects;
 //Este sera el observado: Escucha los cambios
 //actualiza cuando algo del observable cambia
 
@@ -602,6 +603,15 @@ public class GUI extends JFrame {
                 }
             }
         });
+        categoriaPedido.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String categoriaSeleccionada = (String) categoriaPedido.getSelectedItem();
+                if (categoriaSeleccionada != null) {
+                    controller.llenarSubCategoria(categoriaSeleccionada);
+                }
+            }
+        });
 
         //BONOTES REGRESAR O NEXT ARTCICULO
         this.regresarCategoriaButton.addActionListener(new ActionListener() {
@@ -1147,5 +1157,12 @@ public class GUI extends JFrame {
     }
     public void setTableArticulos(DefaultTableModel tableModel) {
         jTableArticulos.setModel(tableModel);
+    }
+
+    public JComboBox comboCategoria(){
+        return  categoriaPedido;
+    }
+    public  JComboBox comboSubCategoria(){
+        return  subCategoriaPedido;
     }
 }
