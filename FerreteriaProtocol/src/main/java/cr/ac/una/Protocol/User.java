@@ -58,6 +58,7 @@ public class User {
     public int getIntentosFallidos() {
         return intentosFallidos;
     }
+
     public void setIntentosFallidos(int intentosFallidos) {
         this.intentosFallidos = intentosFallidos;
     }

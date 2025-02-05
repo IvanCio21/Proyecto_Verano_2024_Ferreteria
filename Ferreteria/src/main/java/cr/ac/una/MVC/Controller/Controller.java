@@ -6,8 +6,10 @@ import cr.ac.una.Logic.*;
 import cr.ac.una.MVC.Model.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Controller {
 
@@ -35,6 +37,7 @@ public class Controller {
         TableItems();
         TablePresentacion();
         TablePedidos();
+        TableArticulosFinal();
         llenarCombos(model.getCategories());
     }
 
@@ -299,7 +302,6 @@ public class Controller {
             }
         };
 
-
         Items articulo = service.articuloGetId(dat);
         if (articulo != null) {
 
@@ -307,7 +309,7 @@ public class Controller {
         }
 
 
-        this.gui.setTableArticulos(TableModel); // Método para actualizar la tabla en la GUI
+        this.gui.setTableArticulos(TableModel);
     }
 
     public void searchArticulo(String dat) throws Exception {
@@ -465,11 +467,12 @@ public class Controller {
     public void TablePedidos() {
         try {
             List<Items> items = service.allItems(gui.getCategoryId(), gui.getIDSubCategoria());
-            DefaultTableModel TableModel = new DefaultTableModel(new String[]{"ID", "Nombre", "Marca", "Descripcion", "Unidad", "Cantidad", "Precio"}, items.size()) {
+            DefaultTableModel TableModel = new DefaultTableModel(new String[]{"ID", "Nombre", "Marca", "Descripcion", "Unidad", "Cantidad Disponible", "Precio Unitario", "Cantidad", "Total"}, items.size()) {
                 @Override
                 public boolean isCellEditable(int row, int column) {
-                    return false;
+                    return column == 7;
                 }
+
             };
             this.gui.setTableArticulosVender(TableModel);
         } catch (Exception e) {
@@ -477,7 +480,22 @@ public class Controller {
         }
     }
 
-    public void TableSearchArticuloVenta(String dat) throws Exception {
+    public void TableArticulosFinal() {
+        try {
+            DefaultTableModel TableModel = new DefaultTableModel(new String[]{"ID", "Nombre", "Marca", "Descripcion", "Unidad", "Cantidad Disponible", "Precio Unitario", "Cantidad", "Total"}, 0) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+
+            };
+            this.gui.setArticulosVenderFinal(TableModel);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void TableSearchArticuloVenta() throws Exception {
         DefaultTableModel TableModel = new DefaultTableModel(new String[]{"ID", "Nombre", "Marca", "Descripcion", "Unidad", "Cantidad Disponible", "Precio Unitario", "Cantidad", "Total"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -485,32 +503,65 @@ public class Controller {
             }
         };
 
-
-        Items articulo = service.articuloGetId(dat);
-        if (articulo != null) {
-            List<Presentation> presentaciones = articulo.getPresentation();
-
-            for (Presentation p : presentaciones) {
-                TableModel.addRow(new Object[]{
-                        articulo.getId(),
-                        articulo.getName(),
-                        articulo.getBrand(),
-                        articulo.getDescription(),
-                        p.getMeasure(),
-                        p.getQuantity(),
-                        p.precioVenta(p.getPrice()),
-                        0,
-                        0
-                });
-
-                this.gui.setTableArticulosVender(TableModel);
+        List<Items> items = service.allItems(gui.getCategoriaIdCb(), gui.getSubCategoriaIdCb());
+        for (Items item : items) {
+            if (item != null) {
+                List<Presentation> presentaciones = item.getPresentation();
+                for (Presentation p : presentaciones) {
+                    TableModel.addRow(new Object[]{
+                            item.getId(),
+                            item.getName(),
+                            item.getBrand(),
+                            item.getDescription(),
+                            p.getMeasure(),
+                            p.getQuantity(),
+                            p.precioVenta(p.getPrice()),
+                            0,
+                            0
+                    });
+                }
             }
+        }
+        this.gui.setTableArticulosVender(TableModel);
+    }
+
+    public void agregarArticuloTable() {
+        JTable tableBusqueda = gui.getTableArticulosVender();
+        JTable tablePedidos = gui.getTableArticulosFinal();
+
+        int selectedRow = tableBusqueda.getSelectedRow();
+
+        if (selectedRow != -1) {
+            DefaultTableModel TableModelBusqueda = (DefaultTableModel) tableBusqueda.getModel();
+            DefaultTableModel TableModelPedidos = (DefaultTableModel) tablePedidos.getModel();
+
+            double cantidadUsuario;
+            try {
+                cantidadUsuario = Double.parseDouble(TableModelBusqueda.getValueAt(selectedRow, 7).toString());
+
+                if (cantidadUsuario <= 0) {
+                    JOptionPane.showMessageDialog(null, "La cantidad debe ser mayor a 0.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                Object[] rowData = new Object[TableModelBusqueda.getColumnCount()];
+                for (int i = 0; i < TableModelBusqueda.getColumnCount(); i++) {
+                    rowData[i] = TableModelBusqueda.getValueAt(selectedRow, i);
+                }
+                TableModelPedidos.addRow(rowData);
+            } catch (NumberFormatException e) {
+                throw new RuntimeException(e);
+            } catch (HeadlessException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un artículo antes de agregarlo.");
         }
     }
 
-    public void searchArticuloVenta(String dat) throws Exception {
+    public void searchArticuloVenta() throws Exception {
         try {
-            TableSearchArticuloVenta(dat);
+            TableSearchArticuloVenta();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Articulo no encontrado ");
         }
@@ -518,7 +569,7 @@ public class Controller {
     public void llenarCombos(List<Category> categories){
         gui.comboCategoria().removeAllItems();
         for(Category cat : categories){
-            gui.comboCategoria().addItem(cat.getId() + "-" + cat.getName());
+            gui.comboCategoria().addItem(cat.getId());
         }
     }
 
@@ -537,14 +588,13 @@ public class Controller {
             } else {
                 // Agregar las subcategorías al ComboBox
                 for (SubCategory subCat : subCategories) {
-                    gui.comboSubCategoria().addItem(subCat.getSubCategoryName());
+                    gui.comboSubCategoria().addItem(subCat.getSubCategoryID());
                 }
             }
         } catch (Exception e) {
-            // Manejar errores, mostrando un mensaje en caso de que algo falle
-            gui.comboSubCategoria().removeAllItems();  // Limpiar en caso de error
+            gui.comboSubCategoria().removeAllItems();
             gui.comboSubCategoria().addItem("Error al cargar subcategorías");
-            e.printStackTrace();  // Mostrar el error en la consola para depuración
+            e.printStackTrace();
         }
 
     }

@@ -112,6 +112,9 @@ public class GUI extends JFrame {
     private JButton volverCategoriaBtn;
     private JComboBox subCategoriaPedido;
     private JComboBox categoriaPedido;
+    private JButton agregarButtonArticuloBtn;
+    private JTable tableArticulosFinal;
+    private JPanel panelPrincipalLogin;
 
     public GUI(){
         initComponets();
@@ -150,8 +153,24 @@ public class GUI extends JFrame {
         this.tableArticulosVender.setModel(tableArticulosVender);
     }
 
+    public JTable getTableArticulosFinal(){
+        return tableArticulosFinal;
+    }
+
+    public void setArticulosVenderFinal(DefaultTableModel tableArticulosFinal) {
+        this.tableArticulosFinal.setModel(tableArticulosFinal);
+    }
+
     public String getIDSubCategoria() {
         return IDSubCategoria.getText();
+    }
+
+    public String getCategoriaIdCb(){
+        return (String) categoriaPedido.getSelectedItem();
+    }
+
+    public String getSubCategoriaIdCb(){
+        return (String) subCategoriaPedido.getSelectedItem();
     }
     //END TABLES VIEWS//
 
@@ -193,9 +212,10 @@ public class GUI extends JFrame {
         buscarArticuloBtn.setEnabled(false);
         limpiarArticulosBtn.setEnabled(false);
         editarButton.setEnabled(false);
-        buscarButton.setEnabled(false);
+        //buscarButton.setEnabled(false);
 
         nombresubCategoriaArticuloTf.setEditable(false);
+        agregarButtonArticuloBtn.setEnabled(false);
 
 
         //Categporia
@@ -214,6 +234,7 @@ public class GUI extends JFrame {
                 }
             }
         });
+
         this.limpiarCategoriaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -222,6 +243,7 @@ public class GUI extends JFrame {
                 JOptionPane.showMessageDialog(null,"La ventana de categoria se a limpiado correctamente");
             }
         });
+
         this.eliminarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -243,6 +265,7 @@ public class GUI extends JFrame {
                 }
             }
         });
+
         this.listaCategoria.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 int filaSeleccionada = listaCategoria.getSelectedRow();
@@ -490,6 +513,7 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int seleccion = presentacionesTable.getSelectedRow();
                 if (seleccion != -1) {
+                    editarButton.setEnabled(true);
                 controller.editarItems(categoriaArticuloTf.getText(), subCategoriaArticuloTf.getText(), codigoArticuloTf.getText(), nombreArticuloTf.getText(),
                         (String)marcaCombo.getSelectedItem(),descripcionArticuloTf.getText(), cantidadItems.getText(), (String) unidadCombo.getSelectedItem(), precioArticuloTf.getText());
                    controller.TableItems();
@@ -527,7 +551,6 @@ public class GUI extends JFrame {
                     marcaCombo.setSelectedItem(marca);
                     controller.TablePresentacion();
                     codigoArticuloTf.setEditable(false);
-                    editarButton.setEnabled(true);
                     eliminarArticulosBtn.setEnabled(true);
                     guardarArticulosBtn.setEnabled(false);
                 }
@@ -588,6 +611,7 @@ public class GUI extends JFrame {
                  }
             }
         });
+
         this.presentacionesTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -601,6 +625,7 @@ public class GUI extends JFrame {
                     cantidadItems.setText(cantidad);
                     precioArticuloTf.setText(precio);
                     agregarPresentacionButton.setEnabled(false);
+                    editarButton.setEnabled(true);
                 }
             }
         });
@@ -639,9 +664,9 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    if(validarPedidoForm()) {
-                        controller.searchArticuloVenta(buscarArticulo.getText());
-                    }
+
+                        controller.searchArticuloVenta();
+                        //tableArticulosVender()
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
@@ -654,26 +679,39 @@ public class GUI extends JFrame {
                 int columnaSeleccionada = tableArticulosVender.getSelectedColumn();
                 int filaSeleccionada = tableArticulosVender.getSelectedRow();
 
-                if ((columnaSeleccionada == 7 || columnaSeleccionada == 8) && filaSeleccionada != -1) {
-                    try {
-                        double cantidadUsuario = Double.parseDouble(tableArticulosVender.getValueAt(filaSeleccionada, 7).toString());
-                        double precioUnitario = Double.parseDouble(tableArticulosVender.getValueAt(filaSeleccionada, 6).toString());
-                        double cantidadActual = Double.parseDouble(tableArticulosVender.getValueAt(filaSeleccionada, 5).toString());
-                        String presentacion = tableArticulosVender.getValueAt(filaSeleccionada, 4).toString();
-                        //String
-                        double total = cantidadUsuario * precioUnitario;
-                        //double actualizar = controller.actualizarCantidades(presentacion, cantidadActual);
-                        tableArticulosVender.setValueAt(total, filaSeleccionada, 8);
-                        //tableArticulosVender.setValueAt(actualizar, filaSeleccionada, 5);
+                if (filaSeleccionada != -1) {
+                    agregarButtonArticuloBtn.setEnabled(true);
+                    //if (columnaSeleccionada == 7 || columnaSeleccionada == 8) {
+                        try {
+                            double cantidadUsuario = Double.parseDouble(tableArticulosVender.getValueAt(filaSeleccionada, 7).toString());
+                            double precioUnitario = Double.parseDouble(tableArticulosVender.getValueAt(filaSeleccionada, 6).toString());
+                            double cantidadDisponible = Double.parseDouble(tableArticulosVender.getValueAt(filaSeleccionada, 5).toString());
 
-                    } catch (NumberFormatException ex) {
-                        tableArticulosVender.setValueAt(0, filaSeleccionada, 0);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
+                            if (cantidadUsuario > cantidadDisponible) {
+                                JOptionPane.showMessageDialog(null, "No hay suficiente stock disponible.", "Error", JOptionPane.ERROR_MESSAGE);
+                                tableArticulosVender.setValueAt(0, filaSeleccionada, 7);
+                                tableArticulosVender.setValueAt(0, filaSeleccionada, 8);
+                            } else {
+                                double total = cantidadUsuario * precioUnitario;
+                                tableArticulosVender.setValueAt(total, filaSeleccionada, 8);
+                            }
+                        } catch (NumberFormatException ex) {
+                            tableArticulosVender.setValueAt(0, filaSeleccionada, 0);
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    //}
                 }
             }
         });
+
+        agregarButtonArticuloBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            controller.agregarArticuloTable();
+            }
+        });
+
 
         volverCategoriaBtn.addActionListener(new ActionListener() {
             @Override
@@ -887,6 +925,7 @@ public class GUI extends JFrame {
             }
         });
 
+        /*
         this.buscarArticulo.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -901,6 +940,8 @@ public class GUI extends JFrame {
                 validarBuscar();
             }
         });
+
+         */
 
 
 
@@ -1070,6 +1111,7 @@ public class GUI extends JFrame {
         }
     }
 
+    /*
     private boolean validarPedidoForm(){
         Border errorBorder = BorderFactory.createLineBorder(Color.RED, 2);
         boolean valid = true;
@@ -1082,6 +1124,8 @@ public class GUI extends JFrame {
         }
         return valid;
     }
+
+     */
 
     void  clearText(){
         nombre.setText("");
@@ -1174,4 +1218,6 @@ public class GUI extends JFrame {
     public  JComboBox comboSubCategoria(){
         return  subCategoriaPedido;
     }
+
+
 }
