@@ -217,6 +217,16 @@ public class GUI extends JFrame {
         nombresubCategoriaArticuloTf.setEditable(false);
         agregarButtonArticuloBtn.setEnabled(false);
 
+        tableArticulosVender.getTableHeader().setReorderingAllowed(false);
+        listaCategoria.getTableHeader().setReorderingAllowed(false);
+        subCategoriasTable.getTableHeader().setReorderingAllowed(false);
+        jTableArticulos.getTableHeader().setReorderingAllowed(false);
+        presentacionesTable.getTableHeader().setReorderingAllowed(false);
+        tableArticulosFinal.getTableHeader().setReorderingAllowed(false);
+
+
+
+
 
         //Categporia
         this.guardarButton.addActionListener(new ActionListener() {
