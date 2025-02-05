@@ -111,6 +111,8 @@ public class GUI extends JFrame {
     private JLabel buscarArticuloLb;
     private JTable tableArticulosVender;
     private JButton volverCategoriaBtn;
+    private JComboBox subCategoriaPedido;
+    private JComboBox categoriaPedido;
 
     public GUI(){
         initComponets();
@@ -192,6 +194,7 @@ public class GUI extends JFrame {
         buscarArticuloBtn.setEnabled(false);
         limpiarArticulosBtn.setEnabled(false);
         editarButton.setEnabled(false);
+        buscarButton.setEnabled(false);
 
         //Categporia
         this.guardarButton.addActionListener(new ActionListener() {
@@ -329,6 +332,7 @@ public class GUI extends JFrame {
                     PestaniasPanel.setSelectedIndex(2);
                     PestaniasPanel.setEnabledAt(0, false);
                     PestaniasPanel.setEnabledAt(1, false);
+                    PestaniasPanel.setEnabledAt(3,true);
                     controller.TableSubCategories();
                     controller.TableItems();
                 }
@@ -607,11 +611,12 @@ public class GUI extends JFrame {
                 PestaniasPanel.setSelectedIndex(0);
                 PestaniasPanel.setEnabledAt(1, false);
                 PestaniasPanel.setEnabledAt(2, false);
+
             }
         });
 
         //Pedidos//
-        buscarButton.addActionListener(new ActionListener() {
+        this.buscarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -862,8 +867,33 @@ public class GUI extends JFrame {
                 validarArticulo();
             }
         });
+
+        this.buscarArticulo.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                validarBuscar();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                validarBuscar();
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                validarBuscar();
+            }
+        });
+
+
+
     }
 
+    public  void validarBuscar(){
+        if(buscarArticulo.getText().isEmpty()){
+            buscarButton.setEnabled(false);
+        }else{
+            buscarButton.setEnabled(true);
+        }
+    }
     public void validar(){
         if(!(codigo.getText().isEmpty() && descripcionCategoria.getText().isEmpty() &&
                 nombre.getText().isEmpty() && buscarCategoria.getText().isEmpty())){
