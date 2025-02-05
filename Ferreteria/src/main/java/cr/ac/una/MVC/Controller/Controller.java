@@ -1,11 +1,12 @@
-package FrontEnd.MVC.Controller;
+package cr.ac.una.MVC.Controller;
 
-import FrontEnd.Logic.*;
-import FrontEnd.MVC.GUI;
-import FrontEnd.MVC.Model.Model;
-
+import cr.ac.una.Data.*;
+import cr.ac.una.MVC.*;
+import cr.ac.una.Logic.*;
+import cr.ac.una.MVC.Model.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
@@ -523,19 +524,29 @@ public class Controller {
 
     public void llenarSubCategoria(String categ) {
         try {
-            List<SubCategory> subCategories = Service.instance().allSubCategories(categ);
-
+            gui.comboSubCategoria().removeAllItems();
+            List<SubCategory> subCategories = new ArrayList<>();
+            for(Category cat : model.getCategories())
+            {
+                if(cat.getId().equals(categ)){
+                    subCategories = cat.getSubCategoryList();
+                }
+            }
             if (subCategories.isEmpty()) {
-                gui.comboSubCategoria().addItem("No hay subcategorías");
+                gui.comboSubCategoria().addItem("No hay subcategorías disponibles");
             } else {
+                // Agregar las subcategorías al ComboBox
                 for (SubCategory subCat : subCategories) {
                     gui.comboSubCategoria().addItem(subCat.getSubCategoryName());
                 }
             }
         } catch (Exception e) {
-
+            // Manejar errores, mostrando un mensaje en caso de que algo falle
+            gui.comboSubCategoria().removeAllItems();  // Limpiar en caso de error
             gui.comboSubCategoria().addItem("Error al cargar subcategorías");
+            e.printStackTrace();  // Mostrar el error en la consola para depuración
         }
+
     }
 
 }

@@ -1,6 +1,6 @@
-package FrontEnd.Logic;
-import FrontEnd.Data.Data;
-import FrontEnd.Data.XmlPersistent;
+package cr.ac.una.Logic;
+
+import cr.ac.una.Data.*;
 
 import java.util.ArrayList;
 import java.util.List;

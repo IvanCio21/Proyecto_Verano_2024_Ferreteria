@@ -6,6 +6,7 @@
       <list>
         <option value="$PROJECT_DIR$/FerreteriaServer/pom.xml" />
         <option value="$PROJECT_DIR$/FerreteriaProtocol/pom.xml" />
+        <option value="$PROJECT_DIR$/Ferreteria/pom.xml" />
       </list>
     </option>
   </component>

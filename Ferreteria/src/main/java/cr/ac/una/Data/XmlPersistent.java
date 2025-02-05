@@ -1,6 +1,6 @@
-package FrontEnd.Data;
+package cr.ac.una.Data;
 
-import FrontEnd.Logic.*;
+import cr.ac.una.Logic.*;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 

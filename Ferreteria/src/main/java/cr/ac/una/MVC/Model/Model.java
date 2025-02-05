@@ -1,6 +1,8 @@
-package FrontEnd.MVC.Model;
+package cr.ac.una.MVC.Model;
 
-import FrontEnd.Logic.Category;
+
+
+import cr.ac.una.Logic.Category;
 
 import java.util.ArrayList;
 import java.util.List;

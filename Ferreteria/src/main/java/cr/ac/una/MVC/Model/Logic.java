@@ -1,4 +1,4 @@
-package FrontEnd.MVC.Model;
+package cr.ac.una.MVC.Model;
 
 import javax.swing.*;
 

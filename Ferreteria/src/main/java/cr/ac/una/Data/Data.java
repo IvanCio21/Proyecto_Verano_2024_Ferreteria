@@ -1,9 +1,10 @@
-package FrontEnd.Data;
+package cr.ac.una.Data;
+
+import cr.ac.una.Logic.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import FrontEnd.Logic.*;
 
 public class Data {
 

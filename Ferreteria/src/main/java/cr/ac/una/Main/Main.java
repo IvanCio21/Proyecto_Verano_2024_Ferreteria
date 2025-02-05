@@ -1,9 +1,9 @@
-package FrontEnd.Main;
+package cr.ac.una.Main;
 
 
-import FrontEnd.MVC.Controller.Controller;
-import FrontEnd.MVC.GUI;
-import FrontEnd.MVC.Model.Model;
+import cr.ac.una.MVC.Controller.Controller;
+import cr.ac.una.MVC.Model.Model;
+import cr.ac.una.MVC.*;
 
 import javax.swing.*;
 

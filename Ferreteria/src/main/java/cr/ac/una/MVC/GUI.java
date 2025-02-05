@@ -1,8 +1,7 @@
-package FrontEnd.MVC;
+package cr.ac.una.MVC;
 
-import FrontEnd.MVC.Controller.Controller;
-import FrontEnd.MVC.Model.Model;
-
+import cr.ac.una.MVC.Controller.*;
+import cr.ac.una.MVC.Model.*;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
@@ -10,7 +9,6 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Objects;
 //Este sera el observado: Escucha los cambios
 //actualiza cuando algo del observable cambia
 
@@ -607,8 +605,16 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String categoriaSeleccionada = (String) categoriaPedido.getSelectedItem();
-                if (categoriaSeleccionada != null) {
-                    controller.llenarSubCategoria(categoriaSeleccionada);
+
+                try {
+                    if (categoriaSeleccionada != null) {
+                        String[] partes = categoriaSeleccionada.split("-");
+                        String categoriaId = partes[0];
+                        controller.llenarSubCategoria(categoriaId);
+                    }
+
+                }catch(Exception ex){
+                    new Exception();
                 }
             }
         });

@@ -1,4 +1,4 @@
-package FrontEnd.Logic;
+package cr.ac.una.Logic;
 
 import java.util.ArrayList;
 import java.util.List;

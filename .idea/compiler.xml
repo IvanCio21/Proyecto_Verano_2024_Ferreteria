@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="FerreteriaProtocol" />
         <module name="FerreteriaServer" />
+        <module name="Ferreteria" />
       </profile>
     </annotationProcessing>
   </component>

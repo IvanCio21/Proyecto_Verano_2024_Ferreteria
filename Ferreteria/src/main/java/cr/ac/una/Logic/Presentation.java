@@ -1,4 +1,4 @@
-package FrontEnd.Logic;
+package cr.ac.una.Logic;
 
 public class Presentation {
     private String measure;
