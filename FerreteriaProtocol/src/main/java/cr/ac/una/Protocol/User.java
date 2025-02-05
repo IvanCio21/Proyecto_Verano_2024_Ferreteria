@@ -1,4 +1,4 @@
-package Protocol;
+package cr.ac.una.Protocol;
 
 import java.util.Objects;
 
@@ -6,6 +6,8 @@ public class User {
     private String userName;
     private String password;
     private String status;
+
+    private int intentosFallidos = 0;
 
     public User(String password, String status, String userName) {
         this.password = password;
@@ -51,6 +53,21 @@ public class User {
         final User other = (User) obj;
         return Objects.equals(this.userName, other.userName) && Objects.equals(this.password, other.password);
 
+    }
+
+    public int getIntentosFallidos() {
+        return intentosFallidos;
+    }
+    public void setIntentosFallidos(int intentosFallidos) {
+        this.intentosFallidos = intentosFallidos;
+    }
+
+    public void incrementarIntentosFallidos() {
+        this.intentosFallidos++;
+    }
+
+    public void resetearIntentosFallidos() {
+        this.intentosFallidos = 0;
     }
 
 }

@@ -1,4 +1,4 @@
-package Protocol;
+package cr.ac.una.Protocol;
 
 public class Protocol {
 

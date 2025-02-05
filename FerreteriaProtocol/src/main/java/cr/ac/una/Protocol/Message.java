@@ -1,6 +1,5 @@
-package Protocol;
+package cr.ac.una.Protocol;
 
-import java.io.Serializable;
 import java.util.List;
 
 public class Message {
