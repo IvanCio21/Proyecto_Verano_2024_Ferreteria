@@ -346,4 +346,8 @@
     <nombre>aaaaa</nombre>
     <descripcion>ddddd</descripcion>
   </categoria>
+  <categoria id="993">
+    <nombre>Clavos</nombre>
+    <descripcion>Clavan</descripcion>
+  </categoria>
 </inventario>

@@ -4,6 +4,8 @@ import cr.ac.una.Data.*;
 import cr.ac.una.MVC.*;
 import cr.ac.una.Logic.*;
 import cr.ac.una.MVC.Model.*;
+import cr.ac.una.Protocol.User;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -16,22 +18,55 @@ public class Controller {
     private static Model model;
     private GUI gui;
     private static Service service;
+    private Login loginView;
 
-    public Controller(Model model, GUI gui) {
-        service = new Service();
-        Controller.model = model;
+    public Controller(Model model, GUI gui, Login loginView) {
+        this.model = model;
         this.gui = gui;
+        this.loginView = loginView;
 
-
+        service = new Service();
         service.loadXml();
+        model.setCategories(service.allCategories());
+
+
+        loginView.setController(this);
+        mostrarLogin();
+
+
+    }
+
+
+    public void mostrarLogin() {
+        JFrame frame = new JFrame("Login - Sistema de Inventarios");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setContentPane(loginView.getPanelLoginBase());
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    public void login(User user) throws Exception {
+            User loggedInUser = Proxy.instance().login(user);
+                model.setCurrentUser(loggedInUser);
+                model.commit(Model.USER);
+                loginView.getPanelLoginBase().setVisible(false);
+                JOptionPane.showMessageDialog(null, "¡Login exitoso!");
+                iniciarSistema();
+    }
+
+
+    public void iniciarSistema() {
+        JFrame frame = new JFrame("Sistema de Inventarios");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setContentPane(gui.getContentPane());
+        frame.pack();
+        frame.setVisible(true);
         model.setCategories(service.allCategories());
 
         if (model.getCategories().isEmpty()) {
             prueba();
         }
-
         gui.setController(this);
-        iniciar();
         TableCategorias();
         TableSubCategories();
         TableItems();
@@ -39,15 +74,6 @@ public class Controller {
         TablePedidos();
         TableArticulosFinal();
         llenarCombos(model.getCategories());
-    }
-
-
-    public void iniciar() {
-        JFrame frame = new JFrame("Sistema de Inventarios");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setContentPane(gui.getContentPane());
-        frame.pack();
-        frame.setVisible(true);
     }
 
     //Categoria

@@ -1,4 +1,55 @@
 package cr.ac.una.MVC.Model;
 
-public class Login {
+import cr.ac.una.MVC.Controller.Controller;
+import cr.ac.una.Protocol.User;
+
+import javax.swing.*;
+import java.util.Observable;
+import java.util.Observer;
+
+public class Login implements Observer {
+    private JPanel PanelLoginBase;
+    private JPanel loginPanel;
+    private JTextField FieldUsuario;
+    private JPasswordField FieldContrasenia;
+    private JButton buttonFinish;
+    private JButton ButtonIngreso;
+
+
+    Model model;
+    Controller controller;
+
+    public void setController(Controller controller) {
+        this.controller = controller;
+
+        ButtonIngreso.addActionListener(e -> {
+            String usuario = FieldUsuario.getText();
+            String contrasenia = new String(FieldContrasenia.getPassword());
+
+            User user = new User(contrasenia,"",usuario);
+
+            try {
+                controller.login(user);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        buttonFinish.addActionListener(e -> System.exit(0));
+    }
+
+    public JPanel getPanelLoginBase() {
+        return PanelLoginBase;
+    }
+
+    public void update(Observable o, Object arg) {
+        // Aquí puedes manejar la lógica cuando el modelo cambie y notifique a esta vista.
+        System.out.println("El modelo ha sido actualizado: " + arg);
+
+        // Si deseas, puedes actualizar la interfaz gráfica aquí, por ejemplo:
+        if ((int) arg == Model.USER) {
+            JOptionPane.showMessageDialog(null, "Usuario actualizado en el modelo");
+        }
+    }
+
 }

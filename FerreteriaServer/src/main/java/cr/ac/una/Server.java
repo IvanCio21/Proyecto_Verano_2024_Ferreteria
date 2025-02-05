@@ -4,7 +4,7 @@ import cr.ac.una.Protocol.IService;
 import cr.ac.una.Protocol.Message;
 import cr.ac.una.Protocol.Protocol;
 import cr.ac.una.Protocol.User;
-
+import cr.ac.una.Service;
 import javax.swing.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -65,21 +65,14 @@ public class Server {
         int method = in.readInt();
         if (method!=Protocol.LOGIN) throw new Exception("Should login first");
         User user=(User)in.readObject();
-        user=service.login(user);
+        user = service.login(user);
 
 
 
-        if (user == null) {
+        if (user == null || !user.getStatus().equals("Activo")) {
             out.writeInt(Protocol.ERROR_LOGIN);
             out.flush();
-            JOptionPane.showMessageDialog(null, "Usuario o Contraseña incorrecta.", "Error de Inicio de Sesión", JOptionPane.ERROR_MESSAGE);
-        }
-
-        if (!user.getStatus().equals("Activo")){
-            out.writeInt(Protocol.ERROR_LOGIN);
-            out.flush();
-            JOptionPane.showMessageDialog(null, "Usuario bloqueado, comuníquese con soporte.", "Error de Inicio de Sesión", JOptionPane.ERROR_MESSAGE);
-            return null;
+            throw new Exception(user == null ? "Usuario o contraseña incorrectos" : "Usuario bloqueado");
         }
 
         out.writeInt(Protocol.ERROR_NO_ERROR);
