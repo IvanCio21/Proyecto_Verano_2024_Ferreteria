@@ -490,6 +490,7 @@ public class Controller {
             // Llamar al servicio para agregar la presentación
             service.agregarPresentation(gui.getCategoryId(), gui.getIDSubCategoria(), gui.getArticuloId(),
                     new Presentation(un, numeroComoDouble, Double.parseDouble(precio)));
+            service.saveXml();
 
 
             JOptionPane.showMessageDialog(null, "Presentación agregada correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);

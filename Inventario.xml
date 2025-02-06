@@ -18,6 +18,11 @@
                 <cantidad>28.0</cantidad>
                 <precio>30.0</precio>
               </presentacion>
+              <presentacion>
+                <unidad>Mililitro</unidad>
+                <cantidad>34.0</cantidad>
+                <precio>1200.0</precio>
+              </presentacion>
             </presentaciones>
           </articulo>
           <articulo id="23Df">
