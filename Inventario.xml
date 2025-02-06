@@ -16,7 +16,7 @@
               <presentacion>
                 <unidad>Unica</unidad>
                 <cantidad>28.0</cantidad>
-                <precio>10.0</precio>
+                <precio>30.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>
@@ -28,7 +28,7 @@
               <presentacion>
                 <unidad>Unidad</unidad>
                 <cantidad>34.0</cantidad>
-                <precio>10.0</precio>
+                <precio>30.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>
@@ -40,31 +40,7 @@
               <presentacion>
                 <unidad>Unico</unidad>
                 <cantidad>3.0</cantidad>
-                <precio>10.0</precio>
-              </presentacion>
-            </presentaciones>
-          </articulo>
-          <articulo id="22333">
-            <nombre>Zapato</nombre>
-            <marca>sssss</marca>
-            <descripcion>ssss</descripcion>
-            <presentaciones>
-              <presentacion>
-                <unidad>ess</unidad>
-                <cantidad>20.0</cantidad>
-                <precio>10.0</precio>
-              </presentacion>
-            </presentaciones>
-          </articulo>
-          <articulo id="00005">
-            <nombre>Pintura</nombre>
-            <marca>Yale</marca>
-            <descripcion>dasddasdas</descripcion>
-            <presentaciones>
-              <presentacion>
-                <unidad>Litro</unidad>
-                <cantidad>5.0</cantidad>
-                <precio>100.0</precio>
+                <precio>30.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>
@@ -82,7 +58,7 @@
               <presentacion>
                 <unidad>Kilo</unidad>
                 <cantidad>45.0</cantidad>
-                <precio>1000.0</precio>
+                <precio>2000.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>
@@ -94,7 +70,7 @@
               <presentacion>
                 <unidad>Litro</unidad>
                 <cantidad>50.0</cantidad>
-                <precio>50000.0</precio>
+                <precio>30000.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>
@@ -118,37 +94,7 @@
               <presentacion>
                 <unidad>Costal 1 kg</unidad>
                 <cantidad>4.0</cantidad>
-                <precio>10.0</precio>
-              </presentacion>
-            </presentaciones>
-          </articulo>
-          <articulo id="2222">
-            <nombre>LeonH</nombre>
-            <marca>Yale</marca>
-            <descripcion>ssss</descripcion>
-            <presentaciones>
-              <presentacion>
-                <unidad>Litro</unidad>
-                <cantidad>2.0</cantidad>
-                <precio>10.0</precio>
-              </presentacion>
-            </presentaciones>
-          </articulo>
-        </articulos>
-      </subcategoria>
-      <subcategoria id="004">
-        <nombre>Cementos2</nombre>
-        <descripcion>otros</descripcion>
-        <articulos>
-          <articulo id="0005">
-            <nombre>Sopa</nombre>
-            <marca>HILTI</marca>
-            <descripcion>Sooo</descripcion>
-            <presentaciones>
-              <presentacion>
-                <unidad>Metro</unidad>
-                <cantidad>22.0</cantidad>
-                <precio>10.0</precio>
+                <precio>30.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>
@@ -162,7 +108,7 @@
     <subCategorias>
       <subcategoria id="PINT">
         <nombre>Pinturas De agua</nombre>
-        <descripcion>Pinturas para interior y </descripcion>
+        <descripcion>Pinturas para interior y exterior.</descripcion>
         <articulos>
           <articulo id="CLo">
             <nombre>Sapo</nombre>
@@ -172,7 +118,7 @@
               <presentacion>
                 <unidad>222</unidad>
                 <cantidad>22.0</cantidad>
-                <precio>10.0</precio>
+                <precio>30.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>
@@ -184,66 +130,7 @@
               <presentacion>
                 <unidad>cajs</unidad>
                 <cantidad>33.0</cantidad>
-                <precio>10.0</precio>
-              </presentacion>
-            </presentaciones>
-          </articulo>
-          <articulo id="Esee">
-            <nombre>Holaaa</nombre>
-            <marca>eeee</marca>
-            <descripcion>Ellll</descripcion>
-            <presentaciones>
-              <presentacion>
-                <unidad>caja</unidad>
-                <cantidad>25.0</cantidad>
-                <precio>10.0</precio>
-              </presentacion>
-            </presentaciones>
-          </articulo>
-          <articulo id="3333">
-            <nombre>Sapo</nombre>
-            <marca>Yale</marca>
-            <descripcion>eee</descripcion>
-            <presentaciones>
-              <presentacion>
-                <unidad>Litro</unidad>
-                <cantidad>2.0</cantidad>
-                <precio>10.0</precio>
-              </presentacion>
-            </presentaciones>
-          </articulo>
-        </articulos>
-      </subcategoria>
-      <subcategoria id="PINT_1">
-        <nombre>Pinturas De agua</nombre>
-        <descripcion>Pinturas para interior y exterior.</descripcion>
-        <articulos>
-          <articulo id="CO__">
-            <nombre>Cooka</nombre>
-            <marca>ssss</marca>
-            <descripcion>sssss</descripcion>
-            <presentaciones>
-              <presentacion>
-                <unidad>eee</unidad>
-                <cantidad>202.0</cantidad>
-                <precio>10.0</precio>
-              </presentacion>
-              <presentacion>
-                <unidad>Cajas</unidad>
-                <cantidad>2023.0</cantidad>
-                <precio>10.0</precio>
-              </presentacion>
-            </presentaciones>
-          </articulo>
-          <articulo id="0078">
-            <nombre> 333</nombre>
-            <marca>Pintura</marca>
-            <descripcion>33</descripcion>
-            <presentaciones>
-              <presentacion>
-                <unidad>sss</unidad>
-                <cantidad>22.0</cantidad>
-                <precio>10.0</precio>
+                <precio>30.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>
@@ -263,43 +150,6 @@
             <nombre>Pruebas34</nombre>
             <marca>Fischer</marca>
             <descripcion>Corta</descripcion>
-            <presentaciones>
-              <presentacion>
-                <unidad>Centimetro</unidad>
-                <cantidad>34.0</cantidad>
-                <precio>50000.0</precio>
-              </presentacion>
-            </presentaciones>
-          </articulo>
-          <articulo id="5435">
-            <nombre>fdsfsd</nombre>
-            <marca>Fischer</marca>
-            <descripcion>fsdfsdfsd</descripcion>
-            <presentaciones>
-              <presentacion>
-                <unidad>Centimetro</unidad>
-                <cantidad>5.0</cantidad>
-                <precio>50000.0</precio>
-              </presentacion>
-            </presentaciones>
-          </articulo>
-        </articulos>
-      </subcategoria>
-      <subcategoria id="0003">
-        <nombre>Prueba2</nombre>
-        <descripcion>otro</descripcion>
-        <articulos>
-          <articulo id="123">
-            <nombre>PruebaPrecio</nombre>
-            <marca>Yale</marca>
-            <descripcion>adadada</descripcion>
-            <presentaciones>
-              <presentacion>
-                <unidad>Centimetro</unidad>
-                <cantidad>10.0</cantidad>
-                <precio>50.0</precio>
-              </presentacion>
-            </presentaciones>
           </articulo>
         </articulos>
       </subcategoria>
@@ -321,86 +171,13 @@
               <presentacion>
                 <unidad>Mililitro</unidad>
                 <cantidad>5.0</cantidad>
-                <precio>10.0</precio>
-              </presentacion>
-              <presentacion>
-                <unidad>Centimetro</unidad>
-                <cantidad>6.0</cantidad>
-                <precio>10.0</precio>
-              </presentacion>
-            </presentaciones>
-          </articulo>
-        </articulos>
-      </subcategoria>
-      <subcategoria id="005">
-        <nombre>Prueba subCategoria</nombre>
-        <descripcion>prueba</descripcion>
-        <articulos>
-          <articulo id="0005">
-            <nombre>Pruebas</nombre>
-            <marca>Pintuco</marca>
-            <descripcion>pruebaaaa</descripcion>
-            <presentaciones>
-              <presentacion>
-                <unidad>Litro</unidad>
-                <cantidad>4.0</cantidad>
-                <precio>10.0</precio>
-              </presentacion>
-            </presentaciones>
-          </articulo>
-          <articulo id="123">
-            <nombre>Pruebas</nombre>
-            <marca>Tricolor</marca>
-            <descripcion>adadad</descripcion>
-            <presentaciones>
-              <presentacion>
-                <unidad>Mililitro</unidad>
-                <cantidad>6.0</cantidad>
-                <precio>10.0</precio>
-              </presentacion>
-            </presentaciones>
-          </articulo>
-        </articulos>
-      </subcategoria>
-      <subcategoria id="001">
-        <nombre>prueba</nombre>
-        <descripcion>prueba</descripcion>
-        <articulos>
-          <articulo id="001">
-            <nombre>llave</nombre>
-            <marca>Yale</marca>
-            <descripcion>llave</descripcion>
-            <presentaciones>
-              <presentacion>
-                <unidad>Litro</unidad>
-                <cantidad>10.0</cantidad>
-                <precio>25.0</precio>
+                <precio>30.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>
         </articulos>
       </subcategoria>
     </subCategorias>
-  </categoria>
-  <categoria id="00277">
-    <nombre>Sopa</nombre>
-    <descripcion>sssss</descripcion>
-  </categoria>
-  <categoria id="789999">
-    <nombre>jjjjj</nombre>
-    <descripcion>iiiii</descripcion>
-  </categoria>
-  <categoria id="0043333ss">
-    <nombre>aaaaa</nombre>
-    <descripcion>ddddd</descripcion>
-  </categoria>
-  <categoria id="993">
-    <nombre>Clavos</nombre>
-    <descripcion>Clavan</descripcion>
-  </categoria>
-  <categoria id="005">
-    <nombre>Prueba</nombre>
-    <descripcion>prueba</descripcion>
   </categoria>
   <categoria id="3535">
     <nombre>Materiales Plasticos</nombre>
@@ -418,7 +195,7 @@
               <presentacion>
                 <unidad>Litro</unidad>
                 <cantidad>40.0</cantidad>
-                <precio>10.0</precio>
+                <precio>30.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>

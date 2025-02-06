@@ -1,4 +1,4 @@
-package cr.ac.una.MVC;
+package cr.ac.una.MVC.View;
 
 import cr.ac.una.MVC.Controller.*;
 import cr.ac.una.MVC.Model.*;
@@ -6,6 +6,8 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
@@ -114,6 +116,10 @@ public class GUI extends JFrame {
     private JLabel SubTotalLabel;
     private JLabel DescuentoLabel;
     private JLabel TotalLabel;
+    private JButton eliminarPedido;
+    private JButton vender;
+    private JComboBox presentacion;
+    private JTextField cantidadTotalPresentacion;
     private JPanel panelPrincipalLogin;
 
     public GUI(){
@@ -194,6 +200,7 @@ public class GUI extends JFrame {
         NextButtonSub.setEnabled(false);
         agregarPresentacionButton.setEnabled(false);
         eliminarPresentacionButton.setEnabled(false);
+        vender.setEnabled(false);
 
         editCategory.setEnabled(false);
         eliminarButton.setEnabled(false);
@@ -212,7 +219,8 @@ public class GUI extends JFrame {
         buscarArticuloBtn.setEnabled(false);
         limpiarArticulosBtn.setEnabled(false);
         editarButton.setEnabled(false);
-        //buscarButton.setEnabled(false);
+
+
 
         nombresubCategoriaArticuloTf.setEditable(false);
         agregarButtonArticuloBtn.setEnabled(false);
@@ -223,6 +231,7 @@ public class GUI extends JFrame {
         jTableArticulos.getTableHeader().setReorderingAllowed(false);
         presentacionesTable.getTableHeader().setReorderingAllowed(false);
         tableArticulosFinal.getTableHeader().setReorderingAllowed(false);
+        cantidadTotalPresentacion.setEditable(false);
 
 
 
@@ -645,6 +654,7 @@ public class GUI extends JFrame {
                 String categoriaSeleccionada = (String) categoriaPedido.getSelectedItem();
 
                 try {
+
                     if (categoriaSeleccionada != null) {
                         String[] partes = categoriaSeleccionada.split("-");
                         String categoriaId = partes[0];
@@ -674,9 +684,17 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    String categoriaSeleccionada = (String) categoriaPedido.getSelectedItem();
+                    String subCategoriaSelecionada = (String) subCategoriaPedido.getSelectedItem();
+                    if (categoriaSeleccionada != null) {
+                        String[] partes = categoriaSeleccionada.split("-");
+                        String categoriaId = partes[0];
 
-                        controller.searchArticuloVenta();
-                        //tableArticulosVender()
+                        String[] partesSubCa = subCategoriaSelecionada.split("-");
+                        String subCategoriaId = partesSubCa[0];
+                        controller.searchArticuloVenta(categoriaId, subCategoriaId);
+                    }
+
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
@@ -693,10 +711,20 @@ public class GUI extends JFrame {
                     agregarButtonArticuloBtn.setEnabled(true);
                     //if (columnaSeleccionada == 7 || columnaSeleccionada == 8) {
                         try {
+                            String categoriaSeleccionada = (String) categoriaPedido.getSelectedItem();
+                            String subCategoriaSelecionada = (String) subCategoriaPedido.getSelectedItem();
                             double cantidadUsuario = Double.parseDouble(tableArticulosVender.getValueAt(filaSeleccionada, 7).toString());
                             double precioUnitario = Double.parseDouble(tableArticulosVender.getValueAt(filaSeleccionada, 6).toString());
                             double cantidadDisponible = Double.parseDouble(tableArticulosVender.getValueAt(filaSeleccionada, 5).toString());
+                            String idArticulo = tableArticulosVender.getValueAt(filaSeleccionada, 0).toString();
+                            if (categoriaSeleccionada != null) {
+                                String[] partes = categoriaSeleccionada.split("-");
+                                String categoriaId = partes[0];
 
+                                String[] partesSubCa = subCategoriaSelecionada.split("-");
+                                String subCategoriaId = partesSubCa[0];
+                                controller.CargarPresentacion(categoriaId, subCategoriaId, idArticulo);
+                            }
                             if (cantidadUsuario > cantidadDisponible) {
                                 JOptionPane.showMessageDialog(null, "No hay suficiente stock disponible.", "Error", JOptionPane.ERROR_MESSAGE);
                                 tableArticulosVender.setValueAt(0, filaSeleccionada, 7);
@@ -716,12 +744,70 @@ public class GUI extends JFrame {
             }
         });
 
+
+        this.vender.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DefaultTableModel modelo = (DefaultTableModel) tableArticulosFinal.getModel();
+
+
+
+                while (modelo.getRowCount() > 0) {
+                    modelo.removeRow(0);
+                }
+                vender.setEnabled(false);
+
+            }
+        });
+
+        DefaultTableModel modelo = (DefaultTableModel) tableArticulosFinal.getModel();
+        modelo.addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                System.out.println("Table changed event triggered.");
+                System.out.println("Number of rows: " + modelo.getRowCount());
+                if (modelo.getRowCount() > 0) {
+                    vender.setEnabled(true);
+                    System.out.println("Button enabled.");
+                } else {
+                    vender.setEnabled(false);
+                    System.out.println("Button disabled.");
+                }
+            }
+        });
+
+
         agregarButtonArticuloBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                DefaultTableModel modelo = (DefaultTableModel) tableArticulosFinal.getModel();
 
                 controller.agregarArticuloTable();
+                if (modelo.getRowCount() > 0) {
+                    vender.setEnabled(true);
+                } else {
+                    vender.setEnabled(false);
+                }
                 controller.actualizarTotales();
+            }
+        });
+
+        this.eliminarPedido.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int filaSeleccionada = tableArticulosFinal.getSelectedRow();
+                if(filaSeleccionada != -1){
+                    DefaultTableModel model = (DefaultTableModel) tableArticulosFinal.getModel();
+                    if (filaSeleccionada != -1) {
+                        model.removeRow(filaSeleccionada);
+                        controller.TablePresentacion();
+                        controller.actualizarTotales();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Seleccione una fila para eliminar.");
+                    }
+
+                }
+
             }
         });
 
@@ -938,35 +1024,10 @@ public class GUI extends JFrame {
             }
         });
 
-        /*
-        this.buscarArticulo.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                validarBuscar();
-            }
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                validarBuscar();
-            }
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                validarBuscar();
-            }
-        });
-
-         */
-
 
 
     }
 
-    public  void validarBuscar(){
-        if(buscarArticulo.getText().isEmpty()){
-            buscarButton.setEnabled(false);
-        }else{
-            buscarButton.setEnabled(true);
-        }
-    }
     public void validar(){
         if(!(codigo.getText().isEmpty() && descripcionCategoria.getText().isEmpty() &&
                 nombre.getText().isEmpty() && buscarCategoria.getText().isEmpty())){
@@ -1116,29 +1177,6 @@ public class GUI extends JFrame {
 
         return valid;
     }
-    private void validarPedido(){
-        if(!buscarArticulo.getText().isEmpty()){
-            buscarButton.setEnabled(true);
-        }else{
-            buscarButton.setEnabled(false);
-        }
-    }
-
-    /*
-    private boolean validarPedidoForm(){
-        Border errorBorder = BorderFactory.createLineBorder(Color.RED, 2);
-        boolean valid = true;
-        if (buscarArticulo.getText().isEmpty()) {
-            valid = false;
-            buscarArticuloLb.setBorder(errorBorder);
-        } else {
-            buscarArticuloLb.setBorder(null);
-            buscarArticuloLb.setToolTipText(null);
-        }
-        return valid;
-    }
-
-     */
 
     void  clearText(){
         nombre.setText("");
@@ -1252,7 +1290,11 @@ public class GUI extends JFrame {
         return TotalLabel;
     }
 
+    public JComboBox comboPresentacion(){ return  presentacion;}
     public void setTotalLabel(JLabel totalLabel) {
         TotalLabel = totalLabel;
+    }
+    public void setCantidad(String can){
+        cantidadTotalPresentacion.setText(can);
     }
 }

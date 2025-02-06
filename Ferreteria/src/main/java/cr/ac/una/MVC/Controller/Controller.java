@@ -1,9 +1,9 @@
 package cr.ac.una.MVC.Controller;
 
-import cr.ac.una.Data.*;
-import cr.ac.una.MVC.*;
 import cr.ac.una.Logic.*;
 import cr.ac.una.MVC.Model.*;
+import cr.ac.una.MVC.View.GUI;
+import cr.ac.una.MVC.View.Login;
 import cr.ac.una.Protocol.User;
 
 import javax.swing.*;
@@ -11,7 +11,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Controller {
 
@@ -534,15 +533,15 @@ public class Controller {
         }
     }
 
-    public void TableSearchArticuloVenta() throws Exception {
-        DefaultTableModel TableModel = new DefaultTableModel(new String[]{"ID", "Nombre", "Marca", "Descripcion", "Unidad", "Cantidad Disponible", "Precio Unitario", "Cantidad", "Total"}, 0) {
+    public void TableSearchArticuloVenta(String cat, String sub) throws Exception {
+        DefaultTableModel TableModel = new DefaultTableModel(new String[]{"ID", "Nombre", "Marca", "Descripcion", "Unidad", "Cantidad Disponible", "Precio venta", "Cantidad", "Total"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return column == 7;//el usuario lo edita
             }
         };
 
-        List<Items> items = service.allItems(gui.getCategoriaIdCb(), gui.getSubCategoriaIdCb());
+        List<Items> items = service.allItems(cat, sub);
         for (Items item : items) {
             if (item != null) {
                 List<Presentation> presentaciones = item.getPresentation();
@@ -598,9 +597,9 @@ public class Controller {
         }
     }
 
-    public void searchArticuloVenta() throws Exception {
+    public void searchArticuloVenta(String cat, String sub) throws Exception {
         try {
-            TableSearchArticuloVenta();
+            TableSearchArticuloVenta(cat, sub);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Articulo no encontrado ");
         }
@@ -608,7 +607,7 @@ public class Controller {
     public void llenarCombos(List<Category> categories){
         gui.comboCategoria().removeAllItems();
         for(Category cat : categories){
-            gui.comboCategoria().addItem(cat.getId());
+            gui.comboCategoria().addItem(cat.getId() + "-" + cat.getName());
         }
     }
 
@@ -627,7 +626,7 @@ public class Controller {
             } else {
                 // Agregar las subcategorías al ComboBox
                 for (SubCategory subCat : subCategories) {
-                    gui.comboSubCategoria().addItem(subCat.getSubCategoryID());
+                    gui.comboSubCategoria().addItem(subCat.getSubCategoryID() + "-" + subCat.getSubCategoryName());
                 }
             }
         } catch (Exception e) {
@@ -668,6 +667,39 @@ public class Controller {
         gui.getTotalLabel().setText(String.format("%.2f", totalFinal));
     }
 
+    public void CargarPresentacion ( String cad, String sub, String idArticulo){
+        try {
+            gui.comboPresentacion().removeAllItems();
+            List<Presentation> presentacion = new ArrayList<>();
+            for(Category cat : model.getCategories())
+            {
+                if(cat.getId().equals(cad)){
+                    for(SubCategory subCat : cat.getSubCategoryList()){
+                        if(subCat.getSubCategoryID().equals(sub)){
+                            for(Items items: subCat.getItems()){
+                                if(items.getId().equals(idArticulo)){
+                                    presentacion = items.getPresentation();
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (presentacion.isEmpty()) {
+                gui.comboSubCategoria().addItem("No hay subcategorías disponibles");
+            } else {
+                for(Presentation p : presentacion){
+                    gui.comboPresentacion().addItem(p.getMeasure());
+                    gui.setCantidad(String.valueOf(p.getQuantity()));
+                }
+            }
+        } catch (Exception e) {
+            gui.comboSubCategoria().removeAllItems();
+            gui.comboSubCategoria().addItem("Error al cargar subcategorías");
+            e.printStackTrace();
+        }
+    }
 
 }
 

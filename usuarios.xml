@@ -15,4 +15,10 @@
         <password>AnyPassword</password>
         <estado>Activo</estado>
     </usuario>
+    <usuario>
+        <login>1</login>
+        <password>1</password>
+        <estado>Activo</estado>
+    </usuario>
+
 </usuarios>

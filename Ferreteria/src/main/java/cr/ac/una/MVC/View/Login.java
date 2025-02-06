@@ -1,6 +1,7 @@
-package cr.ac.una.MVC.Model;
+package cr.ac.una.MVC.View;
 
 import cr.ac.una.MVC.Controller.Controller;
+import cr.ac.una.MVC.Model.Model;
 import cr.ac.una.Protocol.User;
 
 import javax.swing.*;

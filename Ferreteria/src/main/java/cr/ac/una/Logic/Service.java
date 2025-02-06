@@ -410,5 +410,9 @@ public class Service {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
+
+    public void venderCantidad(String id, String sub, String Ar, String cantidad){
+
+    }
 }
 
