@@ -411,8 +411,23 @@ public class Service {
         }
     }
 
-    public void venderCantidad(String id, String sub, String Ar, String cantidad){
+    public void venderCantidad(String id, String sub, String Ar, String unidad, String cantidad){
 
+        try {
+            List<Items> items = allItems(id, sub);
+            for (Items item : items) {
+                 if(item.getId().equals(Ar)){
+                     for(Presentation p : item.getPresentation()){
+                         if(p.getMeasure().equals(unidad)){
+                             p.setQuantity(p.getQuantity()-Integer.parseInt(cantidad));
+                         }
+
+                     }
+                 }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 

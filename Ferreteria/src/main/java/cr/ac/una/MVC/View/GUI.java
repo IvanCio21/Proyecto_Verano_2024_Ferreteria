@@ -231,7 +231,6 @@ public class GUI extends JFrame {
         jTableArticulos.getTableHeader().setReorderingAllowed(false);
         presentacionesTable.getTableHeader().setReorderingAllowed(false);
         tableArticulosFinal.getTableHeader().setReorderingAllowed(false);
-        cantidadTotalPresentacion.setEditable(false);
 
 
 
@@ -652,9 +651,7 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String categoriaSeleccionada = (String) categoriaPedido.getSelectedItem();
-
                 try {
-
                     if (categoriaSeleccionada != null) {
                         String[] partes = categoriaSeleccionada.split("-");
                         String categoriaId = partes[0];
@@ -666,6 +663,8 @@ public class GUI extends JFrame {
                 }
             }
         });
+
+
 
         //BONOTES REGRESAR O NEXT ARTCICULO
         this.regresarCategoriaButton.addActionListener(new ActionListener() {
@@ -716,15 +715,6 @@ public class GUI extends JFrame {
                             double cantidadUsuario = Double.parseDouble(tableArticulosVender.getValueAt(filaSeleccionada, 7).toString());
                             double precioUnitario = Double.parseDouble(tableArticulosVender.getValueAt(filaSeleccionada, 6).toString());
                             double cantidadDisponible = Double.parseDouble(tableArticulosVender.getValueAt(filaSeleccionada, 5).toString());
-                            String idArticulo = tableArticulosVender.getValueAt(filaSeleccionada, 0).toString();
-                            if (categoriaSeleccionada != null) {
-                                String[] partes = categoriaSeleccionada.split("-");
-                                String categoriaId = partes[0];
-
-                                String[] partesSubCa = subCategoriaSelecionada.split("-");
-                                String subCategoriaId = partesSubCa[0];
-                                controller.CargarPresentacion(categoriaId, subCategoriaId, idArticulo);
-                            }
                             if (cantidadUsuario > cantidadDisponible) {
                                 JOptionPane.showMessageDialog(null, "No hay suficiente stock disponible.", "Error", JOptionPane.ERROR_MESSAGE);
                                 tableArticulosVender.setValueAt(0, filaSeleccionada, 7);
@@ -749,12 +739,12 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 DefaultTableModel modelo = (DefaultTableModel) tableArticulosFinal.getModel();
-
-
-
+                controller.vendido();
                 while (modelo.getRowCount() > 0) {
                     modelo.removeRow(0);
+
                 }
+                JOptionPane.showMessageDialog(null, " El pedido se ha guardado, correctamente");
                 vender.setEnabled(false);
 
             }
@@ -1079,8 +1069,6 @@ public class GUI extends JFrame {
             descripcionLabel.setToolTipText(null);
         }
 
-
-
         return valid;
     }
 
@@ -1297,4 +1285,23 @@ public class GUI extends JFrame {
     public void setCantidad(String can){
         cantidadTotalPresentacion.setText(can);
     }
+
+    public String cadC() {
+        String selectedItem = (String) categoriaPedido.getSelectedItem();
+        if (selectedItem != null) {
+            String[] parts = selectedItem.split("-");
+            return parts[0];
+        }
+        return "";
+    }
+
+    public String SubC() {
+        String selectedItem = (String) subCategoriaPedido.getSelectedItem();
+        if (selectedItem != null) {
+            String[] parts = selectedItem.split("-");
+            return parts[0];
+        }
+        return "";
+    }
+
 }

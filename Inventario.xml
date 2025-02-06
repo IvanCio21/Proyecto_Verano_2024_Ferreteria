@@ -20,8 +20,13 @@
               </presentacion>
               <presentacion>
                 <unidad>Mililitro</unidad>
-                <cantidad>34.0</cantidad>
-                <precio>1200.0</precio>
+                <cantidad>23.0</cantidad>
+                <precio>56788.0</precio>
+              </presentacion>
+              <presentacion>
+                <unidad>Kilo</unidad>
+                <cantidad>23.0</cantidad>
+                <precio>346777.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>

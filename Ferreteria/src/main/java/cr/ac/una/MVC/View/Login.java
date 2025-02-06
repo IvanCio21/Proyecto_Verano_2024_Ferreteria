@@ -44,13 +44,10 @@ public class Login implements Observer {
     }
 
     public void update(Observable o, Object arg) {
-        // Aquí puedes manejar la lógica cuando el modelo cambie y notifique a esta vista.
         System.out.println("El modelo ha sido actualizado: " + arg);
 
-        // Si deseas, puedes actualizar la interfaz gráfica aquí, por ejemplo:
         if ((int) arg == Model.USER) {
             JOptionPane.showMessageDialog(null, "Usuario actualizado en el modelo");
         }
     }
-
 }

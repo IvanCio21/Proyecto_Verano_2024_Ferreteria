@@ -492,8 +492,7 @@ public class Controller {
                     new Presentation(un, numeroComoDouble, Double.parseDouble(precio)));
             service.saveXml();
 
-
-            JOptionPane.showMessageDialog(null, "Presentación agregada correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+             service.saveXml();
             return true;
 
         } catch (RuntimeException e) {
@@ -570,6 +569,9 @@ public class Controller {
 
         int selectedRow = tableBusqueda.getSelectedRow();
 
+        String id = (String) tableBusqueda.getValueAt(selectedRow, 0);
+        String unidad = (String) tableBusqueda.getValueAt(selectedRow, 4);
+        System.out.println(unidad);
         if (selectedRow != -1) {
             DefaultTableModel TableModelBusqueda = (DefaultTableModel) tableBusqueda.getModel();
             DefaultTableModel TableModelPedidos = (DefaultTableModel) tablePedidos.getModel();
@@ -588,6 +590,7 @@ public class Controller {
                     rowData[i] = TableModelBusqueda.getValueAt(selectedRow, i);
                 }
                 TableModelPedidos.addRow(rowData);
+                editarCan(gui.cadC(), gui.SubC(), id, unidad, String.valueOf(cantidadUsuario));
             } catch (NumberFormatException e) {
                 throw new RuntimeException(e);
             } catch (HeadlessException e) {
@@ -668,39 +671,57 @@ public class Controller {
         gui.getTotalLabel().setText(String.format("%.2f", totalFinal));
     }
 
-    public void CargarPresentacion ( String cad, String sub, String idArticulo){
-        try {
-            gui.comboPresentacion().removeAllItems();
-            List<Presentation> presentacion = new ArrayList<>();
-            for(Category cat : model.getCategories())
-            {
-                if(cat.getId().equals(cad)){
-                    for(SubCategory subCat : cat.getSubCategoryList()){
-                        if(subCat.getSubCategoryID().equals(sub)){
-                            for(Items items: subCat.getItems()){
-                                if(items.getId().equals(idArticulo)){
-                                    presentacion = items.getPresentation();
 
+    public boolean vendido(){
+       service.saveXml();
+        return true;
+    }
+    public void editarCan(String categoria, String subCatgeoria, String id, String unidad, String e) {
+        try {
+            List<Presentation> presentations = new ArrayList<>();
+
+            // Buscar la categoría, subcategoría y artículo correspondiente
+            for (Category cat : model.getCategories()) {
+                if (cat.getId().equals(categoria)) {
+                    for (SubCategory subCat : cat.getSubCategoryList()) {
+                        if (subCat.getSubCategoryName().equals(subCatgeoria)) {
+                            for (Items item : subCat.getItems()) {
+                                if (item.getId().equals(id)) {
+                                    for (Presentation p : item.getPresentation()) {
+                                        System.out.println("Presentación: " + p.getMeasure() + ", Cantidad: " + p.getQuantity());
+                                        if (p.getMeasure().trim().equalsIgnoreCase(unidad.trim())) {
+                                            try {
+                                                System.out.println("Cantidad: " + p.getQuantity());
+                                                int cantidadRestada = (int) (p.getQuantity() - Integer.parseInt(e));
+                                                if (cantidadRestada > 0) {
+                                                    p.setQuantity(cantidadRestada);
+                                                    System.out.println("Cantidad actualizada: " + p.getQuantity());
+                                                    break;
+                                                } else {
+                                                    throw new NumberFormatException("La cantidad debe ser mayor a 0");
+                                                }
+                                            } catch (NumberFormatException ex) {
+                                                JOptionPane.showMessageDialog(null, "Error al ingresar la cantidad: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-            if (presentacion.isEmpty()) {
-                gui.comboSubCategoria().addItem("No hay subcategorías disponibles");
-            } else {
-                for(Presentation p : presentacion){
-                    gui.comboPresentacion().addItem(p.getMeasure());
-                    gui.setCantidad(String.valueOf(p.getQuantity()));
-                }
-            }
-        } catch (Exception e) {
-            gui.comboSubCategoria().removeAllItems();
-            gui.comboSubCategoria().addItem("Error al cargar subcategorías");
-            e.printStackTrace();
+
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();  // Mostrar la excepción para depurar
+            JOptionPane.showMessageDialog(null, "Ocurrió un error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+
+
 
 }
 
