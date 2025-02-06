@@ -679,23 +679,18 @@ public class Controller {
     public void editarCan(String categoria, String subCatgeoria, String id, String unidad, String e) {
         try {
             List<Presentation> presentations = new ArrayList<>();
-
-            // Buscar la categoría, subcategoría y artículo correspondiente
             for (Category cat : model.getCategories()) {
                 if (cat.getId().equals(categoria)) {
                     for (SubCategory subCat : cat.getSubCategoryList()) {
-                        if (subCat.getSubCategoryName().equals(subCatgeoria)) {
+                        if (subCat.getSubCategoryID().equals(subCatgeoria)) {
                             for (Items item : subCat.getItems()) {
                                 if (item.getId().equals(id)) {
                                     for (Presentation p : item.getPresentation()) {
-                                        System.out.println("Presentación: " + p.getMeasure() + ", Cantidad: " + p.getQuantity());
                                         if (p.getMeasure().trim().equalsIgnoreCase(unidad.trim())) {
                                             try {
-                                                System.out.println("Cantidad: " + p.getQuantity());
-                                                int cantidadRestada = (int) (p.getQuantity() - Integer.parseInt(e));
+                                                double cantidadRestada =  (p.getQuantity() - Double.parseDouble(e));
                                                 if (cantidadRestada > 0) {
                                                     p.setQuantity(cantidadRestada);
-                                                    System.out.println("Cantidad actualizada: " + p.getQuantity());
                                                     break;
                                                 } else {
                                                     throw new NumberFormatException("La cantidad debe ser mayor a 0");
@@ -715,7 +710,7 @@ public class Controller {
 
 
         } catch (Exception ex) {
-            ex.printStackTrace();  // Mostrar la excepción para depurar
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Ocurrió un error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
