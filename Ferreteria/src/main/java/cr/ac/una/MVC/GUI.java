@@ -703,7 +703,7 @@ public class GUI extends JFrame {
                                 tableArticulosVender.setValueAt(0, filaSeleccionada, 8);
                             } else {
                                 double total = cantidadUsuario * precioUnitario;
-                                tableArticulosVender.setValueAt(total, filaSeleccionada, 8);
+                                tableArticulosVender.setValueAt(String.format("%.2f", total), filaSeleccionada, 8);
                             }
                             controller.actualizarTotales();
                         } catch (NumberFormatException ex) {
@@ -719,7 +719,9 @@ public class GUI extends JFrame {
         agregarButtonArticuloBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            controller.agregarArticuloTable();
+
+                controller.agregarArticuloTable();
+                controller.actualizarTotales();
             }
         });
 
