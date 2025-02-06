@@ -616,13 +616,14 @@
                     <properties>
                       <model>
                         <item value="Litro"/>
-                        <item value="Mililitro"/>
+                        <item value="Milimetro"/>
                         <item value="Metro"/>
                         <item value="Centimetro"/>
                         <item value="Kilo"/>
                         <item value="Gramo"/>
                         <item value="Pie"/>
                         <item value="Pulgada"/>
+                        <item value="Individual"/>
                       </model>
                     </properties>
                   </component>
@@ -773,7 +774,7 @@
                   <grid row="5" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Regresar Categoria"/>
+                  <text value="Regresar a Categoria"/>
                 </properties>
               </component>
               <component id="f4fd5" class="javax.swing.JButton" binding="regresarSubCategoria">
@@ -781,7 +782,7 @@
                   <grid row="5" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Sub Categoria"/>
+                  <text value="Regresar a SubCategoria"/>
                 </properties>
               </component>
               <component id="58b79" class="javax.swing.JLabel">

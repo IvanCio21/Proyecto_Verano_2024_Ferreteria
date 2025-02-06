@@ -65,13 +65,13 @@ public class Server {
     }
 
     private synchronized User login(ObjectInputStream in,ObjectOutputStream out,IService service) throws IOException, ClassNotFoundException, Exception{
-        int method = in.readInt();//accion a realizar
+        int method = in.readInt();
         if (method != Protocol.LOGIN) throw new Exception("Should login first");
         User user=  (User) in.readObject();
         user=service.login(user);
 
         if (user == null) {
-            out.writeInt(Protocol.ERROR_LOGIN);  // Código de error para fallo de login
+            out.writeInt(Protocol.ERROR_LOGIN);
             out.flush();
             throw new Exception("Usuario o contraseña incorrectos");
         }

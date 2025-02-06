@@ -52,11 +52,9 @@ public class Worker {
                 method = in.readInt();
                 System.out.println("Operacion: "+method);
                 switch(method){
-                    //case Protocol.LOGIN: done on accept
                     case Protocol.LOGOUT:
                         try {
                             srv.remove(user);
-                            //service.logout(user); //nothing to do
                         } catch (Exception ex) {}
                         stop();
                         break;
@@ -65,7 +63,7 @@ public class Worker {
                         try {
                             message = (Message)in.readObject();
                             message.setSender(user);
-                            service.post(message); // if wants to save messages, ex. recivier no logged on
+                            service.post(message);
                             srv.deliver(message);
                             System.out.println(user.getUserName()+": "+message.getMessage());
                         } catch (ClassNotFoundException ex) {}
@@ -79,7 +77,7 @@ public class Worker {
         }
     }
 
-    public void deliver(Message message){ //Enviar el mensaje
+    public void deliver(Message message){
         try {
             out.writeInt(Protocol.DELIVER);
             out.writeObject(message);

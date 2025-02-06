@@ -16,16 +16,6 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 public class UsersXML {
-//    public static void main(String[] args) {
-//        // Crear usuarios
-//        List<User> users;
-//        users = new ArrayList<>();
-//        users.add(new User("MyP455W04D", "Activo", "JohnDoe"));
-//        users.add(new User("qiAqv547Q#$", "Bloqueado", "JaneDoe"));
-//        users.add(new User("AnyPassword", "Activo", "JuanPerez"));
-//
-//        generarXML(users, "usuarios.xml");
-//    }
 
     public static void generarXML(List<User> users, String fileName) {
         try {

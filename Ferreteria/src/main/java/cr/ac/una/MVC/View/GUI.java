@@ -745,6 +745,7 @@ public class GUI extends JFrame {
 
                 }
                 JOptionPane.showMessageDialog(null, " El pedido se ha guardado, correctamente");
+                controller.TablePedidos();
                 vender.setEnabled(false);
 
             }
@@ -1243,10 +1244,16 @@ public class GUI extends JFrame {
                 + "Artículo:\n"
                 + "- Se puede editar todo menos el nombre de la presentación (Unidad) y el código del artículo.\n"
                 + "- Para agregar un artículo es necesario incluir una presentación.\n"
-                + "- Para editar el artículo es necesario que escojan el artículo y la presentación con un clic en su respectiva tabla.";
+                + "- Para editar el artículo es necesario que escojan el artículo y la presentación con un clic en su respectiva tabla.\n\n"
+                + "Pedidos:\n"
+                + "- Para realizar un pedido se debe escoger de los combobox la categoría y la subcategoría, y luego utilizar el botón para mostrarlo.\n"
+                + "- Para agregar el pedido se debe ingresar en la tabla la cantidad deseada y luego dar doble clic en el espacio de precio unitario para que se autocomplete el precio.\n"
+                + "- Podrá comprarse una vez se tenga al menos un artículo seleccionado.\n"
+                + "- Para volver a ver los artículos después de vender, solo presione 'Mostrar Articulos' nuevamente.\n.";
 
         textAcercaDe.setText(texto);
     }
+
     public void setTableArticulos(DefaultTableModel tableModel) {
         jTableArticulos.setModel(tableModel);
     }

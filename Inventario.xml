@@ -5,82 +5,18 @@
     <descripcion>Todo tipo de herramientas manuales y eléctricas.</descripcion>
     <subCategorias>
       <subcategoria id="HERM">
-        <nombre>Herramientas</nombre>
-        <descripcion>Martillos, destornilladores</descripcion>
+        <nombre>Herramientas Manuales</nombre>
+        <descripcion>Martillos, destornilladores, llaves y más</descripcion>
         <articulos>
-          <articulo id="28GF">
-            <nombre>Herramientas</nombre>
-            <marca>Yale</marca>
-            <descripcion>Punta estrella</descripcion>
+          <articulo id="002">
+            <nombre>Martillo</nombre>
+            <marca>HILTI</marca>
+            <descripcion>Martillo punta fina.</descripcion>
             <presentaciones>
               <presentacion>
-                <unidad>Unica</unidad>
-                <cantidad>28.0</cantidad>
-                <precio>30.0</precio>
-              </presentacion>
-              <presentacion>
-                <unidad>Mililitro</unidad>
-                <cantidad>21.0</cantidad>
-                <precio>56788.0</precio>
-              </presentacion>
-              <presentacion>
-                <unidad>Kilo</unidad>
-                <cantidad>3.0</cantidad>
-                <precio>346777.0</precio>
-              </presentacion>
-            </presentaciones>
-          </articulo>
-          <articulo id="23Df">
-            <nombre>Destornillador</nombre>
-            <marca>Fischer</marca>
-            <descripcion>Punta fina</descripcion>
-            <presentaciones>
-              <presentacion>
-                <unidad>Unidad</unidad>
-                <cantidad>34.0</cantidad>
-                <precio>30.0</precio>
-              </presentacion>
-            </presentaciones>
-          </articulo>
-          <articulo id="23Hj">
-            <nombre>Herramientas</nombre>
-            <marca>Yale</marca>
-            <descripcion>Martillo grueso</descripcion>
-            <presentaciones>
-              <presentacion>
-                <unidad>Unico</unidad>
-                <cantidad>3.0</cantidad>
-                <precio>30.0</precio>
-              </presentacion>
-            </presentaciones>
-          </articulo>
-        </articulos>
-      </subcategoria>
-      <subcategoria id="HERM1">
-        <nombre>Herramienta</nombre>
-        <descripcion>Herramientas</descripcion>
-        <articulos>
-          <articulo id="Her01">
-            <nombre>Prueba</nombre>
-            <marca>Yale</marca>
-            <descripcion>Prueba</descripcion>
-            <presentaciones>
-              <presentacion>
-                <unidad>Kilo</unidad>
-                <cantidad>45.0</cantidad>
-                <precio>2000.0</precio>
-              </presentacion>
-            </presentaciones>
-          </articulo>
-          <articulo id="Her02">
-            <nombre>PruebaS</nombre>
-            <marca>Yale</marca>
-            <descripcion>PRUEBAS</descripcion>
-            <presentaciones>
-              <presentacion>
-                <unidad>Litro</unidad>
-                <cantidad>50.0</cantidad>
-                <precio>30000.0</precio>
+                <unidad>Individual</unidad>
+                <cantidad>10.0</cantidad>
+                <precio>50000.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>
@@ -92,19 +28,24 @@
     <nombre>Materiales de Construcción</nombre>
     <descripcion>Cemento, ladrillos, yeso, etc.</descripcion>
     <subCategorias>
-      <subcategoria id="23H4">
-        <nombre>Cementos</nombre>
-        <descripcion>Diferentes tipos de cementos para piso</descripcion>
+      <subcategoria id="002">
+        <nombre>Cemento</nombre>
+        <descripcion>Otros</descripcion>
         <articulos>
-          <articulo id="324g">
-            <nombre>LeonH</nombre>
-            <marca>Cemento Azul</marca>
-            <descripcion>Cemento para piso color Azul.</descripcion>
+          <articulo id="002">
+            <nombre>Cemento Azul</nombre>
+            <marca>Glidden</marca>
+            <descripcion>Para construccion.</descripcion>
             <presentaciones>
               <presentacion>
-                <unidad>Costal 1 kg</unidad>
-                <cantidad>4.0</cantidad>
-                <precio>30.0</precio>
+                <unidad>Kilo</unidad>
+                <cantidad>1.0</cantidad>
+                <precio>6000.0</precio>
+              </presentacion>
+              <presentacion>
+                <unidad>Gramo</unidad>
+                <cantidad>7.0</cantidad>
+                <precio>9000.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>
@@ -113,103 +54,47 @@
     </subCategorias>
   </categoria>
   <categoria id="003">
-    <nombre>Pruebas</nombre>
+    <nombre>Pinturas</nombre>
     <descripcion>Pinturas, barnices y materiales para decoración.</descripcion>
     <subCategorias>
       <subcategoria id="PINT">
-        <nombre>Pinturas De agua</nombre>
-        <descripcion>Pinturas para interior y exterior.</descripcion>
+        <nombre>Pinturas Acrílicas</nombre>
+        <descripcion>Pinturas para interior y exterior</descripcion>
         <articulos>
-          <articulo id="CLo">
-            <nombre>Sapo</nombre>
-            <marca>2222</marca>
-            <descripcion>2333</descripcion>
-            <presentaciones>
-              <presentacion>
-                <unidad>222</unidad>
-                <cantidad>22.0</cantidad>
-                <precio>30.0</precio>
-              </presentacion>
-            </presentaciones>
-          </articulo>
-          <articulo id="008">
-            <nombre>eeee</nombre>
-            <marca>sopaa</marca>
-            <descripcion>seeee</descripcion>
-            <presentaciones>
-              <presentacion>
-                <unidad>cajs</unidad>
-                <cantidad>33.0</cantidad>
-                <precio>30.0</precio>
-              </presentacion>
-            </presentaciones>
-          </articulo>
-        </articulos>
-      </subcategoria>
-    </subCategorias>
-  </categoria>
-  <categoria id="004">
-    <nombre>Pruebas34</nombre>
-    <descripcion>pruebas</descripcion>
-    <subCategorias>
-      <subcategoria id="000112">
-        <nombre>Prueba34</nombre>
-        <descripcion>vvv</descripcion>
-        <articulos>
-          <articulo id="986">
-            <nombre>Pruebas34</nombre>
-            <marca>Fischer</marca>
-            <descripcion>Corta</descripcion>
-          </articulo>
-        </articulos>
-      </subcategoria>
-    </subCategorias>
-  </categoria>
-  <categoria id="0005">
-    <nombre>Pruebas</nombre>
-    <descripcion>otroo</descripcion>
-    <subCategorias>
-      <subcategoria id="123">
-        <nombre>fff</nombre>
-        <descripcion>ffff</descripcion>
-        <articulos>
-          <articulo id="123">
-            <nombre>ff</nombre>
-            <marca>Yale</marca>
-            <descripcion>ffff</descripcion>
-            <presentaciones>
-              <presentacion>
-                <unidad>Mililitro</unidad>
-                <cantidad>5.0</cantidad>
-                <precio>30.0</precio>
-              </presentacion>
-            </presentaciones>
-          </articulo>
-        </articulos>
-      </subcategoria>
-    </subCategorias>
-  </categoria>
-  <categoria id="3535">
-    <nombre>Materiales Plasticos</nombre>
-    <descripcion>Materiales Plasticos</descripcion>
-    <subCategorias>
-      <subcategoria id="001">
-        <nombre>Materiales</nombre>
-        <descripcion>Materiales</descripcion>
-        <articulos>
-          <articulo id="Mat01">
-            <nombre>Prueba</nombre>
-            <marca>Yale</marca>
-            <descripcion>Prueba</descripcion>
+          <articulo id="005">
+            <nombre>Pintura Roja</nombre>
+            <marca>Tricolor</marca>
+            <descripcion>Pintura de agua para casas.</descripcion>
             <presentaciones>
               <presentacion>
                 <unidad>Litro</unidad>
-                <cantidad>40.0</cantidad>
-                <precio>30.0</precio>
+                <cantidad>20.0</cantidad>
+                <precio>20000.0</precio>
+              </presentacion>
+            </presentaciones>
+          </articulo>
+          <articulo id="003">
+            <nombre>Otros</nombre>
+            <marca>Tricolor</marca>
+            <descripcion>Otros.</descripcion>
+            <presentaciones>
+              <presentacion>
+                <unidad>Litro</unidad>
+                <cantidad>23.0</cantidad>
+                <precio>20000.0</precio>
+              </presentacion>
+              <presentacion>
+                <unidad>Gramo</unidad>
+                <cantidad>24.0</cantidad>
+                <precio>20000.0</precio>
               </presentacion>
             </presentaciones>
           </articulo>
         </articulos>
+      </subcategoria>
+      <subcategoria id="PINT_1">
+        <nombre>Pinturas De agua</nombre>
+        <descripcion>Pinturas para interior y exterior</descripcion>
       </subcategoria>
     </subCategorias>
   </categoria>

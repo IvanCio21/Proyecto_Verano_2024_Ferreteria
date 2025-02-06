@@ -31,17 +31,17 @@ private List<User> data;
 
                 encontrado = true;
 
-                // Si el usuario está bloqueado
+
                 if ("Bloqueado".equals(u.getStatus())) {
                     JOptionPane.showMessageDialog(null, "El usuario está bloqueado.", "Error", JOptionPane.ERROR_MESSAGE);
                     return null;
                 }
 
-                // Si la contraseña es incorrecta
+
                 if (!usuario.getPassword().equals(u.getPassword())) {
                     u.setIntentosFallidos(u.getIntentosFallidos() + 1); // Incrementamos intentos fallidos
 
-                    // Bloqueamos si alcanza los 3 intentos
+
                     if (u.getIntentosFallidos() == 3) {
                         u.setStatus("Bloqueado");
                         JOptionPane.showMessageDialog(null, "Límite de intentos fallidos alcanzado. El usuario será bloqueado.", "Advertencia", JOptionPane.ERROR_MESSAGE);

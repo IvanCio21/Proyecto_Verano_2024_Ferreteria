@@ -126,12 +126,6 @@ public class Proxy implements IService {
     }
 
     private void deliver( final Message message ){
-//        SwingUtilities.invokeLater(new Runnable(){
-//            public void run(){
-//                                           controller.deliver(message);
-//                                       }
-//                                   }
-//        );
     }
 
 }

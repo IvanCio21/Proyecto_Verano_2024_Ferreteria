@@ -425,14 +425,6 @@ public class Controller {
 
     public boolean editarItems(String idC, String sub, String cod, String nombre, String marca, String descripcion, String presentacion, String cantidad, String precio) {
         try {
-            /*
-            if (service.BuscarNameArticulos(idC, sub, nombre)) {
-                JOptionPane.showMessageDialog(null,"Ya existe un artículo con el mismo nombre. No se puede editar con un nombre duplicado.","Error", JOptionPane.ERROR_MESSAGE);
-                return false;
-            }
-
-             */
-
             service.editarArticulo(idC, sub, cod, nombre, marca, descripcion, presentacion, cantidad, precio);
             //editPresentation(presentacion, cantidad);
             TableItems();
