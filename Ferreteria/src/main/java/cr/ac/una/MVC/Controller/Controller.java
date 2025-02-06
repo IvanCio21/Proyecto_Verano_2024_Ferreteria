@@ -19,6 +19,7 @@ public class Controller {
     private GUI gui;
     private static Service service;
     private Login loginView;
+    JFrame frameLogin;
 
     public Controller(Model model, GUI gui, Login loginView) {
         this.model = model;
@@ -38,20 +39,32 @@ public class Controller {
 
 
     public void mostrarLogin() {
-        JFrame frame = new JFrame("Login - Sistema de Inventarios");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setContentPane(loginView.getPanelLoginBase());
-        frame.pack();
-        frame.setVisible(true);
+        frameLogin = new JFrame("Login - Sistema de Inventarios");
+        frameLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameLogin.setContentPane(loginView.getPanelLoginBase());
+        frameLogin.pack();
+        frameLogin.setVisible(true);
     }
 
     public void login(User user) throws Exception {
+        try {
             User loggedInUser = Proxy.instance().login(user);
-                model.setCurrentUser(loggedInUser);
-                model.commit(Model.USER);
-                loginView.getPanelLoginBase().setVisible(false);
-                JOptionPane.showMessageDialog(null, "¡Login exitoso!");
-                iniciarSistema();
+
+            if (loggedInUser == null) {
+                JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            model.setCurrentUser(loggedInUser);
+            model.commit(Model.USER);
+            frameLogin.dispose();
+//            loginView.getPanelLoginBase().setVisible(false);
+            JOptionPane.showMessageDialog(null, "¡Login exitoso!");
+            iniciarSistema();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al iniciar sesión: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
 

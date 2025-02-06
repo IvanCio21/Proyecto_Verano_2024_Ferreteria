@@ -1,5 +1,6 @@
 package cr.ac.una;
 
+
 import cr.ac.una.Protocol.IService;
 import cr.ac.una.Protocol.Message;
 import cr.ac.una.Protocol.Protocol;
@@ -32,8 +33,8 @@ public class Server {
 
     public void run(){
         IService service = new Service();
-
         boolean continuar = true;
+
         ObjectInputStream in=null;
         ObjectOutputStream out=null;
         Socket skt=null;
@@ -44,7 +45,9 @@ public class Server {
                 in = new ObjectInputStream(skt.getInputStream());
                 out = new ObjectOutputStream(skt.getOutputStream() );
                 System.out.println("Conexion Establecida...");
+
                 User user=this.login(in,out,service);
+
                 Worker worker = new Worker(this,in,out,user, service);
                 workers.add(worker);
                 worker.start();
@@ -61,23 +64,21 @@ public class Server {
         }
     }
 
-    private User login(ObjectInputStream in,ObjectOutputStream out,IService service) throws IOException, ClassNotFoundException, Exception{
-        int method = in.readInt();
-        if (method!=Protocol.LOGIN) throw new Exception("Should login first");
-        User user=(User)in.readObject();
-        user = service.login(user);
+    private synchronized User login(ObjectInputStream in,ObjectOutputStream out,IService service) throws IOException, ClassNotFoundException, Exception{
+        int method = in.readInt();//accion a realizar
+        if (method != Protocol.LOGIN) throw new Exception("Should login first");
+        User user=  (User) in.readObject();
+        user=service.login(user);
 
-
-
-        if (user == null || !user.getStatus().equals("Activo")) {
-            out.writeInt(Protocol.ERROR_LOGIN);
+        if (user == null) {
+            out.writeInt(Protocol.ERROR_LOGIN);  // Código de error para fallo de login
             out.flush();
-            throw new Exception(user == null ? "Usuario o contraseña incorrectos" : "Usuario bloqueado");
+            throw new Exception("Usuario o contraseña incorrectos");
         }
-
         out.writeInt(Protocol.ERROR_NO_ERROR);
         out.writeObject(user);
         out.flush();
+
         return user;
     }
 

@@ -11,8 +11,8 @@ import java.io.ObjectOutputStream;
 
 public class Worker {
     Server srv;
-    ObjectOutputStream out;
     ObjectInputStream in;
+    ObjectOutputStream out;
     IService service;
     User user;
 
@@ -56,12 +56,23 @@ public class Worker {
                     case Protocol.LOGOUT:
                         try {
                             srv.remove(user);
+                            //service.logout(user); //nothing to do
                         } catch (Exception ex) {}
                         stop();
                         break;
+                    case Protocol.POST:
+                        Message message=null;
+                        try {
+                            message = (Message)in.readObject();
+                            message.setSender(user);
+                            service.post(message); // if wants to save messages, ex. recivier no logged on
+                            srv.deliver(message);
+                            System.out.println(user.getUserName()+": "+message.getMessage());
+                        } catch (ClassNotFoundException ex) {}
+                        break;
                 }
                 out.flush();
-            } catch (IOException ex) {
+            } catch (IOException  ex) {
                 System.out.println(ex);
                 continuar = false;
             }

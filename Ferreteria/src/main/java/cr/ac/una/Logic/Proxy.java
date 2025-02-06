@@ -1,6 +1,7 @@
 package cr.ac.una.Logic;
 
 import cr.ac.una.MVC.Controller.Controller;
+
 import cr.ac.una.Protocol.IService;
 import cr.ac.una.Protocol.Message;
 import cr.ac.una.Protocol.Protocol;
@@ -15,11 +16,6 @@ import java.util.List;
 //import cr.ac.una.Protocol.IService;
 
 public class Proxy implements IService {
-
-    private Controller controller;
-
-    Socket skt;
-
     private static IService theInstance;
     public static IService instance(){
         if (theInstance==null){
@@ -30,15 +26,16 @@ public class Proxy implements IService {
 
     ObjectInputStream in;
     ObjectOutputStream out;
+    Controller controller;
 
-    public Proxy(){
-
+    public Proxy() {
     }
 
-    public void setController(Controller controller){
-        this.controller=controller;
+    public void setController(Controller controller) {
+        this.controller = controller;
     }
 
+    Socket skt;
     private void connect() throws Exception{
         skt = new Socket(Protocol.SERVER,Protocol.PORT);
         out = new ObjectOutputStream(skt.getOutputStream() );
@@ -65,15 +62,12 @@ public class Proxy implements IService {
             }
             else {
                 disconnect();
-                throw new Exception("Usuario o contraseña incorrectos");
+                throw new Exception("No remote user");
             }
         } catch (IOException | ClassNotFoundException ex) {
-            return null;
+            throw new Exception("Se produjo un error, pero no se mostrará en consola.");
         }
     }
-
-
-
 
     public void logout(User u) throws Exception{
         out.writeInt(Protocol.LOGOUT);
@@ -83,6 +77,17 @@ public class Proxy implements IService {
         this.disconnect();
     }
 
+    public void post(Message message){
+        try {
+            out.writeInt(Protocol.POST);
+            out.writeObject(message);
+            out.flush();
+        } catch (IOException ex) {
+
+        }
+    }
+
+    // LISTENING FUNCTIONS
     boolean continuar = true;
     public void start(){
         System.out.println("Client worker atendiendo peticiones...");
@@ -94,7 +99,6 @@ public class Proxy implements IService {
         continuar = true;
         t.start();
     }
-
     public void stop(){
         continuar=false;
     }
@@ -104,35 +108,30 @@ public class Proxy implements IService {
         while (continuar) {
             try {
                 method = in.readInt();
-                switch (method) {
+                System.out.println("DELIVERY");
+                System.out.println("Operacion: "+method);
+                switch(method){
                     case Protocol.DELIVER:
                         try {
-                            Message message = (Message) in.readObject();
-//                            deliver(message);
-                        } catch (ClassNotFoundException ex) {
-                            ex.printStackTrace();
-                        }
+                            Message message=(Message)in.readObject();
+                            deliver(message);
+                        } catch (ClassNotFoundException ex) {}
                         break;
                 }
                 out.flush();
-            } catch (IOException ex) {
+            } catch (IOException  ex) {
                 continuar = false;
             }
         }
     }
 
-
-    public void post(Message m) {
-        System.out.println("Mensaje recibido para enviar: " + m.getMessage());
-    }
-
-//    private void deliver( final Message message ){
+    private void deliver( final Message message ){
 //        SwingUtilities.invokeLater(new Runnable(){
-//                                       public void run(){
+//            public void run(){
 //                                           controller.deliver(message);
 //                                       }
 //                                   }
 //        );
-//    }
+    }
 
 }

@@ -1,8 +1,9 @@
 package cr.ac.una.Protocol;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class User {
+public class User implements Serializable {
     private String userName;
     private String password;
     private String status;
@@ -39,6 +40,14 @@ public class User {
         this.userName = userName;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 53 * hash + Objects.hashCode(this.userName);
+        return hash;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
