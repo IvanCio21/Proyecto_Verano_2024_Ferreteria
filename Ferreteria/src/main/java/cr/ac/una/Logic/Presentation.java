@@ -1,5 +1,7 @@
 package cr.ac.una.Logic;
 
+import java.util.List;
+
 public class Presentation {
     private String measure;
     private double quantity;
@@ -38,6 +40,34 @@ public class Presentation {
 
     public double precioVenta(double precioCompra) {
         return precioCompra / quantity;
+    }
+
+    public static double descuentoPorUnidades(List<Presentation> carrito) {
+        double total = 0;
+        for (Presentation p : carrito) {
+            double totalArticulo = p.getPrice() * p.getQuantity();
+            if (p.getQuantity() > 10) { // Mas de 10 unidades del mismo articulo
+                totalArticulo *= 0.90;
+            }
+            total += totalArticulo;
+        }
+        return total;
+    }
+
+    public static double descuentoPorArticulosDiferentes(List<Presentation> carrito) {
+        if (carrito.size() > 10) { // Mas de 10 articulos diferentes
+            double total = carrito.stream().mapToDouble(p -> p.getPrice() * p.getQuantity()).sum();
+            return total * 0.95;
+        }
+        return carrito.stream().mapToDouble(p -> p.getPrice() * p.getQuantity()).sum();
+    }
+
+    public static double descuentoPorMontoTotal(List<Presentation> carrito) {
+        double total = carrito.stream().mapToDouble(p -> p.getPrice() * p.getQuantity()).sum();
+        if (total > 5000) { // Mas de $5000 en total
+            return total * 0.925;
+        }
+        return total;
     }
 
     public void actualizarCantidad(double cantidadVender) {

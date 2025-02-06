@@ -266,7 +266,7 @@ public class Service {
 
             for(SubCategory subCat : subCategories){
                 if(subCat.getSubCategoryID().equals(idSub)){
-                    items = subCat.getItems();
+                    items.addAll(subCat.getItems());
                 }
             }
         }catch (Exception e){

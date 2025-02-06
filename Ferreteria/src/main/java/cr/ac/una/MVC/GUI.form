@@ -932,30 +932,12 @@
                   <text value="Sub Total:"/>
                 </properties>
               </component>
-              <component id="25268" class="javax.swing.JTextField" binding="subtotal">
-                <constraints>
-                  <grid row="8" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties/>
-              </component>
               <component id="e2a6c" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="8" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Descuento:"/>
-                </properties>
-              </component>
-              <component id="4fd79" class="javax.swing.JTextField" binding="descuento">
-                <constraints>
-                  <grid row="8" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties>
-                  <text value=""/>
                 </properties>
               </component>
               <component id="e476f" class="javax.swing.JLabel">
@@ -966,13 +948,36 @@
                   <text value="Total: "/>
                 </properties>
               </component>
-              <component id="6e25b" class="javax.swing.JTextField" binding="Total">
+              <component id="91cd4" class="javax.swing.JLabel" binding="SubTotalLabel">
                 <constraints>
-                  <grid row="8" column="9" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
+                  <grid row="8" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <font size="16"/>
+                  <foreground color="-13816347"/>
+                  <text value="0"/>
+                </properties>
+              </component>
+              <component id="e1651" class="javax.swing.JLabel" binding="DescuentoLabel">
+                <constraints>
+                  <grid row="8" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font size="16"/>
+                  <foreground color="-13816347"/>
+                  <text value="0"/>
+                </properties>
+              </component>
+              <component id="d2f19" class="javax.swing.JLabel" binding="TotalLabel">
+                <constraints>
+                  <grid row="8" column="9" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <enabled value="true"/>
+                  <font size="16"/>
+                  <foreground color="-13816347"/>
+                  <text value="0"/>
+                </properties>
               </component>
             </children>
           </grid>

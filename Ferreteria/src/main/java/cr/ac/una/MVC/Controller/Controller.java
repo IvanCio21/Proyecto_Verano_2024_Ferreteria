@@ -638,6 +638,37 @@ public class Controller {
 
     }
 
+    public void actualizarTotales() {
+        JTable tablePedidos = gui.getTableArticulosFinal();
+        DefaultTableModel model = (DefaultTableModel) tablePedidos.getModel();
+
+        List<Presentation> carrito = new ArrayList<>();
+        double subTotal = 0;
+
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String measure = (String) model.getValueAt(i, 4);
+            double quantity = Double.parseDouble(model.getValueAt(i, 7).toString());
+            double price = Double.parseDouble(model.getValueAt(i, 6).toString());
+
+            Presentation p = new Presentation(measure, quantity, price);
+            carrito.add(p);
+            subTotal += price * quantity;
+        }
+
+        double totalConDescuentoUnidades = Presentation.descuentoPorUnidades(carrito);
+        double totalConDescuentoArticulos = Presentation.descuentoPorArticulosDiferentes(carrito);
+        double totalConDescuentoMonto = Presentation.descuentoPorMontoTotal(carrito);
+
+        double totalFinal = Math.min(totalConDescuentoUnidades,
+                Math.min(totalConDescuentoArticulos, totalConDescuentoMonto));
+        double descuentoAplicado = subTotal - totalFinal;
+
+        gui.getSubTotalLabel().setText(String.format("%.2f", subTotal));
+        gui.getDescuentoLabel().setText(String.format("%.2f", descuentoAplicado));
+        gui.getTotalLabel().setText(String.format("%.2f", totalFinal));
+    }
+
+
 }
 
 

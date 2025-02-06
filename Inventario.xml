@@ -70,6 +70,36 @@
           </articulo>
         </articulos>
       </subcategoria>
+      <subcategoria id="HERM1">
+        <nombre>Herramienta</nombre>
+        <descripcion>Herramientas</descripcion>
+        <articulos>
+          <articulo id="Her01">
+            <nombre>Prueba</nombre>
+            <marca>Yale</marca>
+            <descripcion>Prueba</descripcion>
+            <presentaciones>
+              <presentacion>
+                <unidad>Kilo</unidad>
+                <cantidad>45.0</cantidad>
+                <precio>1000.0</precio>
+              </presentacion>
+            </presentaciones>
+          </articulo>
+          <articulo id="Her02">
+            <nombre>PruebaS</nombre>
+            <marca>Yale</marca>
+            <descripcion>PRUEBAS</descripcion>
+            <presentaciones>
+              <presentacion>
+                <unidad>Litro</unidad>
+                <cantidad>50.0</cantidad>
+                <precio>50000.0</precio>
+              </presentacion>
+            </presentaciones>
+          </articulo>
+        </articulos>
+      </subcategoria>
     </subCategorias>
   </categoria>
   <categoria id="002">
@@ -332,6 +362,24 @@
           </articulo>
         </articulos>
       </subcategoria>
+      <subcategoria id="001">
+        <nombre>prueba</nombre>
+        <descripcion>prueba</descripcion>
+        <articulos>
+          <articulo id="001">
+            <nombre>llave</nombre>
+            <marca>Yale</marca>
+            <descripcion>llave</descripcion>
+            <presentaciones>
+              <presentacion>
+                <unidad>Litro</unidad>
+                <cantidad>10.0</cantidad>
+                <precio>25.0</precio>
+              </presentacion>
+            </presentaciones>
+          </articulo>
+        </articulos>
+      </subcategoria>
     </subCategorias>
   </categoria>
   <categoria id="00277">
@@ -349,5 +397,33 @@
   <categoria id="993">
     <nombre>Clavos</nombre>
     <descripcion>Clavan</descripcion>
+  </categoria>
+  <categoria id="005">
+    <nombre>Prueba</nombre>
+    <descripcion>prueba</descripcion>
+  </categoria>
+  <categoria id="3535">
+    <nombre>Materiales Plasticos</nombre>
+    <descripcion>Materiales Plasticos</descripcion>
+    <subCategorias>
+      <subcategoria id="001">
+        <nombre>Materiales</nombre>
+        <descripcion>Materiales</descripcion>
+        <articulos>
+          <articulo id="Mat01">
+            <nombre>Prueba</nombre>
+            <marca>Yale</marca>
+            <descripcion>Prueba</descripcion>
+            <presentaciones>
+              <presentacion>
+                <unidad>Litro</unidad>
+                <cantidad>40.0</cantidad>
+                <precio>10.0</precio>
+              </presentacion>
+            </presentaciones>
+          </articulo>
+        </articulos>
+      </subcategoria>
+    </subCategorias>
   </categoria>
 </inventario>

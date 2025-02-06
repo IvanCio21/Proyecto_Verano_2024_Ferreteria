@@ -99,9 +99,6 @@ public class GUI extends JFrame {
     private JTextField buscarArticulo;
     private JButton buscarButton;
     private JScrollPane articulosVender;
-    private JTextField subtotal;
-    private JTextField descuento;
-    private JTextField Total;
     private JLabel codigoArticuloLabel;
     private JTextField nombreCategoriaArticuloTf;
     private JTextField nombresubCategoriaArticuloTf;
@@ -114,6 +111,9 @@ public class GUI extends JFrame {
     private JComboBox categoriaPedido;
     private JButton agregarButtonArticuloBtn;
     private JTable tableArticulosFinal;
+    private JLabel SubTotalLabel;
+    private JLabel DescuentoLabel;
+    private JLabel TotalLabel;
     private JPanel panelPrincipalLogin;
 
     public GUI(){
@@ -705,6 +705,7 @@ public class GUI extends JFrame {
                                 double total = cantidadUsuario * precioUnitario;
                                 tableArticulosVender.setValueAt(total, filaSeleccionada, 8);
                             }
+                            controller.actualizarTotales();
                         } catch (NumberFormatException ex) {
                             tableArticulosVender.setValueAt(0, filaSeleccionada, 0);
                         } catch (Exception ex) {
@@ -1229,5 +1230,27 @@ public class GUI extends JFrame {
         return  subCategoriaPedido;
     }
 
+    public JLabel getSubTotalLabel() {
+        return SubTotalLabel;
+    }
 
+    public void setSubTotalLabel(JLabel subTotalLabel) {
+        SubTotalLabel = subTotalLabel;
+    }
+
+    public JLabel getDescuentoLabel() {
+        return DescuentoLabel;
+    }
+
+    public void setDescuentoLabel(JLabel descuentoLabel) {
+        DescuentoLabel = descuentoLabel;
+    }
+
+    public JLabel getTotalLabel() {
+        return TotalLabel;
+    }
+
+    public void setTotalLabel(JLabel totalLabel) {
+        TotalLabel = totalLabel;
+    }
 }
