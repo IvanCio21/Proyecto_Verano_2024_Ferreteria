@@ -1,8 +1,9 @@
 package cr.ac.una.Protocol;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Message {
+public class Message implements Serializable {
 
         User sender;
         String message;
